@@ -41,13 +41,15 @@ const AppPlayerBar: FC<IProps> = (props) => {
     currentSong = {},
     lyrics,
     lyricsItemIndex,
-    playMode
+    playMode,
+    currentList
   } = useAppSelector(
     (state) => ({
       currentSong: state.player.currentSong,
       lyrics: state.player.lyrics,
       lyricsItemIndex: state.player.lyricsItemIndex,
-      playMode: state.player.playMode
+      playMode: state.player.playMode,
+      currentList: state.player.currentList
     }),
     shallowEqual
   )
@@ -106,7 +108,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
     //2.2设置当前歌曲进度
     const currentTime = audioRef.current!.currentTime
     const playCurrentTime = currentTime * 1000
-    console.log(!isSliderChange)
     //5.3拖拽时不设置
     if (!isSliderChange) {
       //设置当前歌曲播放时间
@@ -146,7 +147,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
     //5.4设置slider进度
     setProgress(value)
     //5.5拖拽的同时设置时间
-    console.log('change')
     setCurrentMinute((value / 100.0) * duration)
   }
 
@@ -162,7 +162,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
     setCurrentMinute(currentTime)
     //补充 重置slider状态让onTimeUpdate生效
     setIsSliderChange(false)
-    console.log('afterChange')
 
     // //补充
     // if (!isPlay) {
@@ -186,11 +185,15 @@ const AppPlayerBar: FC<IProps> = (props) => {
     //设置当前播放时间为0
     setCurrentMinute(0)
     dispatch(fetchNextSongAction(isNext))
+    //如果歌曲列表只有一首歌，重新开始播放
+    if (currentList.length === 1) {
+      audioRef.current!.src = getPlayUrl(id)
+      audioRef.current?.play().catch((e) => audioRef.current?.pause())
+    }
   }
 
   //9.0播放这一首自动播放下一首
   function audioEnded() {
-    console.log('触发')
     //如果是当前循环仍然播放这一首
     if (playMode === 2) {
       audioRef.current!.currentTime = 0
