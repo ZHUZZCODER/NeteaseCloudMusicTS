@@ -20,7 +20,11 @@ const RankingList: FC<IProps> = (props) => {
 
   return (
     <RankingListWrapper>
-      <NavHeaderV1 title="榜单" />
+      <NavHeaderV1
+        title="榜单"
+        hotLink="#/discover/ranking"
+        moreLink={'/discover/ranking'}
+      />
       <div className="rankingListContent">
         {rankingList.length &&
           rankingList.map((rankItem) => {

@@ -71,18 +71,17 @@ const AppPlayerBar: FC<IProps> = (props) => {
 
   //1.6当页面挂载后，且歌曲数据获取到，设置歌曲url
   useEffect(() => {
-    console.log('调用')
     audioRef.current!.src = getPlayUrl(id)
     //补充 这里播放首次不会触发，第二次触发
     audioRef.current
       ?.play()
       .then(() => {
         setIsPlay(true)
-        console.log('歌曲播放成功')
+        console.log('success')
       })
       .catch((err) => {
         setIsPlay(false)
-        console.log('歌曲播放失败:', err)
+        console.log('err:', err)
       })
 
     setDuration(dt)

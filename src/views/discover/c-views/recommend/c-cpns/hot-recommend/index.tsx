@@ -14,23 +14,23 @@ const HotRecommend: FC<IProps> = (props) => {
   const menuList = [
     {
       item: '华语',
-      link: '#'
+      link: '/discover/song?=华语'
     },
     {
       item: '流行',
-      link: '#'
+      link: '/discover/song?=流行'
     },
     {
       item: '摇滚',
-      link: '#'
+      link: '/discover/song?=摇滚'
     },
     {
       item: '民谣',
-      link: '#'
+      link: '/discover/song?=民谣'
     },
     {
       item: '电子',
-      link: '#'
+      link: '/discover/song?=电子'
     }
   ]
 
@@ -44,6 +44,7 @@ const HotRecommend: FC<IProps> = (props) => {
     <HotRecommendWrapper>
       <NavHeaderV1
         title={'热门推荐'}
+        hotLink="#/discover/song"
         menuList={menuList}
         moreLink="/discover/song"
       />

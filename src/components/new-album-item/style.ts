@@ -39,6 +39,7 @@ export const NewAlbumItemWrapper = styled.div`
           right: 5px;
           bottom: 5px;
           background-position: 0 -85px;
+          cursor: pointer;
         }
       }
     }

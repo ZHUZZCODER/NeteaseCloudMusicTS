@@ -31,7 +31,11 @@ const NewAlbum: FC<IProps> = (props) => {
 
   return (
     <NewAlbumWrapper>
-      <NavHeaderV1 title={'新碟上架'} />
+      <NavHeaderV1
+        title={'新碟上架'}
+        hotLink="#/discover/album"
+        moreLink={'/discover/album'}
+      />
       <div className="newAlbumContent">
         <div className="sprite_02 btn leftBtn" onClick={carouselLeft}></div>
         <div className="albumCenter">
