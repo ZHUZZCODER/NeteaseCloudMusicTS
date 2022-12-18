@@ -1,0 +1,88 @@
+第一步: 实现简单的歌曲播放暂停
+  1.创建reducer文件，将需要播放的歌曲信息存储在redux中
+  2.在播放页面，取出reducer的歌曲id
+  3.根据歌曲id获取歌曲播放路径
+  4.获取audio标签实例
+  5.设置audio的src为歌曲播放路径
+  6.调用audio实例的play()方法播放，pause()方法暂停,将播放会暂停状态存储在useState中
+  7.页面挂载监听当前播放歌曲变化，设置url,(并调用组件实例上的播放，第一次不会播放)
+
+第二步：设置当前歌曲播放时间
+  1.监听audio实例的onTimeUpdate时间，获取当前歌曲播放时间currentTime(秒)
+  2.定义currentMinute的useState存储当前歌曲播放时间变化
+  3.将currentTime*1000设置到当前歌曲播放时间进度中
+  4.jsx中使用formatTime对时间进行格式化
+
+第三步：播放歌曲设置slider进度
+  1.在useState中定义progress，存放slider进度值（百分比）
+  2.监听audio标签onTimeUpdate事件
+  3.取出audio实例的currentTime,计算slider: (currentTime / duration)*100
+
+第四步：点击进度条改变歌曲播放进度
+  1.监听antdesign的slider的afterChange事件，中的value
+  2.计算当前播放时间，currentTime = (value / 100) * duration(总时间) <毫秒>
+  3.修改当前歌曲播放进度时间(秒): audioInstance.current.currentTime = currentTime / 1000
+  4.设置当前slider组件进度，value
+  5.设置当前播放时间分钟currentTime,formatTime转化
+  6.将拖动完成将拖动状态isSliderChange设置为false.(使用onTimeUpdate生效)
+
+第五步：拖拽改变歌曲进度及时间
+  1.在useState中定义isSliderChange为false，默认不拖动
+  2.监听slider的change事件，中的value值
+  3.触发拖动事件，设置isSliderChange为true
+  4.当isSliderChange为true时，onTimeUpdate中不设置当前进度、当前歌曲播放时间
+  5.在sliderChange中，设置audio实例的currentTime(秒) = (value / 100) * duration / 1000
+  6.在silderChange中，设置当前歌曲播放的slider进度 = value
+  7.在sliderChange中，设置当前歌曲播放时间currentMinute =  (value / 100) * duration
+
+第六步：通过请求获取播放的歌曲
+  1.在service中定义请求歌曲内容的请求currentSong
+  2.createSyncThunk中，修改currentSong
+  3.页面通过dispatch发送请求
+
+第七步：获取设置歌词
+  1.通过axios获取歌词
+  2.定义处理歌词的工具函数，split('\n')分割成数组
+  3.定义正则.exec匹配时间，将分秒、毫秒（两位就是毫秒*10）转化成毫秒，相加
+  4.通过正则的replace方法，将歌词时间替换为空，存储在数组中返回
+  5.在redux中定义数组，存储返回的歌词和时间数据
+  6.在player-bar页面，useSelector取出歌词
+  7.在audio标签onTimeUpdate方法中，匹配歌词
+  8.匹配方法：for循环遍历歌词数据，当歌词的的time>当前的播放时间currentTime,
+   定义记录索引变量，currentIndex = index - 1 等于当前index-1
+   currentIndex默认歌词长度减一
+  9.当currentIndex === -1 || currentIndex === prevIndex(redux存储上一次index) return
+   修改redux的prevIndex状态
+  10.将歌词设置到页面上
+
+第八步：切换上一曲和下一期
+  1.在redux中设置播放模式playMode，当点击切换模式时，数值+1。当num > 2时，num = 0。
+   当num < 0 时，num = 2。
+  2.将playMode状态传入组件中，动态切换图标（0：顺序，1：随机，2：单曲循环）
+  3.在redux中定义数组存放需要播放歌曲的list，修改获取歌曲歌词的action。（请求歌曲时）
+   在redux中定义prevSongIndex，上一首index。（用于之后歌曲+1,-1）
+   通过action的getState取出，播放列表list。
+   通过传入的歌曲id，在list中findeIndex查找是否包含这首歌。
+   如果findIndex===-1,没有找到这首歌，就通过id请求歌曲信息，将信息存入currentSong(当前播放歌曲)。
+   将请求到的歌曲push进播放列表，修改list列表。
+   存储当前index到prevSongIndex
+   如果findIndx!==-1,找到了这首歌，就将歌曲设置成当前播放歌曲(currentSong)。
+   修改preSongIndex记录当前歌曲
+  4.获取歌词信息，将歌词存入redux的lyric数组中
+  5.下一首逻辑：
+   首先判断播放模式，分为随机和单曲、顺序，两种情况
+   定义currentIndex记录播放索引
+   如果时随机播放，currentIndex = Math.floor(Math.random() * list.length)
+   如果时单曲和顺序，isNext(上一首还是下一首)，preSongIndex(上一首歌索引):isNext ? preSongIndex + 1 : preSongIndex - 1
+   根据currentIndex索引取出当前歌曲，放入currentSong
+   将当前歌曲索引存入preSongIndex
+   再次获取歌曲播放歌词
+  6.通过onClick事件触发上一首和下一首，设置slider进度为0，设置当前播放时间为0，触发changeNextSongAction函数
+
+第九步：根据模式自动触发上一首和下一首
+  1.监听radio组件上的onEnded方法，如果playMode=单曲循环，直接将audioRef.current.currentTime = 0
+   audioRef.current.play().catch(e=> audioRef.current.pause())
+   否则播放下一首
+
+
+
