@@ -26,7 +26,7 @@ interface Tracks {
 
 const RankingListItem: FC<IProps> = (props) => {
   const {
-    rankingItem: { coverImgUrl = '', name = '', tracks = [] }
+    rankingItem: { coverImgUrl = '', name = '', tracks = [], id = 0 }
   } = props
   const dispatch = useAppDispatch()
 
@@ -37,12 +37,12 @@ const RankingListItem: FC<IProps> = (props) => {
   return (
     <RankingListItemWrapper>
       <div className="rankingTop">
-        <a href="#" className="rangkingImg">
+        <a href={`#/discover/ranking?id=${id}`} className="rangkingImg">
           <img src={getImageSize(coverImgUrl, 80)} alt="" />
           <div className="sprite_cover rankingCover"></div>
         </a>
         <div className="topText">
-          <a className="text" href="#">
+          <a className="text" href={`#/discover/ranking?id=${id}`}>
             {name}
           </a>
           <a className="iconBox" href="#">
@@ -52,26 +52,24 @@ const RankingListItem: FC<IProps> = (props) => {
         </div>
       </div>
       <div className="rankingBottom">
-        {tracks
-          .slice(0, 10)
-          .map(({ id, name, al: { id: alId } }: Tracks, index: number) => {
-            return (
-              <div className="rankingItem" key={id}>
-                <span className="rankingNum">{index + 1}</span>
-                <a className="rankingTitle" href="#">
-                  {name}
-                </a>
-                <div className="rankingIcon">
-                  <div
-                    className="btn sprite_02 iconPlay"
-                    onClick={(e) => playMusic(alId)}
-                  ></div>
-                  <div className="btn sprite_icon2 iconAdd"></div>
-                  <div className="btn sprite_02 iconCollect"></div>
-                </div>
+        {tracks.slice(0, 10).map(({ id, name }: Tracks, index: number) => {
+          return (
+            <div className="rankingItem" key={id}>
+              <span className="rankingNum">{index + 1}</span>
+              <a className="rankingTitle" href="#">
+                {name}
+              </a>
+              <div className="rankingIcon">
+                <div
+                  className="btn sprite_02 iconPlay"
+                  onClick={(e) => playMusic(id)}
+                ></div>
+                <div className="btn sprite_icon2 iconAdd"></div>
+                <div className="btn sprite_02 iconCollect"></div>
               </div>
-            )
-          })}
+            </div>
+          )
+        })}
         <a className="seeAll" href="#">
           查看全部 &gt;
         </a>

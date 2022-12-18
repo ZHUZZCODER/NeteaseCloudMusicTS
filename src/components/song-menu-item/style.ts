@@ -55,6 +55,7 @@ export const SongMenuItemWrapper = styled.div`
           height: 17px;
           margin-right: 10px;
           background-position: 0 0;
+          cursor: pointer;
           &:hover {
             background-position: 0 -60px;
           }
@@ -69,6 +70,9 @@ export const SongMenuItemWrapper = styled.div`
       font-size: 14px;
       margin: 8px 0 3px;
       line-height: 1.4;
+      :hover {
+        text-decoration: underline;
+      }
     }
   }
 `

@@ -4,7 +4,8 @@ import {
   getHotRecommend,
   getNewAlbum,
   getRankingList,
-  getJoinSong
+  getJoinSong,
+  getAlbumList
 } from '../service/recommend'
 import type {
   BannerState,
@@ -74,7 +75,6 @@ export const fetchRankingListDataAction = createAsyncThunk(
       const playlists = res
         .filter((item) => item.playlist)
         .map((item) => item.playlist)
-      console.log(playlists)
       dispatch(changeRankingListAction(playlists))
     })
   }

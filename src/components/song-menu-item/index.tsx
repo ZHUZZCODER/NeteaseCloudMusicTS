@@ -2,6 +2,8 @@ import React, { memo } from 'react'
 import type { FC, ReactNode } from 'react'
 import { format, getImageSize } from '@/utils/format'
 import { SongMenuItemWrapper } from './style'
+import { useAppDispatch } from '@/store'
+import { fetchHotRecommendListDataAction } from '@/views/player/store/player'
 
 interface IProps {
   children?: ReactNode
@@ -10,8 +12,13 @@ interface IProps {
 
 const SongMenuItem: FC<IProps> = (props) => {
   const {
-    itemData: { picUrl = '', playCount = 0, name = '' }
+    itemData: { picUrl = '', playCount = 0, name = '', id = 0 }
   } = props
+
+  const dispatch = useAppDispatch()
+  function playMusic(id: number) {
+    dispatch(fetchHotRecommendListDataAction(id))
+  }
   return (
     <SongMenuItemWrapper>
       <div className="songHeader">
@@ -23,7 +30,12 @@ const SongMenuItem: FC<IProps> = (props) => {
               <i className="sprite_icon hear"></i>
               <p>{format(playCount)}</p>
             </div>
-            <a className="sprite_icon play" href="#"></a>
+            <a
+              className="sprite_icon play"
+              href={undefined}
+              target="_self"
+              onClick={(e) => playMusic(id)}
+            ></a>
           </div>
         </div>
       </div>

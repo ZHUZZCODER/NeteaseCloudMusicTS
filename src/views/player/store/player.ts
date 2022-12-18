@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getSongDetail, getLyric } from '../service/player'
+import {
+  getAlbumList,
+  getRankingList
+} from '@/views/discover/c-views/recommend/service/recommend'
 import { CurrentSongState } from './type'
 import { parseLyric } from '@/utils/parse-lyric'
 import type { Lyric } from '@/utils/parse-lyric'
@@ -97,6 +101,37 @@ export const fetchNextSongAction = createAsyncThunk<void, boolean, IThunkState>(
     })
   }
 )
+
+//点击专辑加入多首歌曲进入播放列表
+export const fetchAlbumListDataAction = createAsyncThunk<
+  void,
+  number,
+  IThunkState
+>('fetchAlbumListData', async (id: number, { dispatch }) => {
+  const { songs = [] } = await getAlbumList(id)
+  if (!songs.length) return
+  //修改歌曲播放列表
+  dispatch(changeCurrentListAction(songs))
+  //设置第一首为当前播放歌曲
+  dispatch(changeCurrentSongAction(songs[0]))
+})
+
+//点击热门推荐获取热门推荐播放列表
+export const fetchHotRecommendListDataAction = createAsyncThunk<
+  void,
+  number,
+  IThunkState
+>('fetchHotRecommendListData', async (id, { dispatch }) => {
+  const {
+    playlist: { tracks = [] }
+  } = await getRankingList(id)
+  if (tracks && !tracks.length) return
+  //修改当前播放歌曲
+  dispatch(changeCurrentSongAction(tracks[0]))
+  //修改播放列表
+  dispatch(changeCurrentListAction(tracks))
+})
+
 type IndexType = string | number | symbol
 export type PlainObject<K extends IndexType = string, V = unknown> = Record<
   K,
@@ -213,213 +248,213 @@ const initialState: InitialState = {
   lyricsItemIndex: 0,
   //8.0当前歌曲播放列表
   currentList: [
-    {
-      name: '梦里花',
-      id: 2006204662,
-      pst: 0,
-      t: 0,
-      ar: [
-        {
-          id: 35136304,
-          name: '卢卢快闭嘴',
-          tns: [],
-          alias: []
-        }
-      ],
-      alia: [],
-      pop: 100,
-      st: 0,
-      rt: '',
-      fee: 8,
-      v: 4,
-      crbt: null,
-      cf: '',
-      al: {
-        id: 156431025,
-        name: '梦里花',
-        picUrl:
-          'https://p1.music.126.net/RdMHRLZwtbCg-N23TLGHVA==/109951168141737066.jpg',
-        tns: [],
-        pic_str: '109951168141737066',
-        pic: 109951168141737070
-      },
-      dt: 206273,
-      h: {
-        br: 320000,
-        fid: 0,
-        size: 8253165,
-        vd: -58626,
-        sr: 48000
-      },
-      m: {
-        br: 192000,
-        fid: 0,
-        size: 4951917,
-        vd: -56025,
-        sr: 48000
-      },
-      l: {
-        br: 128000,
-        fid: 0,
-        size: 3301293,
-        vd: -54354,
-        sr: 48000
-      },
-      sq: {
-        br: 941004,
-        fid: 0,
-        size: 24263096,
-        vd: -57822,
-        sr: 48000
-      },
-      hr: {
-        br: 1706277,
-        fid: 0,
-        size: 43995070,
-        vd: -58623,
-        sr: 48000
-      },
-      a: null,
-      cd: '01',
-      no: 1,
-      rtUrl: null,
-      ftype: 0,
-      rtUrls: [],
-      djId: 0,
-      copyright: 0,
-      s_id: 0,
-      mark: 536870912,
-      originCoverType: 2,
-      originSongSimpleData: {
-        songId: 327090,
-        name: '梦里花',
-        artists: [
-          {
-            id: 10562,
-            name: '张韶涵'
-          }
-        ],
-        albumMeta: {
-          id: 32361,
-          name: '梦里花'
-        }
-      },
-      tagPicList: null,
-      resourceState: true,
-      version: 4,
-      songJumpInfo: null,
-      entertainmentTags: null,
-      awardTags: null,
-      single: 0,
-      noCopyrightRcmd: null,
-      mst: 9,
-      cp: 0,
-      rtype: 0,
-      rurl: null,
-      mv: 0,
-      publishTime: 1670860800000,
-      tns: ['唯一纯白的茉莉花']
-    },
-    {
-      name: '雨天·2022',
-      id: 2004349260,
-      pst: 0,
-      t: 0,
-      ar: [
-        {
-          id: 36181946,
-          name: '不是花火呀',
-          tns: [],
-          alias: []
-        }
-      ],
-      alia: [],
-      pop: 100,
-      st: 0,
-      rt: '',
-      fee: 8,
-      v: 3,
-      crbt: null,
-      cf: '',
-      al: {
-        id: 156014665,
-        name: '雨天',
-        picUrl:
-          'https://p2.music.126.net/B1NngmaTA9RFvCqjN70vBw==/109951168125876900.jpg',
-        tns: [],
-        pic_str: '109951168125876900',
-        pic: 109951168125876900
-      },
-      dt: 200419,
-      h: {
-        br: 320000,
-        fid: 0,
-        size: 8019636,
-        vd: -52560,
-        sr: 44100
-      },
-      m: {
-        br: 192000,
-        fid: 0,
-        size: 4811799,
-        vd: -49935,
-        sr: 44100
-      },
-      l: {
-        br: 128000,
-        fid: 0,
-        size: 3207880,
-        vd: -48206,
-        sr: 44100
-      },
-      sq: {
-        br: 845018,
-        fid: 0,
-        size: 21169757,
-        vd: -52702,
-        sr: 44100
-      },
-      hr: null,
-      a: null,
-      cd: '01',
-      no: 1,
-      rtUrl: null,
-      ftype: 0,
-      rtUrls: [],
-      djId: 0,
-      copyright: 0,
-      s_id: 0,
-      mark: 0,
-      originCoverType: 2,
-      originSongSimpleData: {
-        songId: 287083,
-        name: '雨天',
-        artists: [
-          {
-            id: 9272,
-            name: '孙燕姿'
-          }
-        ],
-        albumMeta: {
-          id: 28521,
-          name: 'My Story,Your Song 经典全记录'
-        }
-      },
-      tagPicList: null,
-      resourceState: true,
-      version: 3,
-      songJumpInfo: null,
-      entertainmentTags: null,
-      awardTags: null,
-      single: 0,
-      noCopyrightRcmd: null,
-      mv: 0,
-      rtype: 0,
-      rurl: null,
-      mst: 9,
-      cp: 0,
-      publishTime: 1670428800000
-    }
+    // {
+    //   name: '梦里花',
+    //   id: 2005574298,
+    //   pst: 0,
+    //   t: 0,
+    //   ar: [
+    //     {
+    //       id: 35136304,
+    //       name: '卢卢快闭嘴',
+    //       tns: [],
+    //       alias: []
+    //     }
+    //   ],
+    //   alia: [],
+    //   pop: 100,
+    //   st: 0,
+    //   rt: '',
+    //   fee: 8,
+    //   v: 4,
+    //   crbt: null,
+    //   cf: '',
+    //   al: {
+    //     id: 156431025,
+    //     name: '梦里花',
+    //     picUrl:
+    //       'https://p1.music.126.net/RdMHRLZwtbCg-N23TLGHVA==/109951168141737066.jpg',
+    //     tns: [],
+    //     pic_str: '109951168141737066',
+    //     pic: 109951168141737070
+    //   },
+    //   dt: 206273,
+    //   h: {
+    //     br: 320000,
+    //     fid: 0,
+    //     size: 8253165,
+    //     vd: -58626,
+    //     sr: 48000
+    //   },
+    //   m: {
+    //     br: 192000,
+    //     fid: 0,
+    //     size: 4951917,
+    //     vd: -56025,
+    //     sr: 48000
+    //   },
+    //   l: {
+    //     br: 128000,
+    //     fid: 0,
+    //     size: 3301293,
+    //     vd: -54354,
+    //     sr: 48000
+    //   },
+    //   sq: {
+    //     br: 941004,
+    //     fid: 0,
+    //     size: 24263096,
+    //     vd: -57822,
+    //     sr: 48000
+    //   },
+    //   hr: {
+    //     br: 1706277,
+    //     fid: 0,
+    //     size: 43995070,
+    //     vd: -58623,
+    //     sr: 48000
+    //   },
+    //   a: null,
+    //   cd: '01',
+    //   no: 1,
+    //   rtUrl: null,
+    //   ftype: 0,
+    //   rtUrls: [],
+    //   djId: 0,
+    //   copyright: 0,
+    //   s_id: 0,
+    //   mark: 536870912,
+    //   originCoverType: 2,
+    //   originSongSimpleData: {
+    //     songId: 327090,
+    //     name: '梦里花',
+    //     artists: [
+    //       {
+    //         id: 10562,
+    //         name: '张韶涵'
+    //       }
+    //     ],
+    //     albumMeta: {
+    //       id: 32361,
+    //       name: '梦里花'
+    //     }
+    //   },
+    //   tagPicList: null,
+    //   resourceState: true,
+    //   version: 4,
+    //   songJumpInfo: null,
+    //   entertainmentTags: null,
+    //   awardTags: null,
+    //   single: 0,
+    //   noCopyrightRcmd: null,
+    //   mst: 9,
+    //   cp: 0,
+    //   rtype: 0,
+    //   rurl: null,
+    //   mv: 0,
+    //   publishTime: 1670860800000,
+    //   tns: ['唯一纯白的茉莉花']
+    // },
+    // {
+    //   name: '雨天·2022',
+    //   id: 2004349260,
+    //   pst: 0,
+    //   t: 0,
+    //   ar: [
+    //     {
+    //       id: 36181946,
+    //       name: '不是花火呀',
+    //       tns: [],
+    //       alias: []
+    //     }
+    //   ],
+    //   alia: [],
+    //   pop: 100,
+    //   st: 0,
+    //   rt: '',
+    //   fee: 8,
+    //   v: 3,
+    //   crbt: null,
+    //   cf: '',
+    //   al: {
+    //     id: 156014665,
+    //     name: '雨天',
+    //     picUrl:
+    //       'https://p2.music.126.net/B1NngmaTA9RFvCqjN70vBw==/109951168125876900.jpg',
+    //     tns: [],
+    //     pic_str: '109951168125876900',
+    //     pic: 109951168125876900
+    //   },
+    //   dt: 200419,
+    //   h: {
+    //     br: 320000,
+    //     fid: 0,
+    //     size: 8019636,
+    //     vd: -52560,
+    //     sr: 44100
+    //   },
+    //   m: {
+    //     br: 192000,
+    //     fid: 0,
+    //     size: 4811799,
+    //     vd: -49935,
+    //     sr: 44100
+    //   },
+    //   l: {
+    //     br: 128000,
+    //     fid: 0,
+    //     size: 3207880,
+    //     vd: -48206,
+    //     sr: 44100
+    //   },
+    //   sq: {
+    //     br: 845018,
+    //     fid: 0,
+    //     size: 21169757,
+    //     vd: -52702,
+    //     sr: 44100
+    //   },
+    //   hr: null,
+    //   a: null,
+    //   cd: '01',
+    //   no: 1,
+    //   rtUrl: null,
+    //   ftype: 0,
+    //   rtUrls: [],
+    //   djId: 0,
+    //   copyright: 0,
+    //   s_id: 0,
+    //   mark: 0,
+    //   originCoverType: 2,
+    //   originSongSimpleData: {
+    //     songId: 287083,
+    //     name: '雨天',
+    //     artists: [
+    //       {
+    //         id: 9272,
+    //         name: '孙燕姿'
+    //       }
+    //     ],
+    //     albumMeta: {
+    //       id: 28521,
+    //       name: 'My Story,Your Song 经典全记录'
+    //     }
+    //   },
+    //   tagPicList: null,
+    //   resourceState: true,
+    //   version: 3,
+    //   songJumpInfo: null,
+    //   entertainmentTags: null,
+    //   awardTags: null,
+    //   single: 0,
+    //   noCopyrightRcmd: null,
+    //   mv: 0,
+    //   rtype: 0,
+    //   rurl: null,
+    //   mst: 9,
+    //   cp: 0,
+    //   publishTime: 1670428800000
+    // }
   ],
   //8.1播放模式  0：顺序，1：随机，2：单曲循环
   playMode: 0,

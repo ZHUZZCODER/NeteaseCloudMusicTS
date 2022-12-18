@@ -3,6 +3,8 @@ import type { FC, ReactNode } from 'react'
 import { NewAlbumItemWrapper } from './style'
 import { Link } from 'react-router-dom'
 import { getImageSize } from '@/utils/format'
+import { playMusic } from '@/utils/handle-player'
+import { useAppDispatch } from '@/store'
 
 interface IProps {
   children?: ReactNode
@@ -12,18 +14,26 @@ interface IProps {
 const NewAlbumItem: FC<IProps> = (props) => {
   const {
     newAlbumItem: {
+      id = 0,
       picUrl = '',
       name = '',
       artist: { name: newName = '' }
     }
   } = props
+
+  const dispatch = useAppDispatch()
+
   return (
     <NewAlbumItemWrapper>
       <div className="albumItemBox">
         <div className="albumItemHeader">
           <img className="albumImage" src={getImageSize(picUrl, 100)} alt="" />
           <Link className="sprite_cover albumCover" to="/"></Link>
-          <a className="sprite_icon albumPlay" title="播放" href="#"></a>
+          <div
+            className="sprite_icon albumPlay"
+            title="播放"
+            onClick={(e) => playMusic(id, dispatch)}
+          ></div>
           <div className="sprite_cover bottomCover"></div>
         </div>
         <div className="albumItemFooter">

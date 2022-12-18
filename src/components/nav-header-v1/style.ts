@@ -21,6 +21,9 @@ export const NavHeaderV1Wrapper = styled.div`
       display: flex;
       margin-left: 20px;
       color: ${(props) => props.theme.color.threeColor};
+      a:hover {
+        text-decoration: underline;
+      }
       .line {
         margin: 0 10px;
       }

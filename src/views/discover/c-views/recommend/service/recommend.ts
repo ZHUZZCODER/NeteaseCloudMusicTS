@@ -15,6 +15,11 @@ export const getNewAlbum = () => {
   return zhuRequest.get({ url: '/album/newest' })
 }
 
+//获取新碟歌曲播放列表
+export const getAlbumList = (id: number) => {
+  return zhuRequest.get({ url: '/album', params: { id } })
+}
+
 //获取榜单数据
 export const getRankingList = (id: number) => {
   return zhuRequest.get({ url: '/playlist/detail', params: { id } })
