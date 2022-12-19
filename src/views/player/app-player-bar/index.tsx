@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import type { FC, ReactNode } from 'react'
 import { Slider } from 'antd'
 import { AppPlayerBarWrapper } from './style'
@@ -35,6 +35,10 @@ const AppPlayerBar: FC<IProps> = (props) => {
   // const [lyricIndex, setLyricIndex] = useState<number>(0)
   //歌曲播放进入
   const [duration, setDuration] = useState(0)
+  //切换声音按钮
+  const [isShowVoice, setIsShowVoice] = useState<boolean>(true)
+  //是否显示音量条件功能
+  const [isVoiceSlider, setIsVoiceSlider] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   //1.1获取需要播放的歌曲 //7.6获取歌词lyrics //7.11取出歌词索引lyricsItemIndex //8.3取出播放模式
   const {
@@ -141,33 +145,39 @@ const AppPlayerBar: FC<IProps> = (props) => {
   }
 
   //5.1slider的change事件 (拖拽时修改歌曲进度及时间)
-  function sliderChange(value: number) {
-    //5.2拖到了设置isSliderChange状态为true
-    setIsSliderChange(true)
-    //5.4设置slider进度
-    setProgress(value)
-    //5.5拖拽的同时设置时间
-    setCurrentMinute((value / 100.0) * duration)
-  }
+  const sliderChange = useCallback(
+    (value: number) => {
+      //5.2拖到了设置isSliderChange状态为true
+      setIsSliderChange(true)
+      //5.4设置slider进度
+      setProgress(value)
+      //5.5拖拽的同时设置时间
+      setCurrentMinute((value / 100.0) * duration)
+    },
+    [duration]
+  )
 
   //4.0slider的afterchange事件 (点击修改歌曲进度及时间)
-  function sliderAfterChange(value: number) {
-    console.log('silderAfterChange:', value)
-    const currentTime = (value / 100.0) * duration
-    //修改当前歌曲播放进度(秒)
-    audioRef.current!.currentTime = currentTime / 1000
-    //设置当前歌曲播放slider进度
-    setProgress(value)
-    //修改当前currentMinute：当前播放时间 = 总时间 * 百分比
-    setCurrentMinute(currentTime)
-    //补充 重置slider状态让onTimeUpdate生效
-    setIsSliderChange(false)
+  const sliderAfterChange = useCallback(
+    (value: number) => {
+      console.log('silderAfterChange:', value)
+      const currentTime = (value / 100.0) * duration
+      //修改当前歌曲播放进度(秒)
+      audioRef.current!.currentTime = currentTime / 1000
+      //设置当前歌曲播放slider进度
+      setProgress(value)
+      //修改当前currentMinute：当前播放时间 = 总时间 * 百分比
+      setCurrentMinute(currentTime)
+      //补充 重置slider状态让onTimeUpdate生效
+      setIsSliderChange(false)
 
-    // //补充
-    // if (!isPlay) {
-    //   playAudio()
-    // }
-  }
+      // //补充
+      // if (!isPlay) {
+      //   playAudio()
+      // }
+    },
+    [duration]
+  )
 
   //8.0切换播放模式
   function cutMode() {
@@ -207,11 +217,28 @@ const AppPlayerBar: FC<IProps> = (props) => {
     }
   }
 
+  //显示隐藏声音调节
+  function voiceBtnClick() {
+    setIsVoiceSlider(!isVoiceSlider)
+  }
+
+  //控制音量
+  const voiceSliderChange = useCallback((value: number) => {
+    console.log(value / 100)
+    if (value / 100 === 0) {
+      setIsShowVoice(false)
+    } else {
+      setIsShowVoice(true)
+    }
+    audioRef.current!.volume = value / 100
+  }, [])
+
   return (
     <AppPlayerBarWrapper
       className="sprite_playbar"
       isPlay={isPlay}
       playMode={playMode}
+      isShowVoice={isShowVoice}
     >
       <div className="wrap-v2 playContent">
         <div className="playLeft">
@@ -261,9 +288,25 @@ const AppPlayerBar: FC<IProps> = (props) => {
           <div className="wh sprite_playbar add"></div>
           <div className="wh sprite_playbar share"></div>
           <div className="sprite_playbar fgx"></div>
-          <div className="wh sprite_playbar voice"></div>
+          <div className="wh sprite_playbar voice" onClick={voiceBtnClick}>
+            {isVoiceSlider && (
+              <div className="sprite_playbar voiceControl">
+                <div className=" voiceTotalDistance">
+                  <Slider
+                    className="voiceSlider"
+                    defaultValue={100}
+                    vertical
+                    step={0.1}
+                    onChange={voiceSliderChange}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
           <div className="wh sprite_playbar mode" onClick={cutMode}></div>
-          <div className="num sprite_playbar"></div>
+          <div className="num sprite_playbar">
+            <span className="numText">{currentList.length + 1}</span>
+          </div>
           <div></div>
         </div>
       </div>
