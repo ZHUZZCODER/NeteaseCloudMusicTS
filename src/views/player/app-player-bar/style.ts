@@ -4,6 +4,7 @@ import styled from 'styled-components'
 interface APPPLAYBAR {
   isPlay: boolean
   playMode: number
+  isShowVoice: boolean
 }
 
 export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
@@ -43,7 +44,7 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
         width: 36px;
         height: 36px;
 
-        background-position:  ${(props) =>
+        background-position: ${(props) =>
           props.isPlay ? '-2px -166px' : '-2px -205px'};
         &:hover {
           background-position: ${(props) =>
@@ -131,7 +132,7 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
             .ant-slider-handle::after {
               width: 22px;
               height: 24px;
-              background: url(${require('@/assets/img/sprite_icon.png')}) 0 -250px ;
+              background: url(${require('@/assets/img/sprite_icon.png')}) 0 -250px;
               position: absolute;
               top: -4px;
               box-shadow: none;
@@ -139,8 +140,8 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
                 background: url(${require('@/assets/img/sprite_icon.png')}) 0 -280px;
               }
             }
-            ant-slider-handle::before {
-              display: none:  !important;;
+            .ant-slider-handle::before {
+              display: none !important;
             }
           }
           .timeBox {
@@ -186,13 +187,56 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
         background-position: -147px -248px;
       }
       .voice {
-        background-position: -2px -248px;
+        background-position: ${(props) =>
+          props.isShowVoice ? '-2px -248px' : '-106px -68px'};
+        position: relative;
         &:hover {
-          background-position: -31px -248px;
+          background-position: ${(props) =>
+            props.isShowVoice ? '-31px -248px' : '-128px -68px'};
+        }
+        .voiceControl {
+          width: 32px;
+          height: 113px;
+          position: absolute;
+          top: -126px;
+          left: -6px;
+          background-position: 0 -503px;
+          .voiceTotalDistance {
+            padding: 4px 0;
+            width: 4px;
+            height: 93px;
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            .voiceSlider {
+              width: 4px;
+              height: 93px;
+              position: absolute;
+              left: -4px;
+              top: 0;
+              margin: 0;
+
+              .ant-slider-track {
+                background: url(${require('@/assets/img/playbar_sprite.png')});
+                background-position: -40px -523px;
+              }
+              .ant-slider-handle::after {
+                width: 18px;
+                height: 20px;
+                background: url(${require('@/assets/img/sprite_icon.png')});
+                box-shadow: none;
+                left: -4px;
+                background-position: -40px -250px;
+                :hover {
+                  background-position: -40px -280px;
+                }
+              }
+            }
+          }
         }
       }
       .mode {
-        background-position:${(props) => {
+        background-position: ${(props) => {
           switch (props.playMode) {
             case 1:
               return '-66px -248px'
@@ -212,15 +256,21 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
               default:
                 return '-33px -344px'
             }
-          }} ;
+          }};
         }
       }
       .num {
         width: 59px;
         height: 25px;
         background-position: -45px -70px;
+        cursor: pointer;
         &:hover {
           background-position: -45px -100px;
+        }
+        .numText {
+          margin: 0 0 0 32px;
+          line-height: 25px;
+          color: ${(props) => props.theme.color.threeColor};
         }
       }
     }
