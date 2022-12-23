@@ -3,7 +3,8 @@ const theme = {
     primaryColor: '#C20C0C',
     secondColor: '#000000',
     threeColor: '#666666',
-    fourColor: '#333333'
+    fourColor: '#333333',
+    fiveColor: '#ccc'
   },
   size: {
     primarySize: '12px',
