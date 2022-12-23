@@ -7,7 +7,16 @@ import {
 import { CurrentSongState } from './type'
 import { parseLyric } from '@/utils/parse-lyric'
 import type { Lyric } from '@/utils/parse-lyric'
-import type { RootState } from '@/store'
+import type { RootState, AppDispatch } from '@/store'
+
+//获取歌词
+//获取歌曲的歌词
+function handleGetLyric(id: number, dispatch: AppDispatch) {
+  getLyric(id).then(({ lrc: { lyric = [] } = {} }) => {
+    if (!lyric.length) return
+    dispatch(changeLyricsAction(parseLyric(lyric)))
+  })
+}
 
 //6.2获取currentSong数据修改currentSong
 export const fetchCurrentSongDataAction = createAsyncThunk<
@@ -57,16 +66,19 @@ export const fetchCurrentSongDataAction = createAsyncThunk<
     dispatch(changePrevSongIndexAction(findIndex))
   }
 
+  // //7.2请求歌词信息
+  // getLyric(id).then(({ lrc: { lyric = [] } = {} }) => {
+  //   if (!lyric.length) return
+  //   //7.5
+  //   dispatch(changeLyricsAction(parseLyric(lyric)))
+  // })
   //7.2请求歌词信息
-  getLyric(id).then(({ lrc: { lyric = [] } = {} }) => {
-    if (!lyric.length) return
-    //7.5
-    dispatch(changeLyricsAction(parseLyric(lyric)))
-  })
+  handleGetLyric(id, dispatch)
 })
 
 interface IThunkState {
   state: RootState
+  dispatch: AppDispatch
 }
 
 //8.6切换下一首歌曲
@@ -94,11 +106,13 @@ export const fetchNextSongAction = createAsyncThunk<void, boolean, IThunkState>(
     //修改当前播放歌曲索引
     dispatch(changePrevSongIndexAction(currentIndex))
 
+    // //获取歌曲的歌词
+    // getLyric(song.id).then(({ lrc: { lyric = [] } = {} }) => {
+    //   if (!lyric.length) return
+    //   dispatch(changeLyricsAction(parseLyric(lyric)))
+    // })
     //获取歌曲的歌词
-    getLyric(song.id).then(({ lrc: { lyric = [] } = {} }) => {
-      if (!lyric.length) return
-      dispatch(changeLyricsAction(parseLyric(lyric)))
-    })
+    handleGetLyric(song.id, dispatch)
   }
 )
 
@@ -114,6 +128,8 @@ export const fetchAlbumListDataAction = createAsyncThunk<
   dispatch(changeCurrentListAction(songs))
   //设置第一首为当前播放歌曲
   dispatch(changeCurrentSongAction(songs[0]))
+  //获取歌曲的歌词
+  handleGetLyric(songs[0].id, dispatch)
 })
 
 //点击热门推荐获取热门推荐播放列表
@@ -130,6 +146,8 @@ export const fetchHotRecommendListDataAction = createAsyncThunk<
   dispatch(changeCurrentSongAction(tracks[0]))
   //修改播放列表
   dispatch(changeCurrentListAction(tracks))
+  //获取歌曲的歌词
+  handleGetLyric(tracks[0].id, dispatch)
 })
 
 type IndexType = string | number | symbol
@@ -245,7 +263,7 @@ const initialState: InitialState = {
   //7.1当前播放歌曲歌词数据
   lyrics: [],
   //7.10歌词索引
-  lyricsItemIndex: 0,
+  lyricsItemIndex: -1,
   //8.0当前歌曲播放列表
   currentList: [
     // {
@@ -486,6 +504,12 @@ export const playerSlice = createSlice({
     },
     changePrevSongIndexAction(state, { payload }) {
       state.prevSongIndex = payload
+    },
+    //根据id删除歌曲列表歌曲
+    changeCurrentListActiveAction(state, { payload }) {
+      state.currentList = state.currentList.filter(
+        (item) => item.id !== payload
+      )
     }
   }
 })
@@ -496,6 +520,7 @@ export const {
   changeLyricsIndexItemAction,
   changePlayModeAction,
   changeCurrentListAction,
-  changePrevSongIndexAction
+  changePrevSongIndexAction,
+  changeCurrentListActiveAction
 } = playerSlice.actions
 export default playerSlice.reducer

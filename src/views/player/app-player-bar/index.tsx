@@ -1,4 +1,11 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  createContext
+} from 'react'
 import type { FC, ReactNode } from 'react'
 import { Slider } from 'antd'
 import { AppPlayerBarWrapper } from './style'
@@ -13,6 +20,7 @@ import {
   changePlayModeAction,
   fetchNextSongAction
 } from '../store/player'
+import AppPlayerPanel from '../app-player-panel'
 
 interface IProps {
   children?: ReactNode
@@ -21,6 +29,14 @@ interface IProps {
 message.config({
   prefixCls: 'my-message'
 })
+
+//定义context
+type TSETSTATE = (arg: boolean) => void
+type TPLAYERCONTEXT = {
+  panelState: boolean
+  setPanelState: TSETSTATE
+}
+export const PlayerContext = createContext<TPLAYERCONTEXT | null>(null)
 
 const AppPlayerBar: FC<IProps> = (props) => {
   //1.5播放和暂停状态 false暂停,true播放
@@ -39,6 +55,8 @@ const AppPlayerBar: FC<IProps> = (props) => {
   const [isShowVoice, setIsShowVoice] = useState<boolean>(true)
   //是否显示音量条件功能
   const [isVoiceSlider, setIsVoiceSlider] = useState<boolean>(false)
+  //是否显示panel面板
+  const [showPanel, setShowPanel] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   //1.1获取需要播放的歌曲 //7.6获取歌词lyrics //7.11取出歌词索引lyricsItemIndex //8.3取出播放模式
   const {
@@ -122,7 +140,7 @@ const AppPlayerBar: FC<IProps> = (props) => {
     }
     //7.9根据时间匹配歌词  ***默认最后一句
     let currentIndex = lyrics.length - 1
-    for (let i = 0; i < lyrics.length - 1; i++) {
+    for (let i = 0; i < lyrics.length; i++) {
       //如果歌词时间大于当前播放时间，获取下一个索引，然后减一
       if (lyrics[i].time > playCurrentTime) {
         currentIndex = i - 1
@@ -160,7 +178,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
   //4.0slider的afterchange事件 (点击修改歌曲进度及时间)
   const sliderAfterChange = useCallback(
     (value: number) => {
-      console.log('silderAfterChange:', value)
       const currentTime = (value / 100.0) * duration
       //修改当前歌曲播放进度(秒)
       audioRef.current!.currentTime = currentTime / 1000
@@ -181,7 +198,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
 
   //8.0切换播放模式
   function cutMode() {
-    // console.log('点击')
     //8.4设置play
     let newPlayMode = playMode + 1
     if (newPlayMode > 2) newPlayMode = 0
@@ -190,6 +206,8 @@ const AppPlayerBar: FC<IProps> = (props) => {
 
   //8.7上一首，下一首
   function nextPlay(isNext: boolean) {
+    //如果清空了播放列表则不切换
+    if (!currentList.length) return
     //设置slider进度为0
     setProgress(0)
     //设置当前播放时间为0
@@ -204,8 +222,8 @@ const AppPlayerBar: FC<IProps> = (props) => {
 
   //9.0播放这一首自动播放下一首
   function audioEnded() {
-    //如果是当前循环仍然播放这一首
-    if (playMode === 2) {
+    //如果是单曲循环仍然播放这一首或歌曲播放列表被清空
+    if (playMode === 2 || !currentList.length) {
       audioRef.current!.currentTime = 0
       audioRef.current!.play().catch((e) => {
         console.log('e', e)
@@ -224,7 +242,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
 
   //控制音量
   const voiceSliderChange = useCallback((value: number) => {
-    console.log(value / 100)
     if (value / 100 === 0) {
       setIsShowVoice(false)
     } else {
@@ -232,6 +249,11 @@ const AppPlayerBar: FC<IProps> = (props) => {
     }
     audioRef.current!.volume = value / 100
   }, [])
+
+  //设置歌曲面板状态
+  const closePanelFn = (state: boolean, setState: TSETSTATE) => {
+    setState(!state)
+  }
 
   return (
     <AppPlayerBarWrapper
@@ -304,8 +326,11 @@ const AppPlayerBar: FC<IProps> = (props) => {
             )}
           </div>
           <div className="wh sprite_playbar mode" onClick={cutMode}></div>
-          <div className="num sprite_playbar">
-            <span className="numText">{currentList.length + 1}</span>
+          <div
+            className="num sprite_playbar"
+            onClick={(e) => setShowPanel(!showPanel)}
+          >
+            <span className="numText">{currentList.length}</span>
           </div>
           <div></div>
         </div>
@@ -315,6 +340,11 @@ const AppPlayerBar: FC<IProps> = (props) => {
         onTimeUpdate={audioTimeUpdate}
         onEnded={audioEnded}
       />
+      <PlayerContext.Provider
+        value={{ panelState: showPanel, setPanelState: setShowPanel }}
+      >
+        {showPanel && <AppPlayerPanel />}
+      </PlayerContext.Provider>
     </AppPlayerBarWrapper>
   )
 }

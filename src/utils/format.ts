@@ -22,3 +22,10 @@ export function formatTime(ms: number): string {
   const formatSecond = String(second).padStart(2, '0')
   return `${formatMinute}:${formatSecond}`
 }
+
+//获取毛玻璃图片
+export function getImageBlur(url: string): string {
+  if (!url || url.length === 0) return ''
+  const imgArr = url.split('==')
+  return `https://music.163.com/api/img/blur/${imgArr[1]}`
+}

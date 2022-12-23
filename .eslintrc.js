@@ -22,6 +22,15 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': [0],
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     '@typescript-eslint/no-explicit-any': [0],
-    '@typescript-eslint/no-non-null-assertion': [0]
+    '@typescript-eslint/no-non-null-assertion': [0],
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        extendDefaults: true,
+        types: {
+          '{}': false
+        }
+      }
+    ]
   }
 }

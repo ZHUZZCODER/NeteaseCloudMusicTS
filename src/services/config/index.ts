@@ -1,5 +1,5 @@
 // 1.手动切换
-export const BASE_URL = 'http://39.108.182.96:10000'
+export const BASE_URL = 'http://139.159.248.231:10000'
 // export const BASE_URL = 'http://codercba.prod:9002'
 export const TIME_OUT = 10000
 
