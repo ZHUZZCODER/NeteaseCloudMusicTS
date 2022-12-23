@@ -8,10 +8,11 @@ import React, {
 } from 'react'
 import type { FC, ReactNode } from 'react'
 import { Slider } from 'antd'
-import { AppPlayerBarWrapper } from './style'
+import { AppPlayerBarWrapper, LockWrapper } from './style'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import { message } from 'antd'
+import { throttle } from 'underscore'
 import { getImageSize, formatTime } from '@/utils/format'
 import { getPlayUrl } from '@/utils/handle-player'
 import {
@@ -57,6 +58,11 @@ const AppPlayerBar: FC<IProps> = (props) => {
   const [isVoiceSlider, setIsVoiceSlider] = useState<boolean>(false)
   //是否显示panel面板
   const [showPanel, setShowPanel] = useState<boolean>(false)
+  //播放栏是否固定底部
+  const [showPlayerBar, setShowPlayerBar] = useState<boolean>(true)
+  //鼠标移入和移出显示播放栏
+  const [showMousePlayer, setShowMousePlayer] = useState<boolean>(false)
+
   const dispatch = useAppDispatch()
   //1.1获取需要播放的歌曲 //7.6获取歌词lyrics //7.11取出歌词索引lyricsItemIndex //8.3取出播放模式
   const {
@@ -250,10 +256,35 @@ const AppPlayerBar: FC<IProps> = (props) => {
     audioRef.current!.volume = value / 100
   }, [])
 
-  //设置歌曲面板状态
-  const closePanelFn = (state: boolean, setState: TSETSTATE) => {
-    setState(!state)
+  //播放栏是否固定
+  const lockClick = () => {
+    setShowPlayerBar(!showPlayerBar)
   }
+
+  //播放栏鼠标移入
+  const playerMouseEnter = throttle(function (
+    e: React.MouseEvent<HTMLDivElement>
+  ) {
+    console.log('鼠标移入')
+    if (!showPlayerBar) setShowMousePlayer(true)
+  },
+  200)
+
+  const timer = useRef<NodeJS.Timeout | null>(null)
+  //播放栏鼠标移出
+  const playerMouseLeave = throttle(function (
+    e: React.MouseEvent<HTMLDivElement>
+  ) {
+    // console.log('鼠标移出')
+    if (timer.current) {
+      clearTimeout(timer.current)
+      timer.current = null
+    }
+    timer.current = setTimeout(() => {
+      if (!showPlayerBar) setShowMousePlayer(false)
+    }, 500)
+  },
+  200)
 
   return (
     <AppPlayerBarWrapper
@@ -261,6 +292,10 @@ const AppPlayerBar: FC<IProps> = (props) => {
       isPlay={isPlay}
       playMode={playMode}
       isShowVoice={isShowVoice}
+      showPlayerBar={showPlayerBar}
+      showMousePlayer={showMousePlayer}
+      onMouseEnter={playerMouseEnter}
+      onMouseLeave={playerMouseLeave}
     >
       <div className="wrap-v2 playContent">
         <div className="playLeft">
@@ -345,6 +380,10 @@ const AppPlayerBar: FC<IProps> = (props) => {
       >
         {showPanel && <AppPlayerPanel />}
       </PlayerContext.Provider>
+      <LockWrapper showPlayerBar={showPlayerBar}>
+        <a href={undefined} className="sprite_playbar" onClick={lockClick}></a>
+      </LockWrapper>
+      <div className="showPlayer" title="展开"></div>
     </AppPlayerBarWrapper>
   )
 }

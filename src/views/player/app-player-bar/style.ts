@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 
 //定义动态传入属性类型
@@ -5,6 +6,10 @@ interface APPPLAYBAR {
   isPlay: boolean
   playMode: number
   isShowVoice: boolean
+  showPlayerBar: boolean
+  showMousePlayer: boolean
+  onMouseEnter: (event: React.MouseEvent<HTMLDivElement>) => void
+  onMouseLeave: (event: React.MouseEvent<HTMLDivElement>) => void
 }
 
 export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
@@ -15,7 +20,10 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
   width: 100%;
   height: 53px;
   background-position: 0 0;
-  background-repeat: repeat;
+  background-repeat: repeat-x;
+  bottom: ${(props) =>
+    props.showPlayerBar || props.showMousePlayer ? '0px' : '-46px'};
+  transition: bottom linear 100ms;
   .playContent {
     display: flex;
     justify-content: space-between;
@@ -275,6 +283,41 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
       }
     }
   }
+  .showPlayer {
+    position: absolute;
+    top: -14px;
+    width: 100%;
+    height: 20px;
+  }
 `
 
-export const ABC = styled.div``
+interface LOCK {
+  showPlayerBar: boolean
+}
+
+export const LockWrapper = styled.div.attrs({
+  className: 'sprite_playbar'
+})<LOCK>`
+  width: 52px;
+  height: 67px;
+  background-position: 0 -380px;
+  position: absolute;
+  right: 15px;
+  top: -14px;
+  text-align: center;
+  background-color: #f5f5f5;
+  z-index: 9;
+  a {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-position: ${(props) =>
+      props.showPlayerBar ? '-100px -380px' : '-78px -379px'};
+    margin: 6px 17px 0;
+    cursor: pointer;
+    :hover {
+      background-position: ${(props) =>
+        props.showPlayerBar ? ' -100px -402px' : '-78px -399px'};
+    }
+  }
+`
