@@ -265,7 +265,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
   const playerMouseEnter = throttle(function (
     e: React.MouseEvent<HTMLDivElement>
   ) {
-    console.log('鼠标移入')
     if (!showPlayerBar) setShowMousePlayer(true)
   },
   200)
@@ -275,7 +274,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
   const playerMouseLeave = throttle(function (
     e: React.MouseEvent<HTMLDivElement>
   ) {
-    // console.log('鼠标移出')
     if (timer.current) {
       clearTimeout(timer.current)
       timer.current = null
