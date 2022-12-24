@@ -51,12 +51,20 @@ export const NewAlbumItemWrapper = styled.div`
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        cursor: pointer;
+        :hover {
+          text-decoration: underline;
+        }
       }
       .footName {
         color: ${(props) => props.theme.color.threeColor};
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        cursor: pointer;
+        :hover {
+          text-decoration: underline;
+        }
       }
     }
   }
