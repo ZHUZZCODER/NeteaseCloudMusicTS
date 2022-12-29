@@ -8,7 +8,8 @@ const theme = {
   },
   size: {
     primarySize: '12px',
-    secondSize: '14px'
+    secondSize: '14px',
+    threeSize: '20px'
   },
   mixin: {
     wrapv1: `

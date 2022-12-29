@@ -8,6 +8,7 @@ import { CurrentSongState } from './type'
 import { parseLyric } from '@/utils/parse-lyric'
 import type { Lyric } from '@/utils/parse-lyric'
 import type { RootState, AppDispatch } from '@/store'
+import { Id } from '@reduxjs/toolkit/dist/tsHelpers'
 
 //获取歌词
 //获取歌曲的歌词
@@ -17,6 +18,17 @@ function handleGetLyric(id: number, dispatch: AppDispatch) {
     dispatch(changeLyricsAction(parseLyric(lyric)))
   })
 }
+
+//获取歌曲歌词改成thunk
+export const fetchGetLyricDataAction = createAsyncThunk<
+  void,
+  number,
+  IThunkState
+>('fetchGetLyricData', async (id: number, { dispatch }) => {
+  const { lrc: { lyric = [] } = {} } = await getLyric(id)
+  if (!lyric.length) return
+  dispatch(changeLyricsAction(parseLyric(lyric)))
+})
 
 //6.2获取currentSong数据修改currentSong
 export const fetchCurrentSongDataAction = createAsyncThunk<
@@ -73,7 +85,8 @@ export const fetchCurrentSongDataAction = createAsyncThunk<
   //   dispatch(changeLyricsAction(parseLyric(lyric)))
   // })
   //7.2请求歌词信息
-  handleGetLyric(id, dispatch)
+  // handleGetLyric(id, dispatch)
+  dispatch(fetchGetLyricDataAction(id))
 })
 
 interface IThunkState {
@@ -112,7 +125,8 @@ export const fetchNextSongAction = createAsyncThunk<void, boolean, IThunkState>(
     //   dispatch(changeLyricsAction(parseLyric(lyric)))
     // })
     //获取歌曲的歌词
-    handleGetLyric(song.id, dispatch)
+    // handleGetLyric(song.id, dispatch)
+    dispatch(fetchGetLyricDataAction(song.id))
   }
 )
 
@@ -129,7 +143,8 @@ export const fetchAlbumListDataAction = createAsyncThunk<
   //设置第一首为当前播放歌曲
   dispatch(changeCurrentSongAction(songs[0]))
   //获取歌曲的歌词
-  handleGetLyric(songs[0].id, dispatch)
+  // handleGetLyric(songs[0].id, dispatch)
+  dispatch(fetchGetLyricDataAction(songs[0].id))
 })
 
 //点击热门推荐获取热门推荐播放列表
@@ -147,8 +162,11 @@ export const fetchHotRecommendListDataAction = createAsyncThunk<
   //修改播放列表
   dispatch(changeCurrentListAction(tracks))
   //获取歌曲的歌词
-  handleGetLyric(tracks[0].id, dispatch)
+  // handleGetLyric(tracks[0].id, dispatch)
+  dispatch(fetchGetLyricDataAction(tracks[0].id))
 })
+
+//点击playlist播放修改播放列表和当前播放歌曲
 
 type IndexType = string | number | symbol
 export type PlainObject<K extends IndexType = string, V = unknown> = Record<

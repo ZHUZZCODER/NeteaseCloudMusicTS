@@ -229,3 +229,46 @@ export const artistCategories = [
     ]
   }
 ]
+
+export const hotSong = [
+  {
+    imgUrl:
+      'http://p2.music.126.net/L9o79rTIcDWczQSJtpU2Tg==/109951167933404557.jpg',
+    title: 'Chill Time丨浸润于夜色中的一抹寂静',
+    description: '丨IIIIIIIIII丨',
+    iconUrl:
+      'https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340194/0903/b735/7c7a/0dddcdf78047d397d24125840e54ab5b.png'
+  },
+  {
+    imgUrl:
+      'http://p2.music.126.net/JcpOXM243FptA9tRYnPFlw==/109951167423159409.jpg',
+    title: '『猫咪喜欢的轻音乐』持续更新',
+    description: '冰美式三分苦加浓...',
+    iconUrl:
+      'https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340194/0903/b735/7c7a/0dddcdf78047d397d24125840e54ab5b.png'
+  },
+  {
+    imgUrl:
+      'http://p2.music.126.net/92NWlGo76ha-if-WMK3vCg==/1410673428769729.jpg',
+    title: '世界上很好听的纯音乐（经典不朽）',
+    description: '橘子树风车',
+    iconUrl:
+      'https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340194/0903/b735/7c7a/0dddcdf78047d397d24125840e54ab5b.png'
+  },
+  {
+    imgUrl:
+      'http://p2.music.126.net/B0YtENYuA3HFki3Ht_TniA==/109951163469578210.jpg',
+    title: '正念净心之冥想调适',
+    description: '云乡寻梦人',
+    iconUrl:
+      'https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340194/0903/b735/7c7a/0dddcdf78047d397d24125840e54ab5b.png'
+  },
+  {
+    imgUrl:
+      'http://p2.music.126.net/4hCpqWeNupK-7KbawyB-3w==/109951167330131366.jpg',
+    title: '高效率音乐 | 学习不是苦差事',
+    description: 'Tobby___',
+    iconUrl:
+      'https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340194/0903/b735/7c7a/0dddcdf78047d397d24125840e54ab5b.png'
+  }
+]

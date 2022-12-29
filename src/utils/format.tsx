@@ -1,3 +1,6 @@
+import React from 'react'
+import moment from 'moment'
+
 export function format(count: number): string | number {
   if (count > 100000) {
     return Math.floor(count / 10000) + '万'
@@ -11,7 +14,7 @@ export function getImageSize(
   width: number,
   height: number = width
 ): string {
-  return `${url}?params=${width}y${height}`
+  return `${url}?param=${width}y${height}`
 }
 
 export function formatTime(ms: number): string {
@@ -28,4 +31,16 @@ export function getImageBlur(url: string): string {
   if (!url || url.length === 0) return ''
   const imgArr = url.split('==')
   return `https://music.163.com/api/img/blur/${imgArr[1]}`
+}
+
+//时间格式化
+export function momentFormat(time: number, formatType = 'YYYY-MM-DD'): any {
+  return moment(time).format(formatType)
+}
+
+//渲染html
+export function showhtml(htmlString: string) {
+  const html = { __html: htmlString }
+  // return <div dangerouslySetInnerHTML={html}></div>
+  return html
 }
