@@ -13,6 +13,8 @@ const Ranking = lazy(() => import('@/views/discover/c-views/ranking'))
 const Recommend = lazy(() => import('@/views/discover/c-views/recommend'))
 const Singer = lazy(() => import('@/views/discover/c-views/singer'))
 const Song = lazy(() => import('@/views/discover/c-views/song'))
+//歌单详情列表
+const PlayList = lazy(() => import('@/views/discover/c-views/playlist'))
 
 const routes: RouteObject[] = [
   {
@@ -50,6 +52,10 @@ const routes: RouteObject[] = [
       {
         path: '/discover/album',
         element: <Album />
+      },
+      {
+        path: '/discover/playlist',
+        element: <PlayList />
       }
     ]
   },

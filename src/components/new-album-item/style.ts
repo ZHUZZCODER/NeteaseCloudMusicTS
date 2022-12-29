@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const NewAlbumItemWrapper = styled.div`
   .albumItemBox {
+    width: 118px;
     .albumItemHeader {
       width: 100px;
       height: 100px;
@@ -48,20 +49,16 @@ export const NewAlbumItemWrapper = styled.div`
       font-family: Arial, Helvetica, sans-serif;
       .name {
         color: ${(props) => props.theme.color.secondColor};
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         cursor: pointer;
+        ${(props) => props.theme.mixin.textNowrap}
         :hover {
           text-decoration: underline;
         }
       }
       .footName {
         color: ${(props) => props.theme.color.threeColor};
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         cursor: pointer;
+        ${(props) => props.theme.mixin.textNowrap}
         :hover {
           text-decoration: underline;
         }

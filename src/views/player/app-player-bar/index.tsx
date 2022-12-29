@@ -19,12 +19,19 @@ import {
   fetchCurrentSongDataAction,
   changeLyricsIndexItemAction,
   changePlayModeAction,
-  fetchNextSongAction
+  fetchNextSongAction,
+  changeLyricsAction
 } from '../store/player'
 import AppPlayerPanel from '../app-player-panel'
+import { getCheckMusic, getSongUrl } from '../service/player'
 
 interface IProps {
   children?: ReactNode
+}
+
+interface ICHECKMUSICRES {
+  success: boolean
+  message: string
 }
 
 message.config({
@@ -101,21 +108,47 @@ const AppPlayerBar: FC<IProps> = (props) => {
 
   //1.6当页面挂载后，且歌曲数据获取到，设置歌曲url
   useEffect(() => {
-    audioRef.current!.src = getPlayUrl(id)
-    //补充 这里播放首次不会触发，第二次触发
-    audioRef.current
-      ?.play()
-      .then(() => {
-        setIsPlay(true)
-        console.log('success')
-      })
-      .catch((err) => {
+    //检查歌曲是否可用
+    const checkMusicService = async (id: number) => {
+      const { success, message: MESSAGE } = await getCheckMusic(id)
+      //如果没有版权
+      if (!success) {
+        //将歌曲src设置为空
+        audioRef.current!.src = ''
+        //将播放按钮设置为false
         setIsPlay(false)
-        console.log('err:', err)
-      })
+        //清空歌词数据
+        dispatch(changeLyricsAction([]))
+        message.open({
+          key: 'lyric',
+          content: MESSAGE,
+          duration: 0
+        })
+        return console.log(MESSAGE)
+      }
+      //获取歌曲播放路径
+      const {
+        data: [{ url }]
+      } = await getSongUrl(id)
+      audioRef.current!.src = url
+      // audioRef.current!.src = getPlayUrl(id)
+      //补充 这里播放首次不会触发，第二次触发
+      audioRef.current
+        ?.play()
+        .then(() => {
+          setIsPlay(true)
+          console.log('success')
+        })
+        .catch((err) => {
+          setIsPlay(false)
+          console.log('err:', err)
+        })
 
-    setDuration(dt)
-  }, [currentSong, id])
+      setDuration(dt)
+    }
+    checkMusicService(id)
+    // const { success, message } = checkMusicService(id)
+  }, [currentSong, id, dispatch])
 
   //1.4播放歌曲方法
   function playAudio() {

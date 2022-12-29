@@ -31,12 +31,9 @@ export const NewAlbumWrapper = styled.div`
     }
     .albumCenter {
       width: 645px;
-
-      /* margin-right: 17px; */
       .albumList {
         display: flex;
         justify-content: space-between;
-        margin-right: 16px;
       }
     }
   }

@@ -16,14 +16,19 @@ const SongMenuItem: FC<IProps> = (props) => {
   } = props
 
   const dispatch = useAppDispatch()
-  function playMusic(id: number) {
+  function playMusic(e: React.MouseEvent, id: number) {
+    e.stopPropagation()
     dispatch(fetchHotRecommendListDataAction(id))
   }
   return (
     <SongMenuItemWrapper>
       <div className="songHeader">
         <img className="imgBox" src={getImageSize(picUrl, 140)} alt="" />
-        <a title={name} className="sprite_cover cover" href="#"></a>
+        <a
+          title={name}
+          className="sprite_cover cover"
+          href={`#/discover/playlist?id=${id}`}
+        ></a>
         <div className="sprite_cover cover_bottom">
           <div className="bottomContent">
             <div className="hearBox">
@@ -34,7 +39,7 @@ const SongMenuItem: FC<IProps> = (props) => {
               className="sprite_icon play"
               href={undefined}
               target="_self"
-              onClick={(e) => playMusic(id)}
+              onClick={(e) => playMusic(e, id)}
             ></a>
           </div>
         </div>
