@@ -8,7 +8,9 @@ import { CurrentSongState } from './type'
 import { parseLyric } from '@/utils/parse-lyric'
 import type { Lyric } from '@/utils/parse-lyric'
 import type { RootState, AppDispatch } from '@/store'
-import { Id } from '@reduxjs/toolkit/dist/tsHelpers'
+import localCache from '@/utils/cache'
+
+localCache.setCache('playMode', 0)
 
 //获取歌词
 //获取歌曲的歌词
@@ -504,10 +506,12 @@ export const playerSlice = createSlice({
   reducers: {
     //6.1修改currentSong
     changeCurrentSongAction(state, { payload }) {
+      localCache.setCache('currentSong', payload)
       state.currentSong = payload
     },
     //7.3修改lyrics歌词数据
     changeLyricsAction(state, { payload }) {
+      localCache.setCache('lyric', payload)
       state.lyrics = payload
     },
     changeLyricsIndexItemAction(state, { payload }) {
@@ -515,12 +519,15 @@ export const playerSlice = createSlice({
     },
     //8.2修改播放模式
     changePlayModeAction(state, { payload }) {
+      localCache.setCache('playMode', payload)
       state.playMode = payload
     },
     changeCurrentListAction(state, { payload }) {
+      localCache.setCache('currentList', payload)
       state.currentList = payload
     },
     changePrevSongIndexAction(state, { payload }) {
+      localCache.setCache('preSongIndex', payload)
       state.prevSongIndex = payload
     },
     //根据id删除歌曲列表歌曲

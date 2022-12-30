@@ -100,7 +100,7 @@ const AppPlayerBar: FC<IProps> = (props) => {
 
   //6.3请求歌曲数据
   useEffect(() => {
-    dispatch(fetchCurrentSongDataAction(1330348068))
+    dispatch(fetchCurrentSongDataAction(id))
   }, [dispatch])
 
   //1.2获取audio实例

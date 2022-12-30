@@ -7,7 +7,8 @@ import { useAppDispatch, useAppSelector } from '@/store'
 import { formatTime } from '@/utils/format'
 import {
   fetchCurrentSongDataAction,
-  changeCurrentListActiveAction
+  changeCurrentListActiveAction,
+  changeCurrentListAction
 } from '@/views/player/store/player'
 
 interface IProps {
@@ -32,10 +33,11 @@ const PanelList: FC<IProps> = (props) => {
   //删除歌曲列表单首歌曲
   const deleteSongList = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    id: number
+    itemid: number
   ) => {
     e.stopPropagation()
-    dispatch(changeCurrentListActiveAction(id))
+    const newCurrentList = currentList.filter((item) => item.id !== itemid)
+    dispatch(changeCurrentListAction(newCurrentList))
   }
 
   function listItemContent() {
