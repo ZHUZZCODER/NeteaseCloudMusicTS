@@ -47,7 +47,7 @@ const PlayListInfo: FC<IProps> = (props) => {
     dispatch(changeCurrentSongAction(tracks[0]))
     dispatch(changeCurrentListAction(tracks))
     dispatch(fetchGetLyricDataAction(tracks[0].id))
-  }, [dispatch])
+  }, [dispatch, tracks])
 
   return (
     <PlayListInfoWrapper>
@@ -56,7 +56,7 @@ const PlayListInfo: FC<IProps> = (props) => {
         <div className="sprite_cover imgMask"></div>
       </div>
       <div className="info">
-        <SongLabel name={name} />
+        <SongLabel name={name} labelPosition="0 -243px" />
         <UserInfo useInfo={creator} createTime={createTime} />
         <SongBtnlist
           colletNum={subscribedCount}

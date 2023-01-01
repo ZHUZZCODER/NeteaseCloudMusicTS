@@ -1,12 +1,16 @@
 import styled from 'styled-components'
 
-export const SongLabelWrapper = styled.div`
+interface ILABELPOSITION {
+  labelPosition: string
+}
+
+export const SongLabelWrapper = styled.div<ILABELPOSITION>`
   display: flex;
   margin: 0 0 12px;
   .labelImg {
     width: 54px;
     height: 24px;
-    background-position: 0 -243px;
+    background-position: ${(props) => props.labelPosition};
   }
   .labelText {
     margin-left: 10px;

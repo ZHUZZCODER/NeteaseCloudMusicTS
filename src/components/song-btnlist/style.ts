@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const SongBtnlistWrapper = styled.div`
   display: flex;
   margin: 0 0 25px 0;
+  height: 31px;
   a {
     cursor: pointer;
   }

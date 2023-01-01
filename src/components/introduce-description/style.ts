@@ -2,12 +2,16 @@ import styled from 'styled-components'
 
 interface IINTRODUCEPROPS {
   isFlod: boolean
+  isFW?: boolean
 }
 
 export const IntroduceDescriptionWrapper = styled.div<IINTRODUCEPROPS>`
   span {
     display: block;
     white-space: pre-wrap;
+  }
+  .introduceTitle {
+    font-weight: ${(props) => (props.isFW ? 'normal' : 'bold')};
   }
   .hiddenDesc {
   }

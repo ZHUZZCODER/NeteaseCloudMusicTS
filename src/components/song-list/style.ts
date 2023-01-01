@@ -2,83 +2,14 @@ import styled from 'styled-components'
 
 export const SongListWrapper = styled.div`
   table {
-    /* width: 100%; */
-    /* .trWrap1 {
-      height: 38px;
-      th,
-      .icon {
-        background-color: #f7f7f7;
-        background-position: 0 0;
-        background-repeat: repeat-x;
-        color: ${(props) => props.theme.color.threeColor};
-      }
-      .icon {
-        display: block;
-        height: 38px;
-        line-height: 38px;
-        padding: 0 0 0 10px;
-      }
-      .iconLeft {
-        padding: 0 0 0 3px;
-        background-position: 0 -56px;
-        background-repeat: no-repeat;
-        text-align: left;
-      }
-      .thCol1 {
-        width: 74px;
-      }
-      .thCol2 {
-      }
-      .thCol3 {
-        width: 111px;
-      }
-      .thCol4 {
-        width: 14%;
-      }
-      .thCol5 {
-        width: 20%;
-      }
-    }
-    .trWrap2 {
-      height: 30px;
-      td {
-        height: 30px;
-      }
-      .tdCol1 {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 10px 0 15px;
-        .col1Num {
-          width: 25px;
-          color: #999;
-          vertical-align: middle;
-        }
-        .col1Icon {
-          width: 17px;
-          height: 17px;
-          background-position: 0 -103px;
-          cursor: pointer;
-          :hover {
-            background-position: 0 -128px;
-          }
-        }
-      }
-      .tdCol2 {
-        .col2Box {
-          padding: 0 0 0 10px;
-          width: 99%;
-          ${(props) => props.theme.mixin.textNowrap}
-          .col2SongTitle {
-            color: #aeaeae;
-          }
-        }
-      }
-    } */
     width: 100%;
     table-layout: fixed;
+    tbody {
+      tr:nth-child(2n + 1) {
+        background-color: #f7f7f7;
+      }
+    }
     tr {
-      /* width: 100%; */
       th {
         height: 38px;
         background-color: #f7f7f7;
@@ -161,7 +92,7 @@ export const SongListWrapper = styled.div`
             width: 23px;
             height: 17px;
             background-position: 0 -151px;
-            margin: 1px 0 0 0;
+            margin: 1px 10px 0 0;
           }
         }
       }

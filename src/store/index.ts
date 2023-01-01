@@ -4,13 +4,15 @@ import counterReducer from './modules/counter'
 import recommendReducer from '@/views/discover/c-views/recommend/store/recommend'
 import playerReducer from '@/views/player/store/player'
 import playlistReducer from '@/views/discover/c-views/playlist/store/playlist'
+import albumChildrenReducer from '@/views/discover/c-views/album-children/store/album-children'
 
 const store = configureStore({
   reducer: {
     counter: counterReducer,
     recommend: recommendReducer,
     player: playerReducer,
-    playlist: playlistReducer
+    playlist: playlistReducer,
+    albumChildren: albumChildrenReducer
   }
 })
 

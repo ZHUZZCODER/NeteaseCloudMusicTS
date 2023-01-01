@@ -147,7 +147,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
       setDuration(dt)
     }
     checkMusicService(id)
-    // const { success, message } = checkMusicService(id)
   }, [currentSong, id, dispatch])
 
   //1.4播放歌曲方法
@@ -252,10 +251,12 @@ const AppPlayerBar: FC<IProps> = (props) => {
     //设置当前播放时间为0
     setCurrentMinute(0)
     dispatch(fetchNextSongAction(isNext))
-    //如果歌曲列表只有一首歌，重新开始播放
+    //如果歌曲列表只有一首歌，重新开始播放, 且不是暂停状态
     if (currentList.length === 1) {
       audioRef.current!.src = getPlayUrl(id)
-      audioRef.current?.play().catch((e) => audioRef.current?.pause())
+      if (isPlay) {
+        audioRef.current?.play().catch((e) => audioRef.current?.pause())
+      }
     }
   }
 

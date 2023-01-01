@@ -75,15 +75,15 @@ export interface Creator {
 export interface Ar {
   id: number
   name: string
-  tns: any[]
-  alias: any[]
+  tns?: any[]
+  alias?: any[]
 }
 
 export interface Al {
   id: number
   name: string
   picUrl: string
-  tns: any[]
+  tns?: any[]
   pic_str: string
   pic: any
 }
