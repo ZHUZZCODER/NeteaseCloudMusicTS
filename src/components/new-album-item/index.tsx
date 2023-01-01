@@ -9,6 +9,7 @@ import { useAppDispatch } from '@/store'
 interface IProps {
   children?: ReactNode
   newAlbumItem: any
+  newAlbumClick: (id: number) => void
 }
 
 const NewAlbumItem: FC<IProps> = (props) => {
@@ -18,21 +19,22 @@ const NewAlbumItem: FC<IProps> = (props) => {
       picUrl = '',
       name = '',
       artist: { name: newName = '' }
-    }
+    },
+    newAlbumClick
   } = props
 
   const dispatch = useAppDispatch()
 
   return (
     <NewAlbumItemWrapper>
-      <div className="albumItemBox">
+      <div className="albumItemBox" onClick={(e) => newAlbumClick(id)}>
         <div className="albumItemHeader">
           <img className="albumImage" src={getImageSize(picUrl, 100)} alt="" />
           <Link className="sprite_cover albumCover" to="/"></Link>
           <div
             className="sprite_icon albumPlay"
             title="播放"
-            onClick={(e) => playMusic(id, dispatch)}
+            onClick={(e) => playMusic(e, id, dispatch)}
           ></div>
           <div className="sprite_cover bottomCover"></div>
         </div>

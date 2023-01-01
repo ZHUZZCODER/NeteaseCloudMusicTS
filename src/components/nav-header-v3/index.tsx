@@ -30,9 +30,9 @@ const NavHeaderV3: FC<IProps> = (props) => {
             <a href={link}>生成外链播放器</a>
           </div>
         )}
-        {playCount >= 0 && (
+        {playCount > 0 && (
           <div className="playText">
-            播放：<span>233333</span>次
+            播放：<span>{playCount}</span>次
           </div>
         )}
       </div>

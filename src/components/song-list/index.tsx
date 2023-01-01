@@ -1,20 +1,31 @@
 import React, { memo } from 'react'
 import type { FC, ReactNode } from 'react'
 import { SongListWrapper } from './style'
-import type { Track } from '@/views/discover/c-views/playlist/store/type'
+import type { Al, Ar } from '@/views/discover/c-views/playlist/store/type'
 import { formatTime } from '@/utils/format'
 import { fetchCurrentSongDataAction } from '@/views/player/store/player'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import classnames from 'classnames'
 
+export interface Track {
+  id: number
+  name: string
+  dt: number
+  ar: Ar[]
+  al: Al
+  mv: number
+  alia?: string[]
+}
+
 interface IProps {
   children?: ReactNode
   tracks: Track[]
+  isShowAlbum?: boolean
 }
 
 const SongList: FC<IProps> = (props) => {
-  const { tracks } = props
+  const { tracks, isShowAlbum = true } = props
 
   const dispatch = useAppDispatch()
 
@@ -44,9 +55,11 @@ const SongList: FC<IProps> = (props) => {
             <th className="sprite_table Col4">
               <i className="sprite_table thIcon">歌手</i>
             </th>
-            <th className="sprite_table Col5">
-              <i className="sprite_table thIcon">专辑</i>
-            </th>
+            {isShowAlbum && (
+              <th className="sprite_table Col5">
+                <i className="sprite_table thIcon">专辑</i>
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -68,7 +81,7 @@ const SongList: FC<IProps> = (props) => {
                       <a className="abox" href={undefined} title={name}>
                         {name}
                       </a>
-                      {alia[0] && <span>-（{alia[0]}）</span>}
+                      {alia && alia.length && <span>-（{alia[0]}）</span>}
                     </div>
                     {mv > 0 && <i className="sprite_table mvIcon abox"></i>}
                   </div>
@@ -99,11 +112,13 @@ const SongList: FC<IProps> = (props) => {
                     {ar[0].name}
                   </a>
                 </td>
-                <td className="Col5 tdCol5">
-                  <a className="abox" href={undefined} title={al.name}>
-                    {al.name}
-                  </a>
-                </td>
+                {isShowAlbum && (
+                  <td className="Col5 tdCol5">
+                    <a className="abox" href={undefined} title={al.name}>
+                      {al.name}
+                    </a>
+                  </td>
+                )}
               </tr>
             )
           })}

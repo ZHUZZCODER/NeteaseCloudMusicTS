@@ -7,10 +7,11 @@ interface IProps {
   children?: ReactNode
   introduceTitle: string
   description: string
+  isFW?: boolean //是否加粗
 }
 
 const IntroduceDescription: FC<IProps> = (props) => {
-  const { introduceTitle = '介绍', description } = props
+  const { introduceTitle = '介绍', description = '', isFW = false } = props
   //展开收起状态切换
   const [isFlod, setIsFlod] = useState<boolean>(false)
   //是否显示展开收起
@@ -42,8 +43,8 @@ const IntroduceDescription: FC<IProps> = (props) => {
   }
 
   return (
-    <IntroduceDescriptionWrapper isFlod={isFlod}>
-      {introduceTitle}
+    <IntroduceDescriptionWrapper isFlod={isFlod} isFW={isFW}>
+      <div className="introduceTitle">{introduceTitle}</div>
       <span className="hiddenDesc">
         {!isFlod ? descriptionCpn() : description}
       </span>

@@ -35,7 +35,7 @@ const SongBtnlist: FC<IProps> = (props) => {
       </div>
       <a className="sprite_button iconBox collectBox" href={undefined}>
         <i className="sprite_button collectIcon">
-          {colletNum && `(${format(colletNum)})`}
+          {colletNum ? `(${format(colletNum)})` : '收藏'}
         </i>
       </a>
       <a className="sprite_button iconBox shareBox" href={undefined}>

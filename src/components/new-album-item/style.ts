@@ -2,9 +2,8 @@ import styled from 'styled-components'
 
 export const NewAlbumItemWrapper = styled.div`
   .albumItemBox {
-    width: 118px;
+    width: 100px;
     .albumItemHeader {
-      width: 100px;
       height: 100px;
       margin-bottom: 7px;
       position: relative;

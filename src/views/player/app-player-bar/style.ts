@@ -99,6 +99,7 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
             display: inline-block;
             max-width: 300px;
             color: #e8e8e8;
+            ${(props) => props.theme.mixin.textNowrap}
           }
           .headerTitle {
             display: inline-block;

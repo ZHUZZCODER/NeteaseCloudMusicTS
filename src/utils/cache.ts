@@ -14,7 +14,6 @@ class LocalCache {
     } else {
       value = window.sessionStorage.getItem(key)
     }
-    console.log(typeof value)
     if (value !== 'undefined' && value !== null) {
       return JSON.parse(value)
     }
