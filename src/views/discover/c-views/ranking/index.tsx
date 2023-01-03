@@ -1,4 +1,4 @@
-import React, { memo, useEffect, Fragment, useCallback } from 'react'
+import React, { memo, useEffect, Fragment, useCallback, useState } from 'react'
 import type { FC, ReactNode } from 'react'
 import {
   RankingWrapper,
@@ -15,6 +15,7 @@ import {
   changeCurrentIndexAction
 } from './store/ranking'
 import { shallowEqual } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 interface IProps {
   children?: ReactNode
@@ -22,6 +23,8 @@ interface IProps {
 
 const Ranking: FC<IProps> = (props) => {
   const dispatch = useAppDispatch()
+  const location = useLocation()
+  const navigate = useNavigate()
   useEffect(() => {
     dispatch(fetchRankingListDataAction())
   }, [dispatch])
@@ -35,13 +38,27 @@ const Ranking: FC<IProps> = (props) => {
   )
 
   useEffect(() => {
-    const id = rankingList[currentIndex] && rankingList[currentIndex].id
+    let id = rankingList[currentIndex] && rankingList[currentIndex].id
+    //如果url中有id则优先取url中id
+    if (location.search) {
+      const locationId = parseInt(location.search.split('=')[1])
+      const localCurrentIndex = rankingList.findIndex(
+        (item) => item.id === locationId
+      )
+      dispatch(changeCurrentIndexAction(localCurrentIndex))
+      id = locationId
+    }
     if (!id) return
     dispatch(fetchPlayListDataAction(id))
-  }, [rankingList, dispatch, currentIndex])
 
-  const rankingItemClick = useCallback((index: number) => {
+    return () => {
+      dispatch(changeCurrentIndexAction(0))
+    }
+  }, [rankingList, dispatch, currentIndex, location])
+
+  const rankingItemClick = useCallback((index: number, id: number) => {
     dispatch(changeCurrentIndexAction(index))
+    navigate(`/discover/ranking?=${id}`)
   }, [])
 
   return (
@@ -68,7 +85,7 @@ const Ranking: FC<IProps> = (props) => {
                       itemTitle={name}
                       itemStatus={updateFrequency}
                       itemActive={currentIndex === index}
-                      rankingItemClick={() => rankingItemClick(index)}
+                      rankingItemClick={() => rankingItemClick(index, id)}
                     />
                   </Fragment>
                 )
