@@ -5,6 +5,7 @@ import recommendReducer from '@/views/discover/c-views/recommend/store/recommend
 import playerReducer from '@/views/player/store/player'
 import playlistReducer from '@/views/discover/c-views/playlist/store/playlist'
 import albumChildrenReducer from '@/views/discover/c-views/album-children/store/album-children'
+import rankingReducer from '@/views/discover/c-views/ranking/store/ranking'
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
     recommend: recommendReducer,
     player: playerReducer,
     playlist: playlistReducer,
-    albumChildren: albumChildrenReducer
+    albumChildren: albumChildrenReducer,
+    ranking: rankingReducer
   }
 })
 
