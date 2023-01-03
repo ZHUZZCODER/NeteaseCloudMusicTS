@@ -4,6 +4,7 @@ import { RankingListItemWrapper } from './style'
 import { getImageSize } from '@/utils/format'
 import { useAppDispatch } from '@/store'
 import { fetchCurrentSongDataAction } from '@/views/player/store/player'
+import { Link } from 'react-router-dom'
 
 interface IProps {
   children?: ReactNode
@@ -36,21 +37,19 @@ const RankingListItem: FC<IProps> = (props) => {
   }
   return (
     <RankingListItemWrapper>
-      <div className="rankingTop">
-        <a href={`#/discover/ranking?id=${id}`} className="rangkingImg">
+      <Link className="rankingTop" to={`/discover/ranking?id=${id}`}>
+        <div className="rangkingImg">
           <img src={getImageSize(coverImgUrl, 80)} alt="" />
           <div className="sprite_cover rankingCover"></div>
-        </a>
+        </div>
         <div className="topText">
-          <a className="text" href={`#/discover/ranking?id=${id}`}>
-            {name}
-          </a>
-          <a className="iconBox" href="#">
+          <div className="text">{name}</div>
+          <div className="iconBox">
             <div className="sprite_02 icon iconLeft"></div>
             <div className="sprite_02 icon iconRight"></div>
-          </a>
+          </div>
         </div>
-      </div>
+      </Link>
       <div className="rankingBottom">
         {tracks.slice(0, 10).map(({ id, name }: Tracks, index: number) => {
           return (
@@ -70,9 +69,9 @@ const RankingListItem: FC<IProps> = (props) => {
             </div>
           )
         })}
-        <a className="seeAll" href="#">
+        <Link className="seeAll" to={`/discover/ranking?id=${id}`}>
           查看全部 &gt;
-        </a>
+        </Link>
       </div>
     </RankingListItemWrapper>
   )

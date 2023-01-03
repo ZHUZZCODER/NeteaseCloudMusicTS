@@ -9,7 +9,7 @@ export const RankingListItemWrapper = styled.div`
   }
   .rankingTop {
     display: flex;
-    margin: 20px 0 0 20px;
+    margin: 20px 0 20px 20px;
     .rangkingImg {
       width: 80px;
       height: 80px;
@@ -64,7 +64,6 @@ export const RankingListItemWrapper = styled.div`
     }
   }
   .rankingBottom {
-    margin-top: 20px;
     .rankingItem {
       width: 100%;
       height: 32px;
