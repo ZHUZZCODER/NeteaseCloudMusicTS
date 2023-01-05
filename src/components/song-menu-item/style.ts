@@ -1,8 +1,12 @@
 import styled from 'styled-components'
 
-export const SongMenuItemWrapper = styled.div`
+interface ISONGMENUITEM {
+  right: number
+}
+
+export const SongMenuItemWrapper = styled.div<ISONGMENUITEM>`
   width: 140px;
-  margin: 15px 0;
+  margin: 15px ${(props) => `${props.right}px`} 15px 0;
   .songHeader {
     width: 140px;
     height: 140px;

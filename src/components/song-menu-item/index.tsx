@@ -8,11 +8,19 @@ import { fetchHotRecommendListDataAction } from '@/views/player/store/player'
 interface IProps {
   children?: ReactNode
   itemData: any
+  right?: number
 }
 
 const SongMenuItem: FC<IProps> = (props) => {
   const {
-    itemData: { picUrl = '', playCount = 0, name = '', id = 0 }
+    itemData: {
+      picUrl = '',
+      coverImgUrl = '',
+      playCount = 0,
+      name = '',
+      id = 0
+    },
+    right = 0
   } = props
 
   const dispatch = useAppDispatch()
@@ -21,9 +29,13 @@ const SongMenuItem: FC<IProps> = (props) => {
     dispatch(fetchHotRecommendListDataAction(id))
   }
   return (
-    <SongMenuItemWrapper>
+    <SongMenuItemWrapper right={right}>
       <div className="songHeader">
-        <img className="imgBox" src={getImageSize(picUrl, 140)} alt="" />
+        <img
+          className="imgBox"
+          src={getImageSize(picUrl || coverImgUrl, 140)}
+          alt=""
+        />
         <a
           title={name}
           className="sprite_cover cover"

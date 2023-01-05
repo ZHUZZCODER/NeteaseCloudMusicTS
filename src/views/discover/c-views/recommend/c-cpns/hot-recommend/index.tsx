@@ -14,23 +14,23 @@ const HotRecommend: FC<IProps> = (props) => {
   const menuList = [
     {
       item: '华语',
-      link: '/discover/song?=华语'
+      link: '/discover/song?cat=华语'
     },
     {
       item: '流行',
-      link: '/discover/song?=流行'
+      link: '/discover/song?cat=流行'
     },
     {
       item: '摇滚',
-      link: '/discover/song?=摇滚'
+      link: '/discover/song?cat=摇滚'
     },
     {
       item: '民谣',
-      link: '/discover/song?=民谣'
+      link: '/discover/song?cat=民谣'
     },
     {
       item: '电子',
-      link: '/discover/song?=电子'
+      link: '/discover/song?cat=电子'
     }
   ]
 
@@ -47,7 +47,7 @@ const HotRecommend: FC<IProps> = (props) => {
         hotLink="#/discover/song"
         menuList={menuList}
         moreLink="/discover/song"
-      />
+      ></NavHeaderV1>
       <div className="songList">
         {hotRecommends.map((item) => {
           return <SongMenuItem key={item.id} itemData={item} />
