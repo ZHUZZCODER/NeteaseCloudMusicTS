@@ -5,7 +5,8 @@ const theme = {
     threeColor: '#666666',
     fourColor: '#333333',
     fiveColor: '#ccc',
-    sixColor: '#999999'
+    sixColor: '#999999',
+    sevenColor: '#e2e2e2'
   },
   size: {
     primarySize: '12px',
