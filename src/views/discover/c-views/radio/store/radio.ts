@@ -50,7 +50,7 @@ export const fetchDjRecommendTypeDataAction = createAsyncThunk<
   const newDjRadiosList = djRadiosList.concat(djRadios)
   //数组去重
   const djRadiosArr = [
-    ...new Set(newDjRadiosList.map((item: any) => JSON.stringify(item)))
+    ...new Set<string>(newDjRadiosList.map((item: any) => JSON.stringify(item)))
   ].map((item) => JSON.parse(item))
   dispatch(changeDjRadiosListAction(djRadiosArr))
 })
