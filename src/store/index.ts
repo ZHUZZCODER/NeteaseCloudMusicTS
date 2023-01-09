@@ -7,6 +7,7 @@ import playlistReducer from '@/views/discover/c-views/playlist/store/playlist'
 import albumChildrenReducer from '@/views/discover/c-views/album-children/store/album-children'
 import rankingReducer from '@/views/discover/c-views/ranking/store/ranking'
 import songReducer from '@/views/discover/c-views/song/store/song'
+import radioReducer from '@/views/discover/c-views/radio/store/radio'
 
 const store = configureStore({
   reducer: {
@@ -16,7 +17,8 @@ const store = configureStore({
     playlist: playlistReducer,
     albumChildren: albumChildrenReducer,
     ranking: rankingReducer,
-    song: songReducer
+    song: songReducer,
+    radio: radioReducer
   }
 })
 
@@ -24,5 +26,9 @@ export type RootState = ReturnType<typeof store.getState>
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch: () => AppDispatch = useDispatch
+export interface IThunkState {
+  state: RootState
+  dispatch: AppDispatch
+}
 
 export default store
