@@ -34,7 +34,6 @@ export const NewAlbumWrapper = styled.div`
       .albumList {
         display: flex;
         justify-content: space-between;
-        margin: 0 16px 0 0;
       }
     }
   }

@@ -272,3 +272,26 @@ export const hotSong = [
       'https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340194/0903/b735/7c7a/0dddcdf78047d397d24125840e54ab5b.png'
   }
 ]
+
+export const albumTabList = [
+  {
+    name: '全部',
+    area: 'ALL'
+  },
+  {
+    name: '华语',
+    area: 'ZH'
+  },
+  {
+    name: '欧美',
+    area: 'EA'
+  },
+  {
+    name: '韩国',
+    area: 'KR'
+  },
+  {
+    name: '日本',
+    area: 'JP'
+  }
+]
