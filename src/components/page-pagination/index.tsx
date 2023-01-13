@@ -7,6 +7,7 @@ import { PaginationWrapper } from './style'
 interface IProps {
   children?: ReactNode
   currentPage: number
+  pageSize?: number
   onPageChange: (page: number) => void
   total: number
   isFirst: boolean
@@ -14,7 +15,14 @@ interface IProps {
 }
 
 const PagePagination: FC<IProps> = (props) => {
-  const { currentPage, onPageChange, total, isFirst, isNext } = props
+  const {
+    currentPage,
+    onPageChange,
+    total,
+    isFirst,
+    isNext,
+    pageSize = 10
+  } = props
   const itemRender: PaginationProps['itemRender'] = (
     _,
     type,
@@ -34,6 +42,7 @@ const PagePagination: FC<IProps> = (props) => {
         className="paginationBox"
         current={currentPage}
         total={total}
+        pageSize={pageSize}
         itemRender={itemRender}
         onChange={onPageChange}
         showSizeChanger={false}

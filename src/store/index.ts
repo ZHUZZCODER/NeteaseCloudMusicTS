@@ -9,6 +9,7 @@ import rankingReducer from '@/views/discover/c-views/ranking/store/ranking'
 import songReducer from '@/views/discover/c-views/song/store/song'
 import radioReducer from '@/views/discover/c-views/radio/store/radio'
 import singerReducer from '@/views/discover/c-views/singer/store/singer'
+import albumReducer from '@/views/discover/c-views/album/store/album'
 
 const store = configureStore({
   reducer: {
@@ -20,7 +21,8 @@ const store = configureStore({
     ranking: rankingReducer,
     song: songReducer,
     radio: radioReducer,
-    singer: singerReducer
+    singer: singerReducer,
+    album: albumReducer
   }
 })
 

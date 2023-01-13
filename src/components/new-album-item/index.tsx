@@ -10,6 +10,10 @@ interface IProps {
   children?: ReactNode
   newAlbumItem: any
   newAlbumClick: (id: number) => void
+  width?: string
+  height?: string
+  bgP?: string
+  titleSize?: string
 }
 
 const NewAlbumItem: FC<IProps> = (props) => {
@@ -20,22 +24,39 @@ const NewAlbumItem: FC<IProps> = (props) => {
       name = '',
       artist: { name: newName = '' }
     },
-    newAlbumClick
+    newAlbumClick,
+    width,
+    height,
+    bgP,
+    titleSize
   } = props
 
   const dispatch = useAppDispatch()
 
   return (
-    <NewAlbumItemWrapper>
+    <NewAlbumItemWrapper
+      imgWidth={width}
+      imgHeight={height}
+      bgP={bgP}
+      titleSize={titleSize}
+    >
       <div className="albumItemBox" onClick={(e) => newAlbumClick(id)}>
         <div className="albumItemHeader">
-          <img className="albumImage" src={getImageSize(picUrl, 100)} alt="" />
+          <div className="albumImgBox">
+            <img
+              className="albumImage"
+              src={getImageSize(picUrl, 100)}
+              alt=""
+            />
+            <div
+              className="sprite_icon albumPlay"
+              title="播放"
+              onClick={(e) => playMusic(e, id, dispatch)}
+            ></div>
+          </div>
+
           <Link className="sprite_cover albumCover" to="/"></Link>
-          <div
-            className="sprite_icon albumPlay"
-            title="播放"
-            onClick={(e) => playMusic(e, id, dispatch)}
-          ></div>
+
           <div className="sprite_cover bottomCover"></div>
         </div>
         <div className="albumItemFooter">
