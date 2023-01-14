@@ -127,7 +127,7 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
           align-items: center;
           .infoSlider {
             width: 446px;
-            margin: 0;
+            margin: 0 7px 0 0;
             .ant-slider-track {
               background: url(${require('@/assets/img/progress_bar.png')})
                 no-repeat 0 -66px;
@@ -204,12 +204,14 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
             props.isShowVoice ? '-31px -248px' : '-128px -68px'};
         }
         .voiceControl {
+          display: none;
           width: 32px;
           height: 113px;
           position: absolute;
           top: -126px;
           left: -6px;
           background-position: 0 -503px;
+          z-index: 99;
           .voiceTotalDistance {
             padding: 4px 0;
             width: 4px;
@@ -242,6 +244,9 @@ export const AppPlayerBarWrapper = styled.div<APPPLAYBAR>`
               }
             }
           }
+        }
+        .showVoiceControl {
+          display: block;
         }
       }
       .mode {
