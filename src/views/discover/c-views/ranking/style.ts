@@ -5,6 +5,7 @@ export const RankingWrapper = styled.div`
   .rankingContent {
     display: flex;
     border: 1px solid #d3d3d3;
+    border-bottom: none;
     background: url(${require('@/assets/img/wrap-bg3.png')}) repeat-y center 0;
   }
 `
