@@ -295,3 +295,79 @@ export const albumTabList = [
     area: 'JP'
   }
 ]
+
+export const footerData = [
+  {
+    name: '音乐开放平台',
+    link: 'https://developer.music.163.com/st/developer',
+    bgP: '-170px -5px',
+    bgPH: '-5px -115px;'
+  },
+  {
+    name: '云村交易所',
+    link: 'https://music.163.com/st/web-sublicense/home',
+    bgP: '-5px -170px',
+    bgPH: '-60px -170px'
+  },
+  {
+    name: 'Amped Studio',
+    link: 'https://web-amped.music.163.com/',
+    bgP: '-5px -60px',
+    bgPH: '-60px -5px'
+  },
+  {
+    name: '用户认证',
+    link: 'https://music.163.com/st/userbasic#/auth',
+    bgP: '-60px -60px',
+    bgPH: '-115px -5px'
+  },
+  {
+    name: '音乐交易平台',
+    link: 'https://music.163.com/st/ad-cms-bills/mlogin?from=mainStation',
+    bgP: '-115px -115px',
+    bgPH: '-5px -5px'
+  },
+  {
+    name: '赞赏',
+    link: 'https://music.163.com/web/reward',
+    bgP: '-170px -115px',
+    bgPH: '-60px -115px'
+  },
+  {
+    name: '视频激励',
+    link: 'https://music.163.com/st/ncreator/revenue-plan',
+    bgP: '-170px -60px',
+    bgPH: '-115px -60px'
+  }
+]
+
+export const officialData = [
+  {
+    name: '服务条款',
+    link: 'https://st.music.163.com/official-terms/service'
+  },
+  {
+    name: '隐私政策',
+    link: 'https://st.music.163.com/official-terms/privacy'
+  },
+  {
+    name: '儿童隐私政策',
+    link: 'https://st.music.163.com/official-terms/children'
+  },
+  {
+    name: '版权投诉',
+    link: 'https://music.163.com/st/staticdeal/complaints.html'
+  },
+  {
+    name: '投资者关系',
+    link: 'http://ir.music.163.com'
+  },
+  {
+    name: '广告合作',
+    link: 'https://music.163.com/ui/resource'
+  },
+  {
+    name: '联系我们',
+    link: 'https://mp.music.163.com/600948c936c13f4d09752e73/contact-us-web/index.html?source=Music-Main-Station'
+  }
+]

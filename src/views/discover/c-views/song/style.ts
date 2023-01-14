@@ -5,6 +5,7 @@ export const SongWrapper = styled.div`
     padding: 40px;
     background-color: #fff;
     border: 1px solid #d3d3d3;
+    border-bottom: none;
     .songListBox {
       display: flex;
       flex-wrap: wrap;

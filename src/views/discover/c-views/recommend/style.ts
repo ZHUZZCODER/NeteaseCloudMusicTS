@@ -5,6 +5,7 @@ export const RecommendWrapper = styled.div`
     display: flex;
     background: url(${require('@/assets/img/wrap-bg.png')});
     border: 1px solid #d3d3d3;
+    border-bottom: none;
     .recommendLeft {
       width: 729px;
       padding: 20px 20px 40px;
