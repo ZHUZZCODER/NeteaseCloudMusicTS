@@ -73,7 +73,7 @@ export const fetchDjRadioHotDataAction = createAsyncThunk<
   )
   if (!djRadios) return
   dispatch(changeHotRadiosAction(djRadios))
-  dispatch(changeHotRadiosCountAction(Math.ceil(count / 22)))
+  dispatch(changeHotRadiosCountAction(count))
 })
 
 const initialState: IRADIOSTATE = {

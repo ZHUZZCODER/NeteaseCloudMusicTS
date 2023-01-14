@@ -54,7 +54,7 @@ const NavHeaderV4: FC<IProps> = (props) => {
       </div>
 
       {moreLink && (
-        <Link className="moreTitle" to={''}>
+        <Link className="moreTitle" to={moreLink}>
           更多&nbsp;&gt;
         </Link>
       )}

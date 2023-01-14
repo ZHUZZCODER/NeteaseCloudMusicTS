@@ -6,12 +6,14 @@ import { useRenderRadioItem } from '@/hooks'
 
 interface IProps {
   children?: ReactNode
+  moreLink?: string
 }
 
 const EmotionRadio: FC<IProps> = (props) => {
+  const { moreLink = '#' } = props
   return (
     <EmotionRadioWrapper>
-      <NavHeaderV4 navTitle="情感·电台" moreLink="#" />
+      <NavHeaderV4 navTitle="情感·电台" moreLink={moreLink} />
       <div className="emotionRadioContent">{useRenderRadioItem(3)}</div>
     </EmotionRadioWrapper>
   )

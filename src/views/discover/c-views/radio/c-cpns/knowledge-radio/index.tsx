@@ -6,12 +6,14 @@ import { useRenderRadioItem } from '@/hooks'
 
 interface IProps {
   children?: ReactNode
+  moreLink?: string
 }
 
 const KnowledgeRadio: FC<IProps> = (props) => {
+  const { moreLink = '#' } = props
   return (
     <KnowledgeRadioWrapper>
-      <NavHeaderV4 navTitle="知识·电台" moreLink="#" />
+      <NavHeaderV4 navTitle="知识·电台" moreLink={moreLink} />
       <div className="knowledgeRadioContent">{useRenderRadioItem(11)}</div>
     </KnowledgeRadioWrapper>
   )

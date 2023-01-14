@@ -9,9 +9,11 @@ import { shallowEqual } from 'react-redux'
 
 interface IProps {
   children?: ReactNode
+  moreLink?: string
 }
 
 const RecommendProgram: FC<IProps> = (props) => {
+  const { moreLink = '#' } = props
   const { programs } = useAppSelector(
     (state) => ({
       programs: state.radio.programs
@@ -21,7 +23,7 @@ const RecommendProgram: FC<IProps> = (props) => {
 
   return (
     <RecommendProgramWrapper>
-      <NavHeaderV4 navTitle="推荐节目" moreLink="#" />
+      <NavHeaderV4 navTitle="推荐节目" moreLink={moreLink} />
       <ul className="programBox">
         {programs.map(
           ({

@@ -50,11 +50,11 @@ const Radio: FC<IProps> = (props) => {
               <RecommendProgram />
               <ProgramRanking />
             </div>
-            <SongRadio />
-            <LifeRadio />
-            <EmotionRadio />
-            <CreateRadio />
-            <KnowledgeRadio />
+            <SongRadio moreLink="/discover/radio?id=2" />
+            <LifeRadio moreLink="/discover/radio?id=6" />
+            <EmotionRadio moreLink="/discover/radio?id=3" />
+            <CreateRadio moreLink="/discover/radio?id=2001" />
+            <KnowledgeRadio moreLink="/discover/radio?id=11" />
           </>
         ) : (
           <>

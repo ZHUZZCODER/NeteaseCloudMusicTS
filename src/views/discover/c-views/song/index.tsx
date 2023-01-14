@@ -21,6 +21,7 @@ interface IProps {
 const Song: FC<IProps> = (props) => {
   const location = useLocation()
   const dispatch = useAppDispatch()
+  const [totalPage, setTotalPage] = useState(0)
 
   const { playlistsInfo, currentPage, category } = useAppSelector(
     (state) => ({
@@ -46,6 +47,14 @@ const Song: FC<IProps> = (props) => {
     dispatch(fetchPlaylistsDataAction(0))
   }, [dispatch, location])
 
+  //页数
+  useEffect(() => {
+    if (playlistsInfo && playlistsInfo.total !== undefined) {
+      const total = Math.ceil(playlistsInfo.total / 35)
+      setTotalPage(total)
+    }
+  }, [playlistsInfo])
+
   const { playlists = [], total = 0 } = playlistsInfo ?? {}
 
   const currentPageChange = useCallback((page: number): void => {
@@ -62,13 +71,17 @@ const Song: FC<IProps> = (props) => {
             playlists.map((item) => {
               return <SongMenuItem key={item.id} itemData={item} right={49} />
             })}
+          <span className="hideSpan"></span>
+          <span className="hideSpan"></span>
+          <span className="hideSpan"></span>
         </div>
         <PagePagination
           currentPage={currentPage}
           onPageChange={currentPageChange}
+          pageSize={35}
           total={total}
           isFirst={currentPage === 1}
-          isNext={currentPage === playlists.length}
+          isNext={currentPage === totalPage}
         />
       </div>
     </SongWrapper>

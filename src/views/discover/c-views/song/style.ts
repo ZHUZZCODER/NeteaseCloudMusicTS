@@ -13,6 +13,10 @@ export const SongWrapper = styled.div`
       * > {
         flex-shrink: 0;
       }
+      > .hideSpan {
+        width: 140px;
+        margin: 15px 49px 15px 0;
+      }
     }
   }
 `

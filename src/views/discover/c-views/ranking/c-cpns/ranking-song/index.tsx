@@ -76,7 +76,7 @@ const RankingSong: FC<IProps> = (props) => {
                     <td className="commonTd">
                       <div className="titleBox">
                         {index < 3 ? (
-                          <a className="titleImgBox" href="undefined">
+                          <a className="titleImgBox" href={undefined}>
                             <img
                               className="titleImg"
                               src={getImageSize(picUrl, 50)}
@@ -92,7 +92,7 @@ const RankingSong: FC<IProps> = (props) => {
                             })}
                             onClick={(e) => playMusic(id)}
                           ></i>
-                          <a className="songTitle" href="undefined">
+                          <a className="songTitle" href={undefined}>
                             {name}
                           </a>
                           {mv > 0 && <i className="sprite_table mvIcon"></i>}
