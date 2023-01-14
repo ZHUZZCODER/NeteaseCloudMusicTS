@@ -50,6 +50,8 @@ const RadioCategory: FC<IProps> = (props) => {
       const activeId = parseInt(searchParams.get('id') as string)
       setSelectId(activeId)
       dispatch(changeActiveRadioIdAction(activeId))
+    } else {
+      setSelectId(null)
     }
     return () => {
       dispatch(changeActiveRadioIdAction(null))

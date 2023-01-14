@@ -15,6 +15,7 @@ interface IProps {
 const RadioRanking: FC<IProps> = (props) => {
   const dispatch = useAppDispatch()
   const [currentPage, setCurrentPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
   const { activeRadioId, hotRadios, hotRadiosCount } = useAppSelector(
     (state) => ({
       activeRadioId: state.radio.activeRadioId,
@@ -23,6 +24,13 @@ const RadioRanking: FC<IProps> = (props) => {
     }),
     shallowEqual
   )
+
+  //页数
+  useEffect(() => {
+    const total = Math.ceil(hotRadiosCount / 22) || 0
+    setTotalPage(total)
+  }, [hotRadiosCount])
+
   useEffect(() => {
     if (activeRadioId !== null) {
       dispatch(fetchDjRadioHotDataAction({ offset: 1, cateId: activeRadioId }))
@@ -57,9 +65,10 @@ const RadioRanking: FC<IProps> = (props) => {
       <PagePagination
         currentPage={currentPage}
         onPageChange={onPageChange}
+        pageSize={22}
         total={hotRadiosCount}
         isFirst={currentPage === 1}
-        isNext={currentPage === hotRadios.length}
+        isNext={currentPage === totalPage}
       />
     </RadioRankingWrapper>
   )

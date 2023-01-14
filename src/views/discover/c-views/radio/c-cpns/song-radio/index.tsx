@@ -6,9 +6,11 @@ import { useRenderRadioItem } from '@/hooks'
 
 interface IProps {
   children?: ReactNode
+  moreLink?: string
 }
 
 const SongRadio: FC<IProps> = (props) => {
+  const { moreLink = '#' } = props
   // const { djRadiosList } = useAppSelector(
   //   (state) => ({
   //     djRadiosList: state.radio.djRadiosList
@@ -37,7 +39,7 @@ const SongRadio: FC<IProps> = (props) => {
 
   return (
     <SongRadioWrapper>
-      <NavHeaderV4 navTitle="音乐推荐·电台" moreLink="#" />
+      <NavHeaderV4 navTitle="音乐推荐·电台" moreLink={moreLink} />
       <div className="songRadioContent">{useRenderRadioItem(2)}</div>
     </SongRadioWrapper>
   )

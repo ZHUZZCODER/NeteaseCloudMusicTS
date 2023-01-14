@@ -20,6 +20,7 @@ interface IProps {
 
 const AllAlbum: FC<IProps> = (props) => {
   const navigate = useNavigate()
+
   const [searchParams, setSearchParams] = useHandleSearchParams()
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPage, setTotalPage] = useState(0)
