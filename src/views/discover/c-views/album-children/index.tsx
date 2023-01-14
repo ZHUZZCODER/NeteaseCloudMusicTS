@@ -9,7 +9,7 @@ import AlbumInfo from './c-cpns/album-info'
 import AlbumList from './c-cpns/album-list'
 import { fetchAlbumInfoDataAction } from './store/album-children'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { shallowEqual } from 'react-redux'
 import MoreDownload from '@/components/more-download'
 
@@ -20,6 +20,7 @@ interface IProps {
 const AlbumChildren: FC<IProps> = (props) => {
   const dispath = useAppDispatch()
   const location = useLocation()
+  const navigate = useNavigate()
 
   const { albumInfo, songInfo } = useAppSelector(
     (state) => ({

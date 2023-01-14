@@ -7,6 +7,7 @@ import React, {
   createContext
 } from 'react'
 import type { FC, ReactNode } from 'react'
+import classNames from 'classnames'
 import { Slider } from 'antd'
 import { AppPlayerBarWrapper, LockWrapper } from './style'
 import { useAppDispatch, useAppSelector } from '@/store'
@@ -276,19 +277,29 @@ const AppPlayerBar: FC<IProps> = (props) => {
   }
 
   //显示隐藏声音调节
-  function voiceBtnClick() {
-    setIsVoiceSlider(!isVoiceSlider)
-  }
+  const voiceBtnClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      const id = (event.target as HTMLElement).id
+      if (id) {
+        console.log('id存在')
+        setIsVoiceSlider(!isVoiceSlider)
+      }
+    },
+    [isVoiceSlider]
+  )
 
   //控制音量
-  const voiceSliderChange = useCallback((value: number) => {
-    if (value / 100 === 0) {
-      setIsShowVoice(false)
-    } else {
-      setIsShowVoice(true)
-    }
-    audioRef.current!.volume = value / 100
-  }, [])
+  const voiceSliderChange = useCallback(
+    (value: number) => {
+      if (value / 100 === 0) {
+        setIsShowVoice(false)
+      } else {
+        setIsShowVoice(true)
+      }
+      audioRef.current!.volume = value / 100
+    },
+    [audioRef]
+  )
 
   //播放栏是否固定
   const lockClick = () => {
@@ -377,20 +388,26 @@ const AppPlayerBar: FC<IProps> = (props) => {
           <div className="wh sprite_playbar add"></div>
           <div className="wh sprite_playbar share"></div>
           <div className="sprite_playbar fgx"></div>
-          <div className="wh sprite_playbar voice" onClick={voiceBtnClick}>
-            {isVoiceSlider && (
-              <div className="sprite_playbar voiceControl">
-                <div className=" voiceTotalDistance">
-                  <Slider
-                    className="voiceSlider"
-                    defaultValue={100}
-                    vertical
-                    step={0.1}
-                    onChange={voiceSliderChange}
-                  />
-                </div>
+          <div
+            id="voiceInstance"
+            className="wh sprite_playbar voice"
+            onClick={voiceBtnClick}
+          >
+            <div
+              className={classNames('sprite_playbar voiceControl', {
+                showVoiceControl: isVoiceSlider
+              })}
+            >
+              <div className="voiceTotalDistance">
+                <Slider
+                  className="voiceSlider"
+                  defaultValue={100}
+                  vertical
+                  step={0.1}
+                  onChange={voiceSliderChange}
+                />
               </div>
-            )}
+            </div>
           </div>
           <div className="wh sprite_playbar mode" onClick={cutMode}></div>
           <div
