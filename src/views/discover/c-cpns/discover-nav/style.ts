@@ -1,11 +1,13 @@
 import styled from 'styled-components'
 
 export const DiscoverNavWrapper = styled.div`
-  height: 34px;
+  height: 30px;
   background-color: #c20c0c;
   .discover-nav {
     margin-left: 180px;
     display: flex;
+    position: relative;
+    top: -4px;
     .nav-item {
       a {
         display: block;
