@@ -7,7 +7,6 @@ import { shallowEqual } from 'react-redux'
 import NewAlbumItem from '@/components/new-album-item'
 import { fetchNewAlbumsDataAction } from '@/views/discover/c-views/recommend/store/recommend'
 import { useNavigate } from 'react-router-dom'
-
 interface IProps {
   children?: ReactNode
 }
@@ -29,7 +28,7 @@ const HotAlbum: FC<IProps> = (props) => {
 
   const newAlbumClick = useCallback(
     (id: number) => {
-      navigate(`/discover/albumList?id=${id}`)
+      navigate(`/discover/albumList?id=${id}`, { replace: true })
     },
     [navigate]
   )

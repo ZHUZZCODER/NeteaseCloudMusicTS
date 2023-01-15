@@ -71,7 +71,7 @@ const AllAlbum: FC<IProps> = (props) => {
 
   const newAlbumClick = useCallback(
     (id: number) => {
-      navigate(`/discover/albumList?id=${id}`)
+      navigate(`/discover/albumList?id=${id}`, { replace: true })
     },
     [navigate]
   )

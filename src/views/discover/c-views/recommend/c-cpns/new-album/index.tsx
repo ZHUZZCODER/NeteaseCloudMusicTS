@@ -33,7 +33,7 @@ const NewAlbum: FC<IProps> = (props) => {
 
   //点击新碟上架页面跳转
   const newAlbumItemClick = useCallback((id: number) => {
-    navigate(`/discover/albumList?id=${id}`)
+    navigate(`/discover/albumList?id=${id}`, { replace: true })
   }, [])
 
   return (
