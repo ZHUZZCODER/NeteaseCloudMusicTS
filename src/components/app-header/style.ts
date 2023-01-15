@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
 export const AppHeaderWrapper = styled.div`
-  height: 70px;
   background: #242424;
 
   .appHeaderBox {
     display: flex;
     justify-content: space-between;
+    height: 70px;
     .headerLeft {
       display: flex;
       .logo {
