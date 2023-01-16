@@ -7,6 +7,7 @@ export const AppPlayerPanelWrapper = styled.div`
   top: -294px;
   left: 50%;
   transform: translate(-50%, 0);
+  z-index: -1;
   overflow: hidden;
   .panelBottom {
     display: flex;

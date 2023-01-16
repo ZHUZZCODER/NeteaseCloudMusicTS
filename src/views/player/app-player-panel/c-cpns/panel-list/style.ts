@@ -62,6 +62,7 @@ export const PanelListWrapper = styled.div`
       flex: 1;
       padding-left: 10px;
       line-height: 28px;
+      color: #969696;
     }
     .iconBox {
       display: flex;
