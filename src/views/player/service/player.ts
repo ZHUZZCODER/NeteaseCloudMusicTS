@@ -1,4 +1,5 @@
 import zhuRequest from '@/services'
+import zhuRequestPlay from '@/services'
 
 //6.0获取歌曲信息数据
 export const getSongDetail = (ids: number) => {
@@ -21,4 +22,13 @@ type TLEVEL = 'standard' | 'higher' | 'exhigh' | 'lossless' | 'hires'
 //获取歌曲url
 export const getSongUrl = (id: number, level: TLEVEL = 'exhigh') => {
   return zhuRequest.get({ url: '/song/url/v1', params: { id, level } })
+}
+
+//新的获取歌曲地址
+export const getNewSongUrl = (
+  id: number,
+  level: TLEVEL = 'hires',
+  type = 'apiSongUrlV1'
+) => {
+  return zhuRequest.get({ params: { type, id, level } })
 }
