@@ -24,7 +24,7 @@ import {
   changeLyricsAction
 } from '../store/player'
 import AppPlayerPanel from '../app-player-panel'
-import { getCheckMusic, getSongUrl, getNewSongUrl } from '../service/player'
+import { getCheckMusic, getNewSongUrl } from '../service/player'
 
 interface IProps {
   children?: ReactNode
@@ -130,7 +130,7 @@ const AppPlayerBar: FC<IProps> = (props) => {
       //获取歌曲播放路径
       const {
         data: [{ url }]
-      } = await getSongUrl(id)
+      } = await getNewSongUrl(id)
       audioRef.current!.src = url
       // audioRef.current!.src = getPlayUrl(id)
       //补充 这里播放首次不会触发，第二次触发
