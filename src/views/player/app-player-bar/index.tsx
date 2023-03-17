@@ -24,7 +24,7 @@ import {
   changeLyricsAction
 } from '../store/player'
 import AppPlayerPanel from '../app-player-panel'
-import { getCheckMusic, getSongUrl } from '../service/player'
+import { getCheckMusic, getSongUrl, getNewSongUrl } from '../service/player'
 
 interface IProps {
   children?: ReactNode
