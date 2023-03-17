@@ -113,20 +113,20 @@ const AppPlayerBar: FC<IProps> = (props) => {
     const checkMusicService = async (id: number) => {
       const { success, message: MESSAGE } = await getCheckMusic(id)
       //如果没有版权
-      if (!success) {
-        //将歌曲src设置为空
-        audioRef.current!.src = ''
-        //将播放按钮设置为false
-        setIsPlay(false)
-        //清空歌词数据
-        dispatch(changeLyricsAction([]))
-        message.open({
-          key: 'lyric',
-          content: MESSAGE,
-          duration: 0
-        })
-        return console.log(MESSAGE)
-      }
+      // if (!success) {
+      //   //将歌曲src设置为空
+      //   audioRef.current!.src = ''
+      //   //将播放按钮设置为false
+      //   setIsPlay(false)
+      //   //清空歌词数据
+      //   dispatch(changeLyricsAction([]))
+      //   message.open({
+      //     key: 'lyric',
+      //     content: MESSAGE,
+      //     duration: 0
+      //   })
+      //   return console.log(MESSAGE)
+      // }
       //获取歌曲播放路径
       const {
         data: [{ url }]
