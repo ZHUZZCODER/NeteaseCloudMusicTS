@@ -1,6 +1,6 @@
-import React, { memo, useCallback, useEffect } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import type { FC, ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { shallowEqual } from 'react-redux'
 import classNames from 'classnames'
 import { SingerCategoryWrapper } from './style'
@@ -26,20 +26,39 @@ const SingerCategory: FC<IProps> = (props) => {
     }),
     shallowEqual
   )
+  const params = useParams()
+  //判断是否由路径跳转过来
+  const [isPathTo, setIsPathTo] = useState<boolean>(false)
 
   useEffect(() => {
-    const localCurrentType = localCache.getCache('currentType')
-    const localCurrentArea = localCache.getCache('currentArea')
-    const localInitialStatus = localCache.getCache('initialStatus')
-    if (localCurrentType) {
-      dispatch(changeCurrentTypeAction(localCurrentType))
-    }
-    if (localCurrentArea) {
-      dispatch(changeCurrentAreaAction(localCurrentArea))
-    }
-    //当路径中没有initial时调用
-    if (!localInitialStatus) {
+    const paramsVal = Object.values(params)[0]
+    if (paramsVal) {
+      const currentType = artistCategories[0].artists[1]
+      dispatch(changeCurrentTypeAction(currentType))
+      dispatch(changeCurrentAreaAction(-1))
       dispatch(fetchArtistListDataAction('-1'))
+      setIsPathTo(false)
+    } else {
+      setIsPathTo(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isPathTo) {
+      const localCurrentType = localCache.getCache('currentType')
+      const localCurrentArea = localCache.getCache('currentArea')
+      const localInitialStatus = localCache.getCache('initialStatus')
+
+      if (localCurrentType) {
+        dispatch(changeCurrentTypeAction(localCurrentType))
+      }
+      if (localCurrentArea) {
+        dispatch(changeCurrentAreaAction(localCurrentArea))
+      }
+      //当路径中没有initial时调用
+      if (!localInitialStatus) {
+        dispatch(fetchArtistListDataAction('-1'))
+      }
     }
 
     return () => {
@@ -51,11 +70,11 @@ const SingerCategory: FC<IProps> = (props) => {
         changeCurrentTypeAction({
           name: '推荐歌手',
           type: 1,
-          url: '/discover/singer'
+          url: '/discover/singer/'
         })
       )
     }
-  }, [dispatch])
+  }, [dispatch, isPathTo])
 
   const singerLiClick = useCallback(
     (area: number, type: ICURRENTTYPE) => {

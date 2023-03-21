@@ -46,7 +46,7 @@ const routes: RouteObject[] = [
         element: <Song />
       },
       {
-        path: '/discover/singer',
+        path: '/discover/singer/*',
         element: <Singer />
       },
       {

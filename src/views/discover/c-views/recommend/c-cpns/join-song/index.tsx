@@ -18,7 +18,7 @@ const JoinSong: FC<IProps> = (props) => {
       <NavHeaderV2
         title="入驻歌手"
         moreText="查看全部 &gt;"
-        moreLink="#/discover/artist"
+        moreLink="#/discover/singer/signed/"
       />
       <div className="songContent">
         {songList.map((item) => {
