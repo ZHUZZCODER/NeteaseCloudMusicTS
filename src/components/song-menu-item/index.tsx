@@ -57,7 +57,7 @@ const SongMenuItem: FC<IProps> = (props) => {
         </div>
       </div>
       <div className="songFooter">
-        <a title={name} href="#">
+        <a title={name} href={`#/discover/playlist?id=${id}`}>
           {name}
         </a>
       </div>

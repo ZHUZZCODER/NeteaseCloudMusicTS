@@ -81,7 +81,7 @@ const SongList: FC<IProps> = (props) => {
                       <a className="abox" href={undefined} title={name}>
                         {name}
                       </a>
-                      {alia && alia.length && <span>-（{alia[0]}）</span>}
+                      {!!alia && alia.length > 0 && <span>-（{alia[0]}）</span>}
                     </div>
                     {mv > 0 && <i className="sprite_table mvIcon abox"></i>}
                   </div>
