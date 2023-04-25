@@ -1,30 +1,39 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { SINGERSTATE } from './type'
+import type { SINGERSTATE, ITHUNKPAYLOAD } from './type'
 import { getArtistList, getTopArtists } from '../service/singer'
 import { IThunkState } from '@/store'
 
 export const fetchArtistListDataAction = createAsyncThunk<
   void,
-  string,
+  ITHUNKPAYLOAD,
   IThunkState
->('fetchArtistListData', async (initial: string, { dispatch, getState }) => {
-  const {
-    currentArea,
-    currentType: { type }
-  } = getState().singer
-  //如果是点击的推荐歌手
-  if (currentArea === -1 && type === 1) {
-    getTopArtists().then(({ artists }) => {
+>(
+  'fetchArtistListData',
+  async (thunkPayload: ITHUNKPAYLOAD, { dispatch, getState }) => {
+    let {
+      currentArea,
+      currentType: { type }
+    } = getState().singer
+    const { initial, isJoinSong = false } = thunkPayload
+    //如果是recommend的入驻歌手数据
+    if (isJoinSong) {
+      currentArea = -1
+      type = 2
+    }
+    //如果是点击的推荐歌手
+    if (currentArea === -1 && type === 1) {
+      getTopArtists().then(({ artists }) => {
+        if (!artists) return
+        dispatch(changeHotArtistsAction(artists))
+      })
+    }
+    //获取非推荐歌手
+    getArtistList(type, currentArea, 0, 100, initial).then(({ artists }) => {
       if (!artists) return
-      dispatch(changeHotArtistsAction(artists))
+      dispatch(changeArtistsListAction(artists))
     })
   }
-  //获取非推荐歌手
-  getArtistList(type, currentArea, 0, 100, initial).then(({ artists }) => {
-    if (!artists) return
-    dispatch(changeArtistsListAction(artists))
-  })
-})
+)
 
 const initialState: SINGERSTATE = {
   currentArea: -1,

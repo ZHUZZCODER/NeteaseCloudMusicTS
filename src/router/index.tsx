@@ -19,6 +19,8 @@ const PlayList = lazy(() => import('@/views/discover/c-views/playlist'))
 const AlbumChildren = lazy(
   () => import('@/views/discover/c-views/album-children')
 )
+//歌手信息页面
+const UserHome = lazy(() => import('@/views/discover/c-views/user-home'))
 
 const routes: RouteObject[] = [
   {
@@ -78,6 +80,10 @@ const routes: RouteObject[] = [
   {
     path: '/mine',
     element: <Mine />
+  },
+  {
+    path: '/user/home',
+    element: <UserHome />
   }
 ]
 

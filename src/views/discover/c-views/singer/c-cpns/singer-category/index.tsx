@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useState, useRef } from 'react'
 import type { FC, ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { shallowEqual } from 'react-redux'
@@ -13,6 +13,7 @@ import {
   fetchArtistListDataAction
 } from '../../store/singer'
 import localCache from '@/utils/cache'
+import type { ITHUNKPAYLOAD } from '@/views/discover/c-views/singer/store/type'
 
 interface IProps {
   children?: ReactNode
@@ -29,6 +30,7 @@ const SingerCategory: FC<IProps> = (props) => {
   const params = useParams()
   //判断是否由路径跳转过来
   const [isPathTo, setIsPathTo] = useState<boolean>(false)
+  const thunkRequestParams = useRef<ITHUNKPAYLOAD>({ initial: '-1' })
 
   useEffect(() => {
     const paramsVal = Object.values(params)[0]
@@ -36,7 +38,7 @@ const SingerCategory: FC<IProps> = (props) => {
       const currentType = artistCategories[0].artists[1]
       dispatch(changeCurrentTypeAction(currentType))
       dispatch(changeCurrentAreaAction(-1))
-      dispatch(fetchArtistListDataAction('-1'))
+      dispatch(fetchArtistListDataAction(thunkRequestParams.current))
       setIsPathTo(false)
     } else {
       setIsPathTo(true)
@@ -57,7 +59,7 @@ const SingerCategory: FC<IProps> = (props) => {
       }
       //当路径中没有initial时调用
       if (!localInitialStatus) {
-        dispatch(fetchArtistListDataAction('-1'))
+        dispatch(fetchArtistListDataAction(thunkRequestParams.current))
       }
     }
 
@@ -83,7 +85,7 @@ const SingerCategory: FC<IProps> = (props) => {
       localCache.setCache('initialStatus', false)
       dispatch(changeCurrentAreaAction(area))
       dispatch(changeCurrentTypeAction(type))
-      dispatch(fetchArtistListDataAction('-1'))
+      dispatch(fetchArtistListDataAction(thunkRequestParams.current))
     },
     [dispatch]
   )

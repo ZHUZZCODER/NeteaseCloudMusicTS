@@ -3,12 +3,10 @@ import type { FC, ReactNode } from 'react'
 import classNames from 'classnames'
 import { FilterNameWrapper } from './style'
 import { singerAlphas } from '@/utils/handle-data'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import { fetchArtistListDataAction } from '../../../../store/singer'
-import { useHandleSearchParams } from '@/hooks'
-import { isEmptyObject } from '@/utils/isEmptyObject'
 import localCache from '@/utils/cache'
 
 interface IProps {
@@ -19,7 +17,7 @@ const FilterName: FC<IProps> = (props) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const location = useLocation()
-  const [searchParams, setSearchParams] = useHandleSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [activeInitial, setActiveInitial] = useState(-1)
   const [catQuery, setCatQuery] = useState<string>('')
   const filterStatus = useRef(false)
@@ -38,14 +36,12 @@ const FilterName: FC<IProps> = (props) => {
   }, [currentType])
 
   useEffect(() => {
-    if (searchParams && isEmptyObject(searchParams)) {
-      const { initial } = searchParams
-      if (initial) {
-        const initialNum = parseInt(initial)
-        localCache.setCache('initialStatus', true)
-        setActiveInitial(initialNum)
-        dispatch(fetchArtistListDataAction(`${searchParams.initial}`))
-      }
+    const initial = searchParams.get('initial')
+    if (initial) {
+      const initialNum = parseInt(initial)
+      localCache.setCache('initialStatus', true)
+      setActiveInitial(initialNum)
+      dispatch(fetchArtistListDataAction({ initial: `${initial}` }))
     }
   }, [searchParams])
 
