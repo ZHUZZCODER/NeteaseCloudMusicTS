@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 import {
   getBanner,
   getHotRecommend,
@@ -12,7 +13,8 @@ import type {
   HotRecommendState,
   AlbumsState,
   RankingState,
-  SongState
+  SongState,
+  InitialState
 } from './type'
 //请求轮播数据
 export const fetchBannersDataAction = createAsyncThunk(
@@ -88,14 +90,6 @@ export const fetchSongListDataAction = createAsyncThunk(
     dispatch(changeSongListAction(res.artists))
   }
 )
-
-interface InitialState {
-  banners: BannerState[]
-  hotRecommends: HotRecommendState[]
-  albums: AlbumsState[]
-  rankingList: RankingState[]
-  songList: SongState[]
-}
 
 const initialState: InitialState = {
   banners: [], //轮播图数据

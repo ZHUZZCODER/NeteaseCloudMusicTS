@@ -20,6 +20,7 @@ import {
   fetchGetLyricDataAction
 } from '@/views/player/store/player'
 import IntroduceDescription from '@/components/introduce-description'
+import SingerImg from '@/components/singer-img'
 
 interface IProps {
   children?: ReactNode
@@ -51,10 +52,11 @@ const PlayListInfo: FC<IProps> = (props) => {
 
   return (
     <PlayListInfoWrapper>
-      <div className="imgBox">
+      <SingerImg coverImgUrl={coverImgUrl} imgsize={200} />
+      {/* <div className="imgBox">
         <img src={getImageSize(coverImgUrl, 200)} alt="" />
         <div className="sprite_cover imgMask"></div>
-      </div>
+      </div> */}
       <div className="info">
         <SongLabel name={name} labelPosition="0 -243px" />
         <UserInfo useInfo={creator} createTime={createTime} />

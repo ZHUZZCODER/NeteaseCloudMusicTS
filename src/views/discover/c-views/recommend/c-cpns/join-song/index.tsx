@@ -2,17 +2,14 @@ import React, { memo } from 'react'
 import type { FC, ReactNode } from 'react'
 import { JoinSongWrapper } from './style'
 import NavHeaderV2 from '@/components/nav-header-v2'
-import { useAppSelector } from '@/store'
 import SongItem from './c-cpns/song-item'
+import joinSongList from '@/assets/data/join_singer.json'
 
 interface IProps {
   children?: ReactNode
 }
 
 const JoinSong: FC<IProps> = (props) => {
-  const { songList = [] } = useAppSelector((state) => ({
-    songList: state.recommend.songList
-  }))
   return (
     <JoinSongWrapper>
       <NavHeaderV2
@@ -21,7 +18,7 @@ const JoinSong: FC<IProps> = (props) => {
         moreLink="#/discover/singer/signed/"
       />
       <div className="songContent">
-        {songList.map((item) => {
+        {joinSongList.slice(0, 5).map((item) => {
           return <SongItem key={item.id} itemData={item} />
         })}
       </div>

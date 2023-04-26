@@ -6,12 +6,22 @@ const theme = {
     fourColor: '#333333',
     fiveColor: '#ccc',
     sixColor: '#999999',
-    sevenColor: '#e2e2e2'
+    sevenColor: '#e2e2e2',
+    eightColor: '#d5d5d5',
+    nineColor: '#fff',
+    tenColor: '#d3d3d3',
+    elevenColor: '#e03a24',
+    twelveColor: '#ddd',
+    thirteenColor: '#0c73c2',
+    fourteenColor: '#aeaeae'
   },
   size: {
     primarySize: '12px',
     secondSize: '14px',
-    threeSize: '20px'
+    threeSize: '20px',
+    fourSize: '22px',
+    fiveSize: '24px',
+    sixSize: '16px'
   },
   mixin: {
     wrapv1: `

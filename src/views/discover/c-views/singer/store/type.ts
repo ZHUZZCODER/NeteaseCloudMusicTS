@@ -12,6 +12,7 @@ export interface IARTISTS {
   picUrl: string
   img1v1Url: string
   picId: number
+  alias: string[]
 }
 
 export interface SINGERSTATE {
@@ -19,4 +20,10 @@ export interface SINGERSTATE {
   currentType: ICURRENTTYPE
   hotArtists: IARTISTS[]
   artistsList: IARTISTS[]
+}
+
+export interface ITHUNKPAYLOAD {
+  initial: string
+  //推荐页面的入驻歌手
+  isJoinSong?: boolean
 }

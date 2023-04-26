@@ -173,3 +173,11 @@ export interface SongState {
   topicPerson: number
   trans: string
 }
+
+export interface InitialState {
+  banners: BannerState[]
+  hotRecommends: HotRecommendState[]
+  albums: AlbumsState[]
+  rankingList: RankingState[]
+  songList: SongState[]
+}
