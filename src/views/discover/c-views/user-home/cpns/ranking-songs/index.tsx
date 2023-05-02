@@ -2,6 +2,7 @@ import React, { Fragment, memo, ReactElement, useMemo } from 'react'
 import type { FC, ReactNode } from 'react'
 import { RankingSongsWrapper } from './style'
 import NavHeaderV3 from '@/components/nav-header-v3'
+import NavHeaderV4 from '@/components/nav-header-v4'
 
 interface IProps {
   children?: ReactNode
@@ -62,6 +63,10 @@ const RankingSong: FC<IProps> = (props) => {
           <div className="songRight"></div>
         </li>
       </ul>
+      <div className="seeMore">
+        <a href={undefined}>查看更多&gt;</a>
+      </div>
+      <NavHeaderV4 navTitle={'张惠妹aMEI创建的歌单（3）'} />
     </RankingSongsWrapper>
   )
 }

@@ -7,6 +7,8 @@ import SingerInfoNav from './cpns/singer-info-nav'
 import { UserHomeWrapper, SingerNavWrapper } from './style'
 import { shallowEqual } from 'react-redux'
 import RankingSongs from './cpns/ranking-songs'
+import SongMenuItem from '@/components/song-menu-item'
+import { isArray } from '@/utils/utils'
 
 interface IProps {
   children?: ReactNode
@@ -14,7 +16,7 @@ interface IProps {
 
 const UserHome: FC<IProps> = (props) => {
   const dispatch = useAppDispatch()
-  const [playlistItem, setPlaylistItem] = useState(null)
+  const [playlistItem, setPlaylistItem] = useState<null | any>(null)
   const [searchParams, setSearchParams] = useSearchParams()
   const { userhomePlaylist } = useAppSelector(
     (state) => ({
@@ -31,19 +33,40 @@ const UserHome: FC<IProps> = (props) => {
     }
   }, [dispatch, searchParams])
 
+  useEffect(() => {
+    if (
+      isArray(userhomePlaylist) &&
+      userhomePlaylist.length &&
+      userhomePlaylist[0].creator
+    ) {
+      setPlaylistItem(userhomePlaylist[0])
+    }
+  }, [userhomePlaylist])
+
   return (
     <UserHomeWrapper>
-      {!!userhomePlaylist.length && (
+      {!!playlistItem && (
         <>
           <SingerNavWrapper>
+            {/* playlistItem.creator.avatarUrl */}
             <img
               className="singerLogo"
-              src={userhomePlaylist[0].creator.avatarUrl}
+              src={playlistItem.creator.avatarUrl}
               alt=""
             />
             <SingerInfoNav />
           </SingerNavWrapper>
           <RankingSongs />
+          <SongMenuItem
+            itemData={{
+              picUrl: '',
+              coverImgUrl: '',
+              playCount: 0,
+              name: '',
+              id: 0
+            }}
+            right={0}
+          />
         </>
       )}
     </UserHomeWrapper>
