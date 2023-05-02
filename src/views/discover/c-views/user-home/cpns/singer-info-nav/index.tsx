@@ -5,6 +5,16 @@ import { SingerInfoNavWrapper } from './style'
 
 interface IProps {
   children?: ReactNode
+  // //姓名
+  // nickname: string
+  // //性别
+  // gender: number
+  // //认证
+  // // authenticationTypes: number
+  // //认证
+  // description: string
+  // //音乐人
+  // signature: string
 }
 
 const SingerInfoNav: FC<IProps> = (props) => {

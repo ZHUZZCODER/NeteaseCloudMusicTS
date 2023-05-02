@@ -14,6 +14,7 @@ interface IProps {
   moreLink?: string
   tabList?: ITABLIST[]
   tabClick?: (item: any) => void
+  titleFontsize?: string
 }
 
 const NavHeaderV4: FC<IProps> = (props) => {
@@ -24,11 +25,12 @@ const NavHeaderV4: FC<IProps> = (props) => {
     tabList,
     tabClick = (item: any) => {
       console.log(item)
-    }
+    },
+    titleFontsize = '24px'
   } = props
 
   return (
-    <NavHeaderV4Wrapper>
+    <NavHeaderV4Wrapper titleFontsize={titleFontsize}>
       <div className="leftBox">
         <h3 className="leftTitle">
           <a href={undefined}>{navTitle}</a>

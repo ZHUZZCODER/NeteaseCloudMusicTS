@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
-export const NavHeaderV4Wrapper = styled.div`
+interface INavHeaderV4 {
+  titleFontsize?: string
+}
+
+export const NavHeaderV4Wrapper = styled.div<INavHeaderV4>`
   display: flex;
   justify-content: space-between;
   padding: 0 0 11px 0;
@@ -8,7 +12,7 @@ export const NavHeaderV4Wrapper = styled.div`
   .leftBox {
     display: flex;
     .leftTitle {
-      font-size: 24px;
+      font-size: ${(props) => props.titleFontsize};
       font-weight: normal;
       > a {
         &:hover {

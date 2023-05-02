@@ -139,4 +139,11 @@ export const RankingSongsWrapper = styled.div`
       }
     }
   }
+  .seeMore {
+    height: 32px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 0 36px 0;
+  }
 `
