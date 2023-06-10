@@ -7,6 +7,9 @@ export const BASE_URL = '/request'
 export const PLAY_BASE_URL = '/api'
 export const TIME_OUT = 10000
 
+//备用音乐播放接口
+export const RESERVE_BASE_URL = '/reserveapi'
+
 // 2.依赖当前环境: development/production
 // console.log(process.env.NODE_ENV)
 // let BASE_URL = ''

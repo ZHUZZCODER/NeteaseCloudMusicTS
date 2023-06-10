@@ -101,3 +101,55 @@ export const AppHeaderWrapper = styled.div`
     background-color: #c20c0c;
   }
 `
+interface ISearchPanelWrapper {
+  showPanel: boolean
+}
+
+export const SearchPanelWrapper = styled.div<ISearchPanelWrapper>`
+  display: ${(props) => (props.showPanel ? 'block' : 'none')};
+  position: absolute;
+  top: 58px;
+  width: 270px;
+  background: #fff;
+  box-shadow: 0px 4px 7px #555;
+  border-radius: 4px;
+  z-index: 9;
+  .searchHeader {
+    display: flex;
+    color: ${(props) => props.theme.color.threeColor};
+    padding: 10px 10px;
+    border-bottom: 1px solid #bebebe;
+    /* cursor: pointer; */
+    &:hover {
+      a {
+        background-color: #bebebe;
+      }
+    }
+  }
+  .searchContentBox {
+    .searchItem {
+      display: flex;
+      .searchCategory {
+        padding: 10px;
+      }
+      .searchContent {
+        flex: 1;
+        border-top: 1px solid #bebebe;
+        border-left: 1px solid #bebebe;
+        .contentItem {
+          cursor: pointer;
+          padding: 10px;
+          ${(props) => props.theme.mixin.textNowrap}
+          &:hover {
+            background-color: #bebebe;
+          }
+        }
+      }
+    }
+    .searchItem:nth-child(1) {
+      .searchContent {
+        border-top: none;
+      }
+    }
+  }
+`

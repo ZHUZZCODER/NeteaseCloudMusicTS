@@ -11,3 +11,7 @@ export function getType(value: unknown) {
 export function isArray(value: unknown): boolean {
   return getType(value) === 'array'
 }
+
+export function isString(value: unknown): boolean {
+  return getType(value) === 'string'
+}
