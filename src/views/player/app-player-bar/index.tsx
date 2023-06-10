@@ -24,7 +24,12 @@ import {
   changeLyricsAction
 } from '../store/player'
 import AppPlayerPanel from '../app-player-panel'
-import { getCheckMusic, getNewSongUrl } from '../service/player'
+import {
+  getCheckMusic,
+  getNewSongUrl,
+  getReserveSongUrl
+} from '../service/player'
+import { playRequetVal } from '@/assets/constants'
 
 interface IProps {
   children?: ReactNode
@@ -128,10 +133,25 @@ const AppPlayerBar: FC<IProps> = (props) => {
       //   return console.log(MESSAGE)
       // }
       //获取歌曲播放路径
-      const {
-        data: [{ url }]
-      } = await getNewSongUrl(id)
-      audioRef.current!.src = url
+      let songUrl = ''
+      try {
+        const {
+          data: [{ url }]
+        } = await getNewSongUrl(id)
+        songUrl = url
+      } catch (error) {
+        const formData = new FormData()
+        formData.append('types', 'url')
+        formData.append('id', '1405283464')
+        formData.append('source', 'netease')
+        let result = await getReserveSongUrl(formData)
+        result = result
+          .replace('jQuery1113021672592618739306_1686291359547(', '')
+          .replace(')', '')
+        result = JSON.parse(result)
+        songUrl = result.url || ''
+      }
+      audioRef.current!.src = songUrl
       // audioRef.current!.src = getPlayUrl(id)
       //补充 这里播放首次不会触发，第二次触发
       audioRef.current

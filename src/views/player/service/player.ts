@@ -1,5 +1,7 @@
 import zhuRequest from '@/services'
 import zhuRequestPlay from '@/services/playrequest'
+import reservePlayRequest from '@/services/reserverPlayRequest'
+import { playRequetVal } from '@/assets/constants'
 
 //6.0获取歌曲信息数据
 export const getSongDetail = (ids: number) => {
@@ -31,4 +33,34 @@ export const getNewSongUrl = (
   type = 'apiSongUrlV1'
 ) => {
   return zhuRequestPlay.get({ url: '/', params: { type, id, level } })
+}
+
+//备用地址
+export const getReserveSongUrl = (data: FormData) => {
+  return reservePlayRequest.post({
+    params: {
+      callback: playRequetVal
+    },
+    data
+  })
+}
+
+/**
+ *
+ * @param keywords 关键字
+ * @param type 搜索类型
+ * @param limit 返回数量
+ * @param offset 偏移
+ * @returns Promise
+ */
+export const search = (
+  keywords: string,
+  type = 1,
+  limit?: number,
+  offset?: number
+) => {
+  return zhuRequest.get({
+    url: '/cloudSearch',
+    params: { keywords, type, limit, offset }
+  })
 }

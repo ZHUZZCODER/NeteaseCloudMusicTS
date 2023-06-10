@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
+import React, { memo, useEffect, useRef, useState, useCallback } from 'react'
 import type { FC, ReactNode } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { fetchUserHomePlaylistAction } from './store/user-home'
@@ -9,6 +9,7 @@ import { shallowEqual } from 'react-redux'
 import RankingSongs from './cpns/ranking-songs'
 import SongMenuItem from '@/components/song-menu-item'
 import { isArray } from '@/utils/utils'
+import { DatePicker, Space } from 'antd'
 
 interface IProps {
   children?: ReactNode
@@ -42,6 +43,26 @@ const UserHome: FC<IProps> = (props) => {
       setPlaylistItem(userhomePlaylist[0])
     }
   }, [userhomePlaylist])
+
+  function range(start: number, end: number) {
+    const result = []
+    for (let i = start; i < end; i++) {
+      result.push(i)
+    }
+    return result
+  }
+
+  const handleDisabledDate = useCallback((date: any) => {
+    return date
+  }, [])
+
+  const handleDisabledTime = useCallback((date: any) => {
+    return {
+      disabledHours: () => range(0, 24),
+      disabledMinutes: () => range(0, 60),
+      disabledSeconds: () => range(0, 60)
+    }
+  }, [])
 
   return (
     <UserHomeWrapper>

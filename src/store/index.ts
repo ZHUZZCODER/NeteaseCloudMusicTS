@@ -11,6 +11,7 @@ import radioReducer from '@/views/discover/c-views/radio/store/radio'
 import singerReducer from '@/views/discover/c-views/singer/store/singer'
 import albumReducer from '@/views/discover/c-views/album/store/album'
 import userHomeReducer from '@/views/discover/c-views/user-home/store/user-home'
+import musicSearchReducer from './modules/musicSearch'
 
 const store = configureStore({
   reducer: {
@@ -24,7 +25,8 @@ const store = configureStore({
     radio: radioReducer,
     singer: singerReducer,
     album: albumReducer,
-    userHome: userHomeReducer
+    userHome: userHomeReducer,
+    musicSearch: musicSearchReducer
   }
 })
 
