@@ -117,55 +117,69 @@ const AppPlayerBar: FC<IProps> = (props) => {
     //检查歌曲是否可用
     const checkMusicService = async (id: number) => {
       const { success, message: MESSAGE } = await getCheckMusic(id)
-      //如果没有版权
-      // if (!success) {
-      //   //将歌曲src设置为空
-      //   audioRef.current!.src = ''
-      //   //将播放按钮设置为false
-      //   setIsPlay(false)
-      //   //清空歌词数据
-      //   dispatch(changeLyricsAction([]))
-      //   message.open({
-      //     key: 'lyric',
-      //     content: MESSAGE,
-      //     duration: 0
-      //   })
-      //   return console.log(MESSAGE)
-      // }
-      //获取歌曲播放路径
-      let songUrl = ''
-      try {
-        const {
-          data: [{ url }]
-        } = await getNewSongUrl(id)
-        songUrl = url
-      } catch (error) {
-        const formData = new FormData()
-        formData.append('types', 'url')
-        formData.append('id', '1405283464')
-        formData.append('source', 'netease')
-        let result = await getReserveSongUrl(formData)
-        result = result
-          .replace('jQuery1113021672592618739306_1686291359547(', '')
-          .replace(')', '')
-        result = JSON.parse(result)
-        songUrl = result.url || ''
+      // 如果没有版权
+      if (!success) {
+        //将歌曲src设置为空
+        audioRef.current!.src = ''
+        //将播放按钮设置为false
+        setIsPlay(false)
+        //清空歌词数据
+        dispatch(changeLyricsAction([]))
+        message.open({
+          key: 'lyric',
+          content: MESSAGE,
+          duration: 0
+        })
+        return console.log(MESSAGE)
       }
-      audioRef.current!.src = songUrl
-      // audioRef.current!.src = getPlayUrl(id)
+      audioRef.current!.src = getPlayUrl(id)
       //补充 这里播放首次不会触发，第二次触发
       audioRef.current
         ?.play()
         .then(() => {
           setIsPlay(true)
-          console.log('success')
+          console.log('歌曲播放成功')
         })
         .catch((err) => {
           setIsPlay(false)
-          console.log('err:', err)
+          console.log('歌曲播放失败:', err)
         })
 
       setDuration(dt)
+      // //获取歌曲播放路径
+      // let songUrl = ''
+      // try {
+      //   const {
+      //     data: [{ url }]
+      //   } = await getNewSongUrl(id)
+      //   songUrl = url
+      // } catch (error) {
+      //   const formData = new FormData()
+      //   formData.append('types', 'url')
+      //   formData.append('id', '1405283464')
+      //   formData.append('source', 'netease')
+      //   let result = await getReserveSongUrl(formData)
+      //   result = result
+      //     .replace('jQuery1113021672592618739306_1686291359547(', '')
+      //     .replace(')', '')
+      //   result = JSON.parse(result)
+      //   songUrl = result.url || ''
+      // }
+      // audioRef.current!.src = songUrl
+      // // audioRef.current!.src = getPlayUrl(id)
+      //补充 这里播放首次不会触发，第二次触发
+      // audioRef.current
+      //   ?.play()
+      //   .then(() => {
+      //     setIsPlay(true)
+      //     console.log('success')
+      //   })
+      //   .catch((err) => {
+      //     setIsPlay(false)
+      //     console.log('err:', err)
+      //   })
+
+      // setDuration(dt)
     }
     checkMusicService(id)
   }, [currentSong, id, dispatch])

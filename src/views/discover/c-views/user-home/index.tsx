@@ -36,7 +36,7 @@ const UserHome: FC<IProps> = (props) => {
 
   useEffect(() => {
     if (
-      isArray(userhomePlaylist) &&
+      Array.isArray(userhomePlaylist) &&
       userhomePlaylist.length &&
       userhomePlaylist[0].creator
     ) {
