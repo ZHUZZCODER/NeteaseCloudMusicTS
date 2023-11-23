@@ -1,16 +1,23 @@
-import React, { memo, ReactElement, useCallback, useState } from 'react'
+import React, {
+  memo,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import type { FC, ReactNode, ChangeEvent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Input } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import { AppHeaderWrapper, SearchPanelWrapper } from './style'
 import headerTitles from '@/assets/data/header_titles.json'
-import { isString } from '@/utils/utils'
+import { hasOwnPropertypeKey, isString } from '@/utils/utils'
 import { searchSuggest, search } from '@/services/service'
 import { changeSuggestResultAction } from '@/store/modules/musicSearch'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import { isEmptyObject } from '@/utils/isEmptyObject'
+import { isArray } from 'underscore'
 
 interface IProps {
   children?: ReactNode
@@ -26,6 +33,7 @@ const AppHeader: FC<IProps> = (props) => {
   const dispatch = useAppDispatch()
   const [searchValue, setSearchValue] = useState<string>('')
   const [showSearchPanel, setShowSearchPanel] = useState<boolean>(false)
+  const [order, setOrder] = useState<string[]>([])
 
   //获取搜索建议
   const { suggestResult } = useAppSelector(
@@ -34,6 +42,12 @@ const AppHeader: FC<IProps> = (props) => {
     }),
     shallowEqual
   )
+
+  useEffect(() => {
+    if (suggestResult.order) {
+      setOrder(suggestResult.order)
+    }
+  }, [suggestResult.order, setOrder])
 
   function handleTitle(
     { title, type, link }: TitleItem,
@@ -66,7 +80,7 @@ const AppHeader: FC<IProps> = (props) => {
       console.log('Event=', e.target.value, typeof e.target.value, searchValue)
       const value = e.target.value
       //进行关键字搜索
-      const { result } = await searchSuggest('111')
+      const { result } = await searchSuggest(value)
       if (result) {
         dispatch(changeSuggestResultAction(result))
       }
@@ -131,41 +145,102 @@ const AppHeader: FC<IProps> = (props) => {
                 <a href={undefined}>搜&quot;11&quot;相关用户&gt;</a>
               </p>
               <div className="searchContentBox">
-                <div className="searchItem">
-                  <h3 className="searchCategory">单曲</h3>
-                  <ul className="searchContent">
-                    <li className="contentItem">
-                      <a href={undefined}>11-队长 黄礼格</a>
-                    </li>
-                    <li className="contentItem">
-                      <a href={undefined}>11-队长 黄礼格</a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="searchItem">
-                  <h3 className="searchCategory">歌手</h3>
-                  <ul className="searchContent">
-                    <li className="contentItem">
-                      <a href={undefined}>11:11</a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="searchItem">
-                  <h3 className="searchCategory">专辑</h3>
-                  <ul className="searchContent">
-                    <li className="contentItem">
-                      <a href={undefined}>111</a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="searchItem">
-                  <h3 className="searchCategory">歌单</h3>
-                  <ul className="searchContent">
-                    <li className="contentItem">
-                      <a href={undefined}>123</a>
-                    </li>
-                  </ul>
-                </div>
+                {!!order.length &&
+                  order.map((orderKey) => {
+                    let element = null
+                    switch (orderKey) {
+                      case 'songs':
+                        element = (
+                          <>
+                            <h3 className="searchCategory">单曲</h3>
+                            <ul className="searchContent">
+                              {suggestResult?.songs &&
+                                suggestResult.songs.map(
+                                  ({
+                                    id,
+                                    artists: [{ name: artistName }],
+                                    name
+                                  }) => {
+                                    return (
+                                      <li key={id} className="contentItem">
+                                        <a href={undefined}>
+                                          {name}-{artistName}
+                                        </a>
+                                      </li>
+                                    )
+                                  }
+                                )}
+                            </ul>
+                          </>
+                        )
+                        break
+                      case 'artists':
+                        element = (
+                          <>
+                            <h3 className="searchCategory">歌手</h3>
+                            <ul className="searchContent">
+                              {suggestResult?.artists &&
+                                suggestResult.artists.map(({ name, id }) => {
+                                  return (
+                                    <li key={id} className="contentItem">
+                                      <a href={undefined}>{name}</a>
+                                    </li>
+                                  )
+                                })}
+                            </ul>
+                          </>
+                        )
+                        break
+                      case 'albums':
+                        element = (
+                          <>
+                            <h3 className="searchCategory">专辑</h3>
+                            <ul className="searchContent">
+                              {suggestResult?.albums &&
+                                suggestResult.albums.map(
+                                  ({
+                                    id,
+                                    artist: { name: artistName },
+                                    name
+                                  }) => {
+                                    return (
+                                      <li key={id} className="contentItem">
+                                        <a href={undefined}>
+                                          {name}-{artistName}
+                                        </a>
+                                      </li>
+                                    )
+                                  }
+                                )}
+                            </ul>
+                          </>
+                        )
+                        break
+                      case 'playlists':
+                        element = (
+                          <>
+                            <h3 className="searchCategory">歌单</h3>
+                            <ul className="searchContent">
+                              {suggestResult?.playlists &&
+                                suggestResult.playlists.map(({ id, name }) => {
+                                  return (
+                                    <li key={id} className="contentItem">
+                                      <a href={undefined}>{name}</a>
+                                    </li>
+                                  )
+                                })}
+                            </ul>
+                          </>
+                        )
+                        break
+                    }
+
+                    return (
+                      <div className="searchItem" key={orderKey}>
+                        {element}
+                      </div>
+                    )
+                  })}
               </div>
             </SearchPanelWrapper>
           </div>

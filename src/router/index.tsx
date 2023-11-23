@@ -85,6 +85,7 @@ const routes: RouteObject[] = [
     path: '/user/home',
     element: <UserHome />
   }
+  //歌曲
 ]
 
 export default routes

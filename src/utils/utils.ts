@@ -8,10 +8,14 @@ export function getType(value: unknown) {
     .toLocaleLowerCase()
 }
 
-export function isArray(value: unknown): boolean {
+export function isArray<T = unknown>(value: unknown): value is T[] {
   return getType(value) === 'array'
 }
 
 export function isString(value: unknown): boolean {
   return getType(value) === 'string'
+}
+
+export function hasOwnPropertypeKey(obj: object, key: string): boolean {
+  return Object.prototype.hasOwnProperty.call(obj, key)
 }
