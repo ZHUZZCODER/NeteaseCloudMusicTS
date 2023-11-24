@@ -29,10 +29,10 @@ export const getSongUrl = (id: number, level: TLEVEL = 'exhigh') => {
 //新的获取歌曲地址
 export const getNewSongUrl = (
   id: number,
-  level: TLEVEL = 'hires',
+  level: TLEVEL = 'exhigh',
   type = 'apiSongUrlV1'
 ) => {
-  return zhuRequestPlay.get({ url: '/', params: { type, id, level } })
+  return zhuRequestPlay.post({ url: '/music/', params: { type, id, level } })
 }
 
 //备用地址
