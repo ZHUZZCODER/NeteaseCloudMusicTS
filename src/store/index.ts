@@ -12,6 +12,7 @@ import singerReducer from '@/views/discover/c-views/singer/store/singer'
 import albumReducer from '@/views/discover/c-views/album/store/album'
 import userHomeReducer from '@/views/discover/c-views/user-home/store/user-home'
 import musicSearchReducer from './modules/musicSearch'
+import singleSongReducer from '@/views/discover/c-views/singleSong/store/singleSong'
 
 const store = configureStore({
   reducer: {
@@ -26,7 +27,8 @@ const store = configureStore({
     singer: singerReducer,
     album: albumReducer,
     userHome: userHomeReducer,
-    musicSearch: musicSearchReducer
+    musicSearch: musicSearchReducer,
+    singleSong: singleSongReducer
   }
 })
 

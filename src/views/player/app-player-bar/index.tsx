@@ -30,6 +30,7 @@ import {
   getReserveSongUrl
 } from '../service/player'
 import { playRequetVal } from '@/assets/constants'
+import { useGetMusicUrl } from '@/hooks'
 
 interface IProps {
   children?: ReactNode
@@ -146,17 +147,20 @@ const AppPlayerBar: FC<IProps> = (props) => {
       //   })
 
       // setDuration(dt)
-      //获取歌曲播放路径
-      let songUrl = ''
-      try {
-        const {
-          data: [{ url }]
-        } = await getNewSongUrl(id)
-        songUrl = url
-      } catch (error) {
-        console.log(error)
-      }
-      audioRef.current!.src = songUrl
+      // //获取歌曲播放路径
+      // let songUrl = ''
+      // try {
+      //   const {
+      //     data: [{ url }]
+      //   } = await getNewSongUrl(id)
+      //   songUrl = url
+      // } catch (error) {
+      //   console.log(error)
+      // }
+      //获取歌曲url
+      const songUrl = await useGetMusicUrl(id)
+      console.log(songUrl)
+      audioRef.current!.src = `${songUrl}`
       // audioRef.current!.src = getPlayUrl(id)
       // 补充 这里播放首次不会触发，第二次触发
       audioRef.current
@@ -173,7 +177,7 @@ const AppPlayerBar: FC<IProps> = (props) => {
       setDuration(dt)
     }
     checkMusicService(id)
-  }, [currentSong, id, dispatch])
+  }, [currentSong, id, dispatch, useGetMusicUrl])
 
   //1.4播放歌曲方法
   function playAudio() {

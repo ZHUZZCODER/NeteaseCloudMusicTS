@@ -136,10 +136,14 @@ export const SearchPanelWrapper = styled.div<ISearchPanelWrapper>`
         flex: 1;
         border-top: 1px solid #bebebe;
         border-left: 1px solid #bebebe;
+        overflow: hidden;
         .contentItem {
           cursor: pointer;
           padding: 10px;
-          ${(props) => props.theme.mixin.textNowrap}
+          a {
+            ${(props) => props.theme.mixin.textNowrap}
+          }
+
           &:hover {
             background-color: #bebebe;
           }

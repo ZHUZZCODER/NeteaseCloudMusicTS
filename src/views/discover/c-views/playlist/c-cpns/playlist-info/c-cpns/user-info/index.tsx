@@ -10,7 +10,7 @@ interface IProps {
 }
 
 interface IAVATARDETAIL {
-  identityIconUrl: string
+  identityIconUrl?: string
 }
 
 const UserInfo: FC<IProps> = (props) => {
@@ -32,11 +32,13 @@ const UserInfo: FC<IProps> = (props) => {
         <a className="info-name-text" href={undefined}>
           {nickname as string}
         </a>
-        <img
-          className="info-name-icon"
-          src={(avatarDetail as IAVATARDETAIL).identityIconUrl}
-          alt=""
-        />
+        {(avatarDetail as IAVATARDETAIL)?.identityIconUrl && (
+          <img
+            className="info-name-icon"
+            src={(avatarDetail as IAVATARDETAIL).identityIconUrl}
+            alt=""
+          />
+        )}
       </span>
       <span className="info-time">{momentFormat(createTime)} 创建</span>
     </UserInfoWrapper>

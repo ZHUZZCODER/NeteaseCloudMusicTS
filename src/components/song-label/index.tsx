@@ -5,7 +5,7 @@ import { SongLabelWrapper } from './style'
 interface IProps {
   children?: ReactNode
   name: string
-  labelPosition: string
+  labelPosition?: string
 }
 
 const SongLabel: FC<IProps> = (props) => {

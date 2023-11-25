@@ -87,7 +87,12 @@ const PlayListInfo: FC<IProps> = (props) => {
             </div>
           )}
         </div> */}
-        <IntroduceDescription introduceTitle="介绍" description={description} />
+        {description && (
+          <IntroduceDescription
+            introduceTitle="介绍"
+            description={description}
+          />
+        )}
       </div>
     </PlayListInfoWrapper>
   )

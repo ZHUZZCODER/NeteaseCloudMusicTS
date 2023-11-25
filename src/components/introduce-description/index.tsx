@@ -16,7 +16,7 @@ const IntroduceDescription: FC<IProps> = (props) => {
   const [isFlod, setIsFlod] = useState<boolean>(false)
   //是否显示展开收起
   const [showFlod, setShowFlod] = useState<boolean>(true)
-  const descriptionList = description.split('\n')
+  const descriptionList = description ? description.split('\n') : []
 
   //介绍没有那么长就不显示展开收起
   useEffect(() => {
@@ -30,7 +30,7 @@ const IntroduceDescription: FC<IProps> = (props) => {
   }
   function descriptionCpn() {
     return (
-      descriptionList.length &&
+      !!descriptionList.length &&
       descriptionList
         .slice(0, 9)
         .map((item, index) => (
