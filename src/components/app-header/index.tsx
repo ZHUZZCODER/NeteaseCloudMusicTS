@@ -3,11 +3,12 @@ import React, {
   ReactElement,
   useCallback,
   useEffect,
-  useState
+  useState,
+  useRef
 } from 'react'
 import type { FC, ReactNode, ChangeEvent } from 'react'
-import { NavLink } from 'react-router-dom'
-import { Input } from 'antd'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { Input, InputRef } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import { AppHeaderWrapper, SearchPanelWrapper } from './style'
 import headerTitles from '@/assets/data/header_titles.json'
@@ -18,6 +19,7 @@ import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import { isEmptyObject } from '@/utils/isEmptyObject'
 import { isArray } from 'underscore'
+import { changeSingerInfomationAction } from '@/views/discover/c-views/singleSong/store/singleSong'
 
 interface IProps {
   children?: ReactNode
@@ -30,10 +32,15 @@ interface TitleItem {
 }
 
 const AppHeader: FC<IProps> = (props) => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [searchValue, setSearchValue] = useState<string>('')
   const [showSearchPanel, setShowSearchPanel] = useState<boolean>(false)
   const [order, setOrder] = useState<string[]>([])
+  //是否点击
+  const [isClick, setIsClick] = useState<boolean>(false)
+  const inputRef = useRef<InputRef>(null)
+  // const isClick = useRef<boolean>()
 
   //获取搜索建议
   const { suggestResult } = useAppSelector(
@@ -77,16 +84,12 @@ const AppHeader: FC<IProps> = (props) => {
 
   const handleSearchChange = useCallback(
     async (e: ChangeEvent<HTMLInputElement>) => {
-      console.log('Event=', e.target.value, typeof e.target.value, searchValue)
       const value = e.target.value
       //进行关键字搜索
       const { result } = await searchSuggest(value)
       if (result) {
         dispatch(changeSuggestResultAction(result))
       }
-
-      console.log('请求result=', result)
-
       if ((isString(value) && !value) || !isEmptyObject(result)) {
         setShowSearchPanel(false)
       }
@@ -102,14 +105,69 @@ const AppHeader: FC<IProps> = (props) => {
     setShowSearchPanel(false)
   }, [])
 
-  const handleFocus = useCallback(() => {
-    console.log('searchValue=', searchValue)
+  const handleFocus = useCallback(async () => {
+    const { result } = await searchSuggest(searchValue)
+    if (result) dispatch(changeSuggestResultAction(result))
     if (searchValue) setShowSearchPanel(true)
   }, [searchValue])
 
   const handleBlur = useCallback(() => {
-    setShowSearchPanel(false)
-  }, [])
+    if (!isClick) setShowSearchPanel(false)
+  }, [isClick])
+
+  const handleSongClick = useCallback(
+    ({
+      id,
+      name,
+      artistName,
+      albumName
+    }: {
+      id: number
+      name: string
+      artistName: string
+      albumName: string
+    }) => {
+      dispatch(
+        changeSingerInfomationAction({
+          songName: name,
+          singerName: artistName,
+          albumName: albumName
+        })
+      )
+      navigate(`/discover/singleSong?id=${id}`)
+      setShowSearchPanel(false)
+      inputRef.current?.blur()
+    },
+    [dispatch, navigate, setShowSearchPanel, inputRef]
+  )
+
+  const handlePlaylists = useCallback(
+    (id: number) => {
+      navigate(`/discover/playlist?id=${id}`)
+      setShowSearchPanel(false)
+      inputRef.current?.blur()
+    },
+    [navigate, setShowSearchPanel, inputRef]
+  )
+
+  const handleAlbums = useCallback(
+    (id: number) => {
+      navigate(`/discover/albumList?id=${id}`)
+      setShowSearchPanel(false)
+      inputRef.current?.blur()
+    },
+    [navigate, setShowSearchPanel, inputRef]
+  )
+
+  const handleShowPanelMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (showSearchPanel) {
+        e.stopPropagation()
+        e.preventDefault()
+      }
+    },
+    [setIsClick, showSearchPanel]
+  )
 
   return (
     <AppHeaderWrapper>
@@ -131,6 +189,7 @@ const AppHeader: FC<IProps> = (props) => {
         <div className="headerRight">
           <div className="searchBox">
             <Input
+              ref={inputRef}
               className="search"
               placeholder="音乐/视频/电台/用户"
               prefix={<SearchOutlined className="searchIcon" />}
@@ -140,9 +199,13 @@ const AppHeader: FC<IProps> = (props) => {
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
-            <SearchPanelWrapper showPanel={showSearchPanel}>
+            {/* showSearchPanel */}
+            <SearchPanelWrapper
+              showPanel={showSearchPanel}
+              onMouseDown={(e: React.MouseEvent) => handleShowPanelMouseDown(e)}
+            >
               <p className="searchHeader">
-                <a href={undefined}>搜&quot;11&quot;相关用户&gt;</a>
+                <a href={undefined}>搜&quot;{searchValue}&quot;相关用户&gt;</a>
               </p>
               <div className="searchContentBox">
                 {!!order.length &&
@@ -159,11 +222,26 @@ const AppHeader: FC<IProps> = (props) => {
                                   ({
                                     id,
                                     artists: [{ name: artistName }],
+                                    album: { name: albumName },
                                     name
                                   }) => {
                                     return (
-                                      <li key={id} className="contentItem">
-                                        <a href={undefined}>
+                                      <li
+                                        key={id}
+                                        className="contentItem"
+                                        onClick={(e) =>
+                                          handleSongClick({
+                                            id,
+                                            name,
+                                            artistName,
+                                            albumName
+                                          })
+                                        }
+                                      >
+                                        <a
+                                          title={`${name}-${artistName}`}
+                                          href={undefined}
+                                        >
                                           {name}-{artistName}
                                         </a>
                                       </li>
@@ -183,7 +261,9 @@ const AppHeader: FC<IProps> = (props) => {
                                 suggestResult.artists.map(({ name, id }) => {
                                   return (
                                     <li key={id} className="contentItem">
-                                      <a href={undefined}>{name}</a>
+                                      <a title={name} href={undefined}>
+                                        {name}
+                                      </a>
                                     </li>
                                   )
                                 })}
@@ -204,8 +284,15 @@ const AppHeader: FC<IProps> = (props) => {
                                     name
                                   }) => {
                                     return (
-                                      <li key={id} className="contentItem">
-                                        <a href={undefined}>
+                                      <li
+                                        key={id}
+                                        className="contentItem"
+                                        onClick={(e) => handleAlbums(id)}
+                                      >
+                                        <a
+                                          title={`${name}-${artistName}`}
+                                          href={undefined}
+                                        >
                                           {name}-{artistName}
                                         </a>
                                       </li>
@@ -224,8 +311,14 @@ const AppHeader: FC<IProps> = (props) => {
                               {suggestResult?.playlists &&
                                 suggestResult.playlists.map(({ id, name }) => {
                                   return (
-                                    <li key={id} className="contentItem">
-                                      <a href={undefined}>{name}</a>
+                                    <li
+                                      key={id}
+                                      className="contentItem"
+                                      onClick={(e) => handlePlaylists(id)}
+                                    >
+                                      <a title={name} href={undefined}>
+                                        {name}
+                                      </a>
                                     </li>
                                   )
                                 })}

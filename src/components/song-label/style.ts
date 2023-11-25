@@ -6,7 +6,7 @@ interface ILABELPOSITION {
 
 export const SongLabelWrapper = styled.div<ILABELPOSITION>`
   display: flex;
-  margin: 0 0 12px;
+  padding: 0 0 6px;
   .labelImg {
     width: 54px;
     height: 24px;

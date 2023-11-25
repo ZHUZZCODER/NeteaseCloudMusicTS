@@ -1,3 +1,4 @@
+import SingleSong from '@/views/discover/c-views/singleSong'
 import React, { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 import type { RouteObject } from 'react-router-dom'
@@ -21,6 +22,8 @@ const AlbumChildren = lazy(
 )
 //歌手信息页面
 const UserHome = lazy(() => import('@/views/discover/c-views/user-home'))
+//单曲
+const singleSong = lazy(() => import('@/views/discover/c-views/singleSong'))
 
 const routes: RouteObject[] = [
   {
@@ -66,6 +69,11 @@ const routes: RouteObject[] = [
       {
         path: '/discover/albumList',
         element: <AlbumChildren />
+      },
+      // 单曲
+      {
+        path: '/discover/singleSong',
+        element: <SingleSong />
       }
     ]
   },

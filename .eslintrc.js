@@ -31,6 +31,7 @@ module.exports = {
           '{}': false
         }
       }
-    ]
+    ],
+    '@typescript-eslint/no-empty-function': [0]
   }
 }
