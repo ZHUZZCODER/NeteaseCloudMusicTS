@@ -95,10 +95,9 @@ const AppHeader: FC<IProps> = (props) => {
       }
 
       setShowSearchPanel(true)
-
       setSearchValue(value)
     },
-    []
+    [setSearchValue, setShowSearchPanel]
   )
 
   const handlePressEnter = useCallback(() => {
@@ -193,13 +192,12 @@ const AppHeader: FC<IProps> = (props) => {
               className="search"
               placeholder="音乐/视频/电台/用户"
               prefix={<SearchOutlined className="searchIcon" />}
-              value={searchValue}
+              defaultValue={searchValue}
               onChange={(e) => handleSearchChange(e)}
               onPressEnter={handlePressEnter}
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
-            {/* showSearchPanel */}
             <SearchPanelWrapper
               showPanel={showSearchPanel}
               onMouseDown={(e: React.MouseEvent) => handleShowPanelMouseDown(e)}
