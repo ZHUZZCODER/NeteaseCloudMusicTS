@@ -159,7 +159,6 @@ const AppPlayerBar: FC<IProps> = (props) => {
       // }
       //获取歌曲url
       const songUrl = await useGetMusicUrl(id)
-      console.log(songUrl)
       audioRef.current!.src = `${songUrl}`
       // audioRef.current!.src = getPlayUrl(id)
       // 补充 这里播放首次不会触发，第二次触发
