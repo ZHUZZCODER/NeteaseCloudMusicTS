@@ -92,12 +92,13 @@ const AppHeader: FC<IProps> = (props) => {
       }
       if ((isString(value) && !value) || !isEmptyObject(result)) {
         setShowSearchPanel(false)
+        dispatch(changeSuggestResultAction({}))
+      } else {
+        setShowSearchPanel(true)
       }
-
-      setShowSearchPanel(true)
       setSearchValue(value)
     },
-    [setSearchValue, setShowSearchPanel]
+    [setSearchValue, setShowSearchPanel, dispatch]
   )
 
   const handlePressEnter = useCallback(() => {
