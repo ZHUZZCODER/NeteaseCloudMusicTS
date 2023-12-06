@@ -6,7 +6,7 @@
 
 本项目前端基于react18、typescripts、reactreduxtookit、reactrouter6、styledcomponent、axios、classnames、craco-less、antd、monent、normalize.css、underscore。
 
-后端使用：https://www.npmjs.com/package/NeteaseCloudMusicApi（nodejs的api接口）
+后端使用（nodejs的api接口）：https://www.npmjs.com/package/NeteaseCloudMusicApi
 
 声明：本项目仅供学习使用。
 
