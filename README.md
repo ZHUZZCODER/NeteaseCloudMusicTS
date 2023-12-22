@@ -1,46 +1,19 @@
-# Getting Started with Create React App
+# 网易云音乐web端
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 项目介绍：
 
-## Available Scripts
+本项目最初是因为本人学了了react16.8和react18之后的一个练手项目，因为本人比较喜欢听音乐，所以持续做了下来。
 
-In the project directory, you can run:
+本项目前端基于react18、typescripts、reactreduxtookit、reactrouter6、styledcomponent、axios、classnames、craco-less、antd、monent、normalize.css、underscore。
 
-### `npm start`
+后端使用（nodejs的api接口）：https://www.npmjs.com/package/NeteaseCloudMusicApi
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+声明：本项目仅供学习使用。
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 项目功能介绍
 
-### `npm test`
+项目目前主要实现了推荐、排行榜、歌单、主播电台、歌手、新碟上架、搜索功能，其他功能都会在后续空闲时间持续完善。
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 如何运行项目
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+在项目根目录执行npm install，然后执行npm start。运行项目。
