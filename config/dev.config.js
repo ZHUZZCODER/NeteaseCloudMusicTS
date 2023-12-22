@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api/': {
-        target: 'http://139.159.248.231:9999',
+        target: 'http://8.134.158.222:9999',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -10,12 +10,12 @@ module.exports = {
         secure: false
       },
       '/request': {
-        target: 'http://139.159.248.231:10000',
+        target: 'http://8.134.158.222:3000',
         changeOrigin: true,
         pathRewrite: { '^/request': '' }
       },
       '/reserveapi': {
-        target: 'http://139.159.248.231:10000',
+        target: 'http://8.134.158.222:10000',
         changeOrigin: true,
         secure: false
       }
