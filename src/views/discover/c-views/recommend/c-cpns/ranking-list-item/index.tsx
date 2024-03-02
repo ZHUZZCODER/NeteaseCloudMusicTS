@@ -55,9 +55,12 @@ const RankingListItem: FC<IProps> = (props) => {
           return (
             <div className="rankingItem" key={id}>
               <span className="rankingNum">{index + 1}</span>
-              <a className="rankingTitle" href="#">
+              <Link
+                className="rankingTitle"
+                to={`/discover/singleSong?id=${id}`}
+              >
                 {name}
-              </a>
+              </Link>
               <div className="rankingIcon">
                 <div
                   className="btn sprite_02 iconPlay"

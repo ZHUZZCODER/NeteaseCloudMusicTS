@@ -7,6 +7,7 @@ import { fetchCurrentSongDataAction } from '@/views/player/store/player'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import classnames from 'classnames'
+import { Link } from 'react-router-dom'
 
 export interface Track {
   id: number
@@ -78,9 +79,13 @@ const SongList: FC<IProps> = (props) => {
                 <td className="Col2 tdCol2">
                   <div className="titleContent">
                     <div className="titleBox">
-                      <a className="abox" href={undefined} title={name}>
+                      <Link
+                        className="abox"
+                        to={`/discover/singleSong?id=${id}`}
+                        title={name}
+                      >
                         {name}
-                      </a>
+                      </Link>
                       {!!alia && alia.length > 0 && <span>-（{alia[0]}）</span>}
                     </div>
                     {mv > 0 && <i className="sprite_table mvIcon abox"></i>}

@@ -67,7 +67,7 @@ const Song: FC<IProps> = (props) => {
       <div className="wrap-v2 songContent">
         <SongHeader />
         <div className="songListBox">
-          {playlists.length &&
+          {!!playlists.length &&
             playlists.map((item) => {
               return <SongMenuItem key={item.id} itemData={item} right={49} />
             })}

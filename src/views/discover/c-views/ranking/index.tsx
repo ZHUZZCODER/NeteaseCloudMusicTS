@@ -65,7 +65,7 @@ const Ranking: FC<IProps> = (props) => {
     <RankingWrapper>
       <div className="wrap-v2 rankingContent">
         <RankingLeftListWrapper>
-          {rankingList.length &&
+          {!!rankingList.length &&
             rankingList.map(
               ({ id, coverImgUrl, name, updateFrequency }, index) => {
                 let header
