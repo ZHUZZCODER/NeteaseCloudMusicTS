@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import { getImageSize, formatTime } from '@/utils/format'
 import { fetchCurrentSongDataAction } from '@/views/player/store/player'
+import { Link } from 'react-router-dom'
 
 interface IProps {
   children?: ReactNode
@@ -76,13 +77,16 @@ const RankingSong: FC<IProps> = (props) => {
                     <td className="commonTd">
                       <div className="titleBox">
                         {index < 3 ? (
-                          <a className="titleImgBox" href={undefined}>
+                          <Link
+                            className="titleImgBox"
+                            to={`/discover/singleSong?id=${id}`}
+                          >
                             <img
                               className="titleImg"
                               src={getImageSize(picUrl, 50)}
                               alt=""
                             />
-                          </a>
+                          </Link>
                         ) : null}
 
                         <div className="titleContent">
@@ -92,9 +96,12 @@ const RankingSong: FC<IProps> = (props) => {
                             })}
                             onClick={(e) => playMusic(id)}
                           ></i>
-                          <a className="songTitle" href={undefined}>
+                          <Link
+                            className="songTitle"
+                            to={`/discover/singleSong?id=${id}`}
+                          >
                             {name}
-                          </a>
+                          </Link>
                           {mv > 0 && <i className="sprite_table mvIcon"></i>}
                         </div>
                       </div>

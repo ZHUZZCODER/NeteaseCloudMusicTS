@@ -41,7 +41,7 @@ const AlbumChildren: FC<IProps> = (props) => {
           {albumInfo && (
             <AlbumInfo albumInfo={albumInfo} songInfo={songInfo || []} />
           )}
-          {songInfo.length && <AlbumList songInfo={songInfo} />}
+          {!!songInfo.length && <AlbumList songInfo={songInfo} />}
         </ChildrenLeftWrapper>
         <ChildrenRightWrapper>
           <MoreDownload />

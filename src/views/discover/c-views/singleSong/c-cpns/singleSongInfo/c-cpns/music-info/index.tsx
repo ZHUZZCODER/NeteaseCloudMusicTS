@@ -48,15 +48,25 @@ const MusicInfo: FC<IProps> = (props) => {
         commentNum={3}
         playAllClick={playAllClick}
       />
-      <LyricWrapper
-        dangerouslySetInnerHTML={showhtml(
-          lyric.reduce(
-            (accumulator, currentValue) =>
-              accumulator + currentValue.text + '<br/>',
-            ''
-          )
-        )}
-      ></LyricWrapper>
+      <LyricWrapper>
+        <input
+          className="selectInput"
+          id="selectInputId"
+          type="checkbox"
+          hidden
+        />
+        <div
+          className="lyricContent"
+          dangerouslySetInnerHTML={showhtml(
+            lyric.reduce(
+              (accumulator, currentValue) =>
+                accumulator + currentValue.text + '<br/>',
+              ''
+            )
+          )}
+        ></div>
+        <label className="selectLabel" htmlFor="selectInputId"></label>
+      </LyricWrapper>
     </MusicInfoWrapper>
   )
 }

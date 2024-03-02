@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const SingleSongMore: FC<IProps> = (props) => {
-  return <SingleSongMoreWrapper>右侧</SingleSongMoreWrapper>
+  return <SingleSongMoreWrapper>暂无</SingleSongMoreWrapper>
 }
 
 export default memo(SingleSongMore)
