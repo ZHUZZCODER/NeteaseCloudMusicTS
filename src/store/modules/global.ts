@@ -19,7 +19,6 @@ export const fetchUserInfo = createAsyncThunk<void, string>(
   'fetchUserInfo',
   async (cookieVal: string, { dispatch, getState }) => {
     const { data } = await getLoginStatus(cookieVal)
-    console.log('res=', data)
     if (data.code === 200) dispatch(changeUserInfo(data))
   }
 )

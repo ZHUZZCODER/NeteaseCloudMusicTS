@@ -6,7 +6,6 @@ export default function useHandleSearchParams() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [newSearchParams, setNewSearchParams] = useState<any>(undefined)
   useEffect(() => {
-    console.log('searchParams=', searchParams)
     setNewSearchParams(Object.fromEntries(searchParams))
   }, [searchParams])
   return [newSearchParams, setSearchParams]

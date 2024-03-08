@@ -65,9 +65,7 @@ const AppHeader: FC<IProps> = (props) => {
   }, [suggestResult.order, setOrder])
 
   useEffect(() => {
-    console.log('val===', userInfo)
     if (isObject<LoginStatusRes>(userInfo) && isObjectKeys(userInfo)) {
-      console.log('存在val======', userInfo)
       setIsLogin(true)
     } else {
       setIsLogin(false)

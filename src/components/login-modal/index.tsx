@@ -30,11 +30,9 @@ const LoginModal: FC<IProps> = (props) => {
     const {
       data: { unikey }
     } = await getQrKey()
-    console.log('key=', unikey)
     const {
       data: { qrimg, qrurl }
     } = await getQrCreate(unikey)
-    console.log('res=', qrimg)
     setQrCodeUrl(qrurl)
     clearTimer()
     timer.current = setInterval(async () => {

@@ -12,7 +12,6 @@ export const fetchUserHomePlaylistAction = createAsyncThunk<
   IThunkState
 >('userhomePlaylist', async (uid: number, { dispatch }) => {
   const { code, playlist = [] } = await getUserPlaylist(uid)
-  console.log('result=', playlist)
   if (code === 200) {
     dispatch(changeUserhomePlaylistAction(playlist))
   }
