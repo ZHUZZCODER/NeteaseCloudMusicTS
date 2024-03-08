@@ -1,4 +1,29 @@
 module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'resolve-url-loader'
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true,
+              sourceMapContents: false
+            }
+          }
+        ]
+      }
+    ]
+  },
   devServer: {
     proxy: {
       '/api/': {

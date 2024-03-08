@@ -1,0 +1,112 @@
+.login-modal-container {
+  background-color: transparent !important;
+}
+.login-modal {
+  width: 538px;
+  border-radius: 4px;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.8);
+  background-color: white;
+  pointer-events: auto;
+
+  .login-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 23px 0 18px;
+    border-bottom: 1px solid #191919;
+    border-radius: 4px 4px 0 0;
+    background: #2d2d2d;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    height: 38px;
+    h2 {
+      font-size: 14px;
+    }
+    .close-icon {
+      cursor: pointer;
+    }
+  }
+  .login-modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 326px;
+    background-color: #fff;
+    .login-modal-content-show {
+      display: flex;
+      justify-content: center;
+      .content-show-img {
+        width: 125px;
+        height: 220px;
+      }
+      .content-show-orcode {
+        margin-left: 25px;
+        width: 200px;
+        text-align: center;
+        .orCode-box {
+          width: 138px;
+          height: 138px;
+          display: flex;
+          justify-content: center;
+          position: relative;
+          margin: 13px auto;
+          .orCode-fail {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 138px;
+            height: 138px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            .fail-text {
+              font-size: 12px;
+              font-weight: 500;
+              margin-bottom: 6px;
+            }
+            .refresh-btn {
+              width: 64px;
+              height: 24px;
+              line-height: 24px;
+              text-align: center;
+              border-radius: 4px;
+              background: linear-gradient(180deg, #81dd81 0%, #55a055 100%);
+              border: 1px solid #5baf5b;
+              // box-shadow: inset 0 -1px 1px 1px rgb(185 230 5.96774194%);
+              color: #fff;
+              font-size: 12px;
+            }
+          }
+        }
+        .orCode-desc {
+          font-size: 12px;
+          width: 200px;
+          line-height: 17px;
+          color: rgba(0, 0, 0, 0.4);
+          text-align: center;
+          .link-desc {
+            color: #0c73c2;
+          }
+        }
+      }
+    }
+    .other-login {
+      display: block;
+      width: 118px;
+      height: 28px;
+      margin: 20px auto 0;
+      padding-right: 0;
+      font-size: 12px;
+      border: 1px solid #979797;
+      border-radius: 15px;
+      line-height: 28px;
+      text-align: center;
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+}

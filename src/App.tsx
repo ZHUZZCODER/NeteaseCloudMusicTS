@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useCallback, useState } from 'react'
 import { useRoutes } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from './store'
 import routes from './router'
@@ -7,6 +7,7 @@ import { changeMessageAction } from './store/modules/counter'
 import AppHeader from './components/app-header'
 import AppPlayerBar from './views/player/app-player-bar'
 import DiscoverFooter from './components/discover-footer'
+import LoginModal from './components/login-modal'
 
 function App() {
   const { count, message } = useAppSelector(
@@ -22,9 +23,15 @@ function App() {
     dispatch(changeMessageAction('Hello World'))
   }
 
+  const [showModal, setShowModal] = useState(false)
+
+  const changeShowModal = useCallback((status: boolean) => {
+    setShowModal(status)
+  }, [])
+
   return (
     <div className="App">
-      <AppHeader />
+      <AppHeader changeLoginModal={changeShowModal} />
       <Suspense fallback="loading">
         <div className="main">{useRoutes(routes)}</div>
       </Suspense>
@@ -32,6 +39,7 @@ function App() {
       <DiscoverFooter />
 
       <AppPlayerBar />
+      <LoginModal showModal={showModal} changeLoginModal={changeShowModal} />
     </div>
   )
 }

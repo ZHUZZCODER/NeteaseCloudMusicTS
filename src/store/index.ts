@@ -13,6 +13,7 @@ import albumReducer from '@/views/discover/c-views/album/store/album'
 import userHomeReducer from '@/views/discover/c-views/user-home/store/user-home'
 import musicSearchReducer from './modules/musicSearch'
 import singleSongReducer from '@/views/discover/c-views/singleSong/store/singleSong'
+import globalReducer from '@/store/modules/global'
 
 const store = configureStore({
   reducer: {
@@ -28,7 +29,8 @@ const store = configureStore({
     album: albumReducer,
     userHome: userHomeReducer,
     musicSearch: musicSearchReducer,
-    singleSong: singleSongReducer
+    singleSong: singleSongReducer,
+    globalStore: globalReducer
   }
 })
 
