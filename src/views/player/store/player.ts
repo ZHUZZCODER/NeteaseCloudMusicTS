@@ -170,12 +170,6 @@ export const fetchHotRecommendListDataAction = createAsyncThunk<
 
 //点击playlist播放修改播放列表和当前播放歌曲
 
-type IndexType = string | number | symbol
-export type PlainObject<K extends IndexType = string, V = unknown> = Record<
-  K,
-  V
->
-
 interface InitialState {
   currentSong: CurrentSongState | Record<string, any> //当前播放歌曲
   lyrics: Lyric[]

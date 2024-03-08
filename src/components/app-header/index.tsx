@@ -20,9 +20,13 @@ import { shallowEqual } from 'react-redux'
 import { isEmptyObject } from '@/utils/isEmptyObject'
 import { isArray } from 'underscore'
 import { changeSingerInfomationAction } from '@/views/discover/c-views/singleSong/store/singleSong'
+import type { LoginStatusRes } from '@/services/service/type'
+import { isObject, isObjectKeys } from '@/utils/type'
+import LoginBar from './cpns/login-bar'
 
 interface IProps {
   children?: ReactNode
+  changeLoginModal?: (status: boolean) => void
 }
 
 interface TitleItem {
@@ -32,6 +36,7 @@ interface TitleItem {
 }
 
 const AppHeader: FC<IProps> = (props) => {
+  const { changeLoginModal } = props
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [searchValue, setSearchValue] = useState<string>('')
@@ -40,12 +45,15 @@ const AppHeader: FC<IProps> = (props) => {
   //是否点击
   const [isClick, setIsClick] = useState<boolean>(false)
   const inputRef = useRef<InputRef>(null)
+  //登录状态
+  const [isLogin, setIsLogin] = useState<boolean>(false)
   // const isClick = useRef<boolean>()
 
   //获取搜索建议
-  const { suggestResult } = useAppSelector(
+  const { suggestResult, userInfo } = useAppSelector(
     (state) => ({
-      suggestResult: state.musicSearch.suggestResult
+      suggestResult: state.musicSearch.suggestResult,
+      userInfo: state.globalStore.userInfo
     }),
     shallowEqual
   )
@@ -55,6 +63,16 @@ const AppHeader: FC<IProps> = (props) => {
       setOrder(suggestResult.order)
     }
   }, [suggestResult.order, setOrder])
+
+  useEffect(() => {
+    console.log('val===', userInfo)
+    if (isObject<LoginStatusRes>(userInfo) && isObjectKeys(userInfo)) {
+      console.log('存在val======', userInfo)
+      setIsLogin(true)
+    } else {
+      setIsLogin(false)
+    }
+  }, [userInfo])
 
   function handleTitle(
     { title, type, link }: TitleItem,
@@ -337,7 +355,13 @@ const AppHeader: FC<IProps> = (props) => {
             </SearchPanelWrapper>
           </div>
           <div className="framer">创作者中心</div>
-          <a href="#">登录</a>
+          {!isLogin ? (
+            <a href={undefined} onClick={() => changeLoginModal?.(true)}>
+              登录
+            </a>
+          ) : (
+            !!userInfo && <LoginBar imgUrl={userInfo.profile.avatarUrl} />
+          )}
         </div>
       </div>
       <div className="divider"></div>

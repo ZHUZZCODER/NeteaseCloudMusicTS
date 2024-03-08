@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getLyric } from '@/views/player/service/player'
 import { IThunkState } from '@/store'
-import { PlainObject } from '@/views/player/store/player'
+import { PlainObject } from '@/bean/base'
 
 export const fetchSongInfoDataAction = createAsyncThunk<
   void,

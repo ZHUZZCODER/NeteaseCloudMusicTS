@@ -92,6 +92,7 @@ export const AppHeaderWrapper = styled.div`
       a {
         color: #787878;
         display: block;
+        cursor: pointer;
       }
     }
   }

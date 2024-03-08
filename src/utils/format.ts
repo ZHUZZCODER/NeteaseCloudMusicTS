@@ -34,7 +34,10 @@ export function getImageBlur(url: string): string {
 }
 
 //时间格式化
-export function momentFormat(time: number, formatType = 'YYYY-MM-DD'): any {
+export function momentFormat(
+  time: number | Date,
+  formatType = 'YYYY-MM-DD'
+): any {
   return moment(time).format(formatType)
 }
 
@@ -43,4 +46,9 @@ export function showhtml(htmlString: string) {
   const html = { __html: htmlString }
   // return <div dangerouslySetInnerHTML={html}></div>
   return html
+}
+
+//获取当前时间戳毫秒
+export const getMilliseconds = (): number => {
+  return momentFormat(new Date(), 'x')
 }
