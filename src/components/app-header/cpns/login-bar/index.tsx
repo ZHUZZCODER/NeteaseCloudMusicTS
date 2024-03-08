@@ -4,9 +4,10 @@ import { LoginBarWrapper } from './style'
 import { Dropdown } from 'antd'
 import type { MenuProps } from 'antd'
 import { getImageSize } from '@/utils/format'
-import { LogoutOutlined } from '@ant-design/icons'
+import { HomeOutlined, LogoutOutlined } from '@ant-design/icons'
 import { fetchLogout } from '@/store/modules/global'
 import { useAppDispatch } from '@/store'
+import { Link } from 'react-router-dom'
 
 interface IProps {
   children?: ReactNode
@@ -25,6 +26,15 @@ const LoginBar: FC<IProps> = (props) => {
   const items: MenuProps['items'] = [
     {
       key: '1',
+      label: (
+        <Link className="menuitem" to={'/my/home'}>
+          <HomeOutlined />
+          <span className="menutext">我的主页</span>
+        </Link>
+      )
+    },
+    {
+      key: '2',
       label: (
         <a
           className="menuitem"
