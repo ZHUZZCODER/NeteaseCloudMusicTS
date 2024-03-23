@@ -295,7 +295,7 @@ const AppPlayerBar: FC<IProps> = (props) => {
     if (playMode === 2 || !currentList.length) {
       audioRef.current!.currentTime = 0
       audioRef.current!.play().catch((e) => {
-        console.log('e', e)
+        console.log('err', e)
         audioRef.current?.pause()
       })
     } else {
