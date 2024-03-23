@@ -26,6 +26,15 @@ jobs:
         run: npm ci
       - name: 项目打包
         run: npm run build
+      # 清除服务器上的/test/目录  
+      - name: Clear /test/ directory on remote server  
+        uses: appleboy/ssh-action@master  
+        with:  
+         host: ${{ secrets.ALIYUN_SERVER_HOST }}  
+         username: root  
+         key: ${{ secrets.ALIYUN_SERVER_PRIVATE_KEY }}  
+         script: |  
+          rm -rf /software/project/test/*  
         # 部署到阿里云
       - name: 发布到阿里云 # 第二步，rsync推文件
         uses: easingthemes/ssh-deploy@v2.1.5 # 使用别人包装好的步骤镜像
@@ -35,7 +44,7 @@ jobs:
           #SCp参数
           ARGS: '-rltgoDzvO --delete'
           #源目录
-          SOURCE: './build'
+          SOURCE: './build/*'
           #服务器Ip:换成你的服务器iP
           REMOTE_HOST: ${{ secrets.ALIYUN_SERVER_HOST }}
           #用户
