@@ -5,9 +5,9 @@ on:
     branches:
       - main
 jobs:
-  explore-github-action:
+  task1:
     runs-on: ubuntu-latest
-    stpes:
+    steps:
       - name: 拉取代码
         uses: actions/checkout@v4
       - name: 安装nodejs
