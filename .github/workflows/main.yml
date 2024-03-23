@@ -28,10 +28,10 @@ jobs:
           #SCp参数
           ARGS: '-rltgoDzvO --delete'
           #源目录
-          SOURCE: './'
+          SOURCE: './build'
           #服务器Ip:换成你的服务器iP
           REMOTE_HOST: ${{ secrets.ALIYUN_SERVER_HOST }}
           #用户
           REMOTE_USER: 'root'
           #目标地址
-          TARGET: '/software/project/NeteaseCloudMusic'
+          TARGET: '/software/project/test/'
