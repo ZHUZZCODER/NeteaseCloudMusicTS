@@ -1,0 +1,37 @@
+name: NeteasseCloudMusic
+run-name: ${{ github.actor }} is GitHub Actions 🚀
+on:
+  push:
+    branches:
+      - main
+jobs:
+  explore-github-action:
+    runs-on: ubuntu-latest
+    stpes:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+      - name: 安装nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16.x'
+          cache: 'npm'
+      - name: 安装依赖
+        run: npm ci
+      - name: 项目打包
+        run: npm run build
+        # 部署到阿里云
+      - name: 发布到阿里云 # 第二步，rsync推文件
+        uses: easingthemes/ssh-deploy@v2.1.5 # 使用别人包装好的步骤镜像
+        env:
+          #私钥
+          SSH_PRIVATE_KEY: ${{ secrets.ALIYUN_SERVER_PRIVATE_KEY }}
+          #SCp参数
+          ARGS: '-rltgoDzvO --delete'
+          #源目录
+          SOURCE: './'
+          #服务器Ip:换成你的服务器iP
+          REMOTE_HOST: ${{ secrets.ALIYUN_SERVER_HOST }}
+          #用户
+          REMOTE_USER: 'root'
+          #目标地址
+          TARGET: '/software/project/NeteaseCloudMusic'
