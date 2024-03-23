@@ -1,9 +1,16 @@
 name: NeteasseCloudMusic
 run-name: ${{ github.actor }} is GitHub Actions 🚀
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:  
+    inputs:  
+      branchName:  
+        description: 'Branch to run the workflow on'  
+        required: true  
+        default: 'main'  
+        type: string  
+#  push:
+#    branches:
+#      - main
 jobs:
   task1:
     runs-on: ubuntu-latest
