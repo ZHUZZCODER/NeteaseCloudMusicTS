@@ -5,7 +5,8 @@ export default async function useGetMusicUrl(id: number): Promise<string> {
     const {
       data: [{ url }]
     } = await getNewSongUrl(id)
-    return url
+    const restUrl = url.split('?')[0]
+    return restUrl
   } catch (error) {
     console.log(error)
   }
