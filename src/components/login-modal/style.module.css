@@ -32,7 +32,7 @@
   cursor: pointer;
 }
 
-.login-modal .login-modal-content {
+.login-modal-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,23 +40,23 @@
   background-color: #fff;
 }
 
-.login-modal .login-modal-content .login-modal-content-show {
+.login-modal-content .login-modal-content-show {
   display: flex;
   justify-content: center;
 }
 
-.login-modal .login-modal-content .login-modal-content-show .content-show-img {
+.login-modal-content .login-modal-content-show .content-show-img {
   width: 125px;
   height: 220px;
 }
 
-.login-modal .login-modal-content .login-modal-content-show .content-show-orcode {
+.login-modal-content .login-modal-content-show .content-show-orcode {
   margin-left: 25px;
   width: 200px;
   text-align: center;
 }
 
-.login-modal .login-modal-content .login-modal-content-show .content-show-orcode .orCode-box {
+.login-modal-content .login-modal-content-show .content-show-orcode .orCode-box {
   width: 138px;
   height: 138px;
   display: flex;
@@ -65,7 +65,7 @@
   margin: 13px auto;
 }
 
-.login-modal .login-modal-content .login-modal-content-show .content-show-orcode .orCode-box .orCode-fail {
+.login-modal-content .login-modal-content-show .content-show-orcode .orCode-box .orCode-fail {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,13 +80,13 @@
   background: rgba(255, 255, 255, 0.9);
 }
 
-.login-modal .login-modal-content .login-modal-content-show .content-show-orcode .orCode-box .orCode-fail .fail-text {
+.login-modal-content .login-modal-content-show .content-show-orcode .orCode-box .orCode-fail .fail-text {
   font-size: 12px;
   font-weight: 500;
   margin-bottom: 6px;
 }
 
-.login-modal .login-modal-content .login-modal-content-show .content-show-orcode .orCode-box .orCode-fail .refresh-btn {
+.login-modal-content .login-modal-content-show .content-show-orcode .orCode-box .orCode-fail .refresh-btn {
   width: 64px;
   height: 24px;
   line-height: 24px;
@@ -98,7 +98,7 @@
   font-size: 12px;
 }
 
-.login-modal .login-modal-content .login-modal-content-show .content-show-orcode .orCode-desc {
+.login-modal-content .login-modal-content-show .content-show-orcode .orCode-desc {
   font-size: 12px;
   width: 200px;
   line-height: 17px;
@@ -106,11 +106,11 @@
   text-align: center;
 }
 
-.login-modal .login-modal-content .login-modal-content-show .content-show-orcode .orCode-desc .link-desc {
+.login-modal-content .login-modal-content-show .content-show-orcode .orCode-desc .link-desc {
   color: #0c73c2;
 }
 
-.login-modal .login-modal-content .other-login {
+.login-modal-content .other-login {
   display: block;
   width: 118px;
   height: 28px;

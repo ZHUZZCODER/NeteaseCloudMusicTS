@@ -25,10 +25,14 @@ const MyHome: FC<IProps> = (props) => {
     shallowEqual
   )
   useEffect(() => {
-    if (isObject<LoginStatusRes>(userInfo) && isObjectKeys(userInfo)) {
+    if (
+      isObject<LoginStatusRes>(userInfo) &&
+      isObjectKeys(userInfo) &&
+      userInfo.profile.userId
+    ) {
       dispatch(fetchPlaylist(userInfo.profile.userId))
     }
-  }, [dispatch, userInfo])
+  }, [dispatch, userInfo?.profile.userId])
   return (
     <UserHomeWrapper>
       {!!createPlaylist.length && <CreateSongList playlist={createPlaylist} />}

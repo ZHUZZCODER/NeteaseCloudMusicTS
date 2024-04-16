@@ -1,4 +1,11 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 import type { FC, ReactNode } from 'react'
 import GlobalModal from '../global-modal'
 import style from './style.module.scss'
@@ -83,16 +90,16 @@ const LoginModal: FC<IProps> = (props) => {
     if (qrCodeFail) generateOrCode()
   }, [qrCodeFail])
 
-  const ModalContent = useCallback(() => {
+  const ModalContent = useMemo<ReactNode>(() => {
     return (
       <>
-        <header className={style['login-modal-header']}>
+        {/* <header className={style['login-modal-header']}>
           <h2>登录</h2>
           <CloseOutlined
             className={style['close-icon']}
             onClick={changeLoginStatus}
           />
-        </header>
+        </header> */}
         <section className={style['login-modal-content']}>
           <div className={style['login-modal-content-show']}>
             <img className={style['content-show-img']} src={LoginShow} alt="" />
@@ -136,22 +143,26 @@ const LoginModal: FC<IProps> = (props) => {
     )
   }, [qrCodeUrl, qrCodeFail])
 
-  const modalStyle = {
-    mask: {
-      backgroundColor: 'transparent'
-    }
-  }
+  // const modalStyle = {
+  //   mask: {
+  //     backgroundColor: 'transparent'
+  //   }
+  // }
 
   return (
-    <div className={style['login-modal-container']}>
-      <GlobalModal
-        className={style['login-modal']}
-        open={showModal}
-        centered={true}
-        modalRender={ModalContent}
-        maskStyle={{ backgroundColor: 'transparent' }}
-      ></GlobalModal>
-    </div>
+    // <div className={style['login-modal-container']}>
+    <GlobalModal
+      // className={style['login-modal']}
+      open={showModal}
+      // centered={true}
+      // modalRenderContent={ModalContent}
+      title="登录"
+      closeModalFn={changeLoginStatus}
+      // maskStyle={{ backgroundColor: 'transparent' }}
+    >
+      {ModalContent}
+    </GlobalModal>
+    // </div>
   )
 }
 

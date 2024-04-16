@@ -1,4 +1,10 @@
-import React, { Suspense, useCallback, useState } from 'react'
+import React, {
+  ElementRef,
+  Suspense,
+  useCallback,
+  useRef,
+  useState
+} from 'react'
 import { useRoutes } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from './store'
 import routes from './router'
@@ -8,6 +14,8 @@ import AppHeader from './components/app-header'
 import AppPlayerBar from './views/player/app-player-bar'
 import DiscoverFooter from './components/discover-footer'
 import LoginModal from './components/login-modal'
+import CollectModal from './components/collect-modal'
+import type { CollectModalRef } from './components/collect-modal'
 
 function App() {
   const { count, message } = useAppSelector(
@@ -24,6 +32,7 @@ function App() {
   }
 
   const [showModal, setShowModal] = useState(false)
+  const collectModalInstance = useRef<ElementRef<typeof CollectModal>>(null)
 
   const changeShowModal = useCallback((status: boolean) => {
     setShowModal(status)
@@ -40,6 +49,7 @@ function App() {
 
       <AppPlayerBar />
       <LoginModal showModal={showModal} changeLoginModal={changeShowModal} />
+      {/* <CollectModal ref={collectModalInstance} /> */}
     </div>
   )
 }

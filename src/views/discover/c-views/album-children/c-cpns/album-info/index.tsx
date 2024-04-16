@@ -16,6 +16,7 @@ import {
   changeCurrentSongAction,
   fetchGetLyricDataAction
 } from '@/views/player/store/player'
+import { useAddPlaySongList } from '@/hooks'
 
 interface IProps {
   children?: ReactNode
@@ -33,7 +34,8 @@ const AlbumInfo: FC<IProps> = (props) => {
       publishTime = 0,
       company = '',
       info: { commentCount = 0, shareCount = 0 },
-      description
+      description,
+      id
     },
     songInfo
   } = props
@@ -43,6 +45,9 @@ const AlbumInfo: FC<IProps> = (props) => {
     dispatch(changeCurrentListAction(songInfo))
     dispatch(fetchGetLyricDataAction(songInfo[0].id))
   }, [dispatch, songInfo])
+
+  const { handleAddPlaySongList } = useAddPlaySongList()
+
   return (
     <AlbumInfoWrapper>
       <div className="infoHeader">
@@ -61,7 +66,9 @@ const AlbumInfo: FC<IProps> = (props) => {
             </div>
           </div>
           <SongBtnlist
+            id={id}
             playAllClick={playAllClick}
+            addPlayListClick={() => handleAddPlaySongList(id, songInfo)}
             shareNum={shareCount}
             commentNum={commentCount}
           />

@@ -529,6 +529,23 @@ export const playerSlice = createSlice({
       state.currentList = state.currentList.filter(
         (item) => item.id !== payload
       )
+    },
+    //在播放列表中添加一首歌曲
+    changePushSongCurrentListAction(state, { payload }) {
+      const currentList = state.currentList
+      //查找列表中是否存在
+      const isExistId = currentList.findIndex(({ id }) => id === payload.id)
+      if (isExistId === -1) {
+        currentList.push(payload)
+        state.currentList = currentList
+        localCache.setCache('currentList', currentList)
+      }
+    },
+    // 在播放列表中一次添加多首歌曲
+    changePushSongListCurrentListAction(state, { payload }) {
+      const currentList = [...state.currentList, ...payload]
+      state.currentList = currentList
+      localCache.setCache('currentList', currentList)
     }
   }
 })
@@ -540,6 +557,8 @@ export const {
   changePlayModeAction,
   changeCurrentListAction,
   changePrevSongIndexAction,
-  changeCurrentListActiveAction
+  changeCurrentListActiveAction,
+  changePushSongCurrentListAction,
+  changePushSongListCurrentListAction
 } = playerSlice.actions
 export default playerSlice.reducer

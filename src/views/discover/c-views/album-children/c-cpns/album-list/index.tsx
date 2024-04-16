@@ -5,23 +5,16 @@ import NavHeaderV3 from '@/components/nav-header-v3'
 import SongList from '@/components/song-list'
 import type { ISONGINFO } from '@/views/discover/c-views/album-children/store/type'
 import type { Track } from '@/components/song-list'
+import { CurrentSongState } from '@/views/player/store/type'
 
 interface IProps {
   children?: ReactNode
-  songInfo: ISONGINFO[]
+  songInfo: CurrentSongState[]
 }
 
 const AlbumList: FC<IProps> = (props) => {
   const { songInfo } = props
 
-  const newSongInfo: Track[] = songInfo.map(({ id, name, dt, ar, al, mv }) => ({
-    id,
-    name,
-    dt,
-    ar,
-    al,
-    mv
-  }))
   return (
     <AlbumListWrapper>
       <NavHeaderV3
@@ -29,7 +22,7 @@ const AlbumList: FC<IProps> = (props) => {
         titleChildren={`${songInfo.length}首歌`}
         link="#"
       />
-      <SongList tracks={newSongInfo} isShowAlbum={false} />
+      <SongList tracks={songInfo} isShowAlbum={false} />
     </AlbumListWrapper>
   )
 }

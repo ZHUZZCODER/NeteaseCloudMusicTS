@@ -1,3 +1,5 @@
+import type { Playlist } from '.'
+
 export interface Account {
   id: number
   userName: string
@@ -58,4 +60,20 @@ export interface LoginStatusRes {
   code: number
   account: Account
   profile: Profile
+}
+
+export interface PlaylistTracks {
+  status: number
+  body: {
+    trackIds: string
+    code: number
+    count: number
+    cloudCount: number
+  }
+}
+
+export interface PlaylistCreate {
+  code: number
+  id: number
+  playlist: Playlist
 }
