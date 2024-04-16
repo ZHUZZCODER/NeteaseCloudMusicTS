@@ -8,8 +8,12 @@ export const fetchPlaylist = createAsyncThunk<void, number>(
     const { code, playlist } = await getUserPlaylist(uid)
     if (code === 200) {
       dispatch(changePlayListAction(playlist))
-      const createPlaylist = playlist.filter((item) => item.id === uid)
-      const collectPlaylist = playlist.filter((item) => item.id !== uid)
+      const createPlaylist = playlist.filter(
+        ({ creator: { userId } }) => userId === uid
+      )
+      const collectPlaylist = playlist.filter(
+        ({ creator: { userId } }) => userId !== uid
+      )
       dispatch(changeCreatePlaylistAction(createPlaylist))
       dispatch(changeCollectPlaylistAction(collectPlaylist))
     }

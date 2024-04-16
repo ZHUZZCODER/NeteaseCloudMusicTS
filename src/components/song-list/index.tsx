@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import classnames from 'classnames'
 import { Link } from 'react-router-dom'
+import { useAddPlayList, useCollectModal } from '@/hooks'
+import type { CurrentSongState } from '@/views/player/store/type'
 
 export interface Track {
   id: number
@@ -21,14 +23,15 @@ export interface Track {
 
 interface IProps {
   children?: ReactNode
-  tracks: Track[]
+  tracks: CurrentSongState[]
   isShowAlbum?: boolean
 }
 
 const SongList: FC<IProps> = (props) => {
   const { tracks, isShowAlbum = true } = props
-
+  const handleAddPlayList = useAddPlayList()
   const dispatch = useAppDispatch()
+  const { renderModal } = useCollectModal()
 
   const { currentSong } = useAppSelector(
     (state) => ({
@@ -64,7 +67,8 @@ const SongList: FC<IProps> = (props) => {
           </tr>
         </thead>
         <tbody>
-          {tracks.map(({ id, name, alia, dt, ar, al, mv }, index) => {
+          {tracks.map((song, index) => {
+            const { id, name, alia, dt, ar, al, mv } = song
             return (
               <tr key={id}>
                 <td className="Col1 tdCol1">
@@ -95,8 +99,14 @@ const SongList: FC<IProps> = (props) => {
                   <div className="timeDuration">{formatTime(dt)}</div>
                   <div className="timeIconList">
                     <div
+                      title="添加到播放列表"
+                      className="sprite_icon2 icon addPlayIcon"
+                      onClick={() => handleAddPlayList(song)}
+                    ></div>
+                    <div
                       title="收藏"
                       className="sprite_playlist icon addIcon"
+                      onClick={() => renderModal(id)}
                     ></div>
                     <div
                       title="分享"
@@ -106,10 +116,10 @@ const SongList: FC<IProps> = (props) => {
                       title="下载"
                       className="sprite_playlist icon downloadIcon"
                     ></div>
-                    <div
+                    {/* <div
                       title="删除"
                       className="sprite_playlist icon deleteIcon"
-                    ></div>
+                    ></div> */}
                   </div>
                 </td>
                 <td className="Col4 tdCol4">

@@ -21,6 +21,7 @@ import {
 } from '@/views/player/store/player'
 import IntroduceDescription from '@/components/introduce-description'
 import SingerImg from '@/components/singer-img'
+import { useAddPlaySongList } from '@/hooks'
 
 interface IProps {
   children?: ReactNode
@@ -38,7 +39,8 @@ const PlayListInfo: FC<IProps> = (props) => {
       commentCount = 0,
       tags = [],
       description = '',
-      tracks = []
+      tracks = [],
+      id
     }
   } = useContext(PlayListCtx)!
 
@@ -49,6 +51,8 @@ const PlayListInfo: FC<IProps> = (props) => {
     dispatch(changeCurrentListAction(tracks))
     dispatch(fetchGetLyricDataAction(tracks[0].id))
   }, [dispatch, tracks])
+
+  const { handleAddPlaySongList } = useAddPlaySongList()
 
   return (
     <PlayListInfoWrapper>
@@ -61,10 +65,12 @@ const PlayListInfo: FC<IProps> = (props) => {
         <SongLabel name={name} labelPosition="0 -243px" />
         <UserInfo useInfo={creator} createTime={createTime} />
         <SongBtnlist
+          id={id}
           colletNum={subscribedCount}
           shareNum={shareCount}
           commentNum={commentCount}
           playAllClick={playAllClick}
+          addPlayListClick={() => handleAddPlaySongList(id, tracks)}
         />
         <div className="labelBox">
           标签：

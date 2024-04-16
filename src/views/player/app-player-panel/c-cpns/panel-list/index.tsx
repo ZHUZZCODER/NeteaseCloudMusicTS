@@ -10,12 +10,14 @@ import {
   changeCurrentListActiveAction,
   changeCurrentListAction
 } from '@/views/player/store/player'
+import { useCollectModal } from '@/hooks'
 
 interface IProps {
   children?: ReactNode
 }
 
 const PanelList: FC<IProps> = (props) => {
+  const { renderModal } = useCollectModal()
   const { currentList = [], currentSong } = useAppSelector(
     (state) => ({
       currentList: state.player.currentList,
@@ -53,7 +55,11 @@ const PanelList: FC<IProps> = (props) => {
           <div className={classNames('sprite_playlist', 'playIcon')}></div>
           <div className="musicTitle">{name}</div>
           <div className="iconBox">
-            <div title="收藏" className="sprite_playlist icon addIcon"></div>
+            <div
+              title="收藏"
+              className="sprite_playlist icon addIcon"
+              onClick={() => renderModal(id)}
+            ></div>
             <div title="分享" className="sprite_playlist icon shareIcon"></div>
             <div
               title="下载"

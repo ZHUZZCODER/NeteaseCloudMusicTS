@@ -1,0 +1,47 @@
+.collect-content {
+  height: 478px;
+  overflow-y: auto;
+}
+.collect-content .header-new {
+  padding: 10px 0 10px 35px;
+  background: #e6e6e6;
+  cursor: pointer;
+  font-size: 12px;
+}
+.collect-content .header-new .new-icon {
+  display: inline-block;
+  margin-right: 10px;
+  width: 35px;
+  height: 36px;
+  background-position: 0 -495px;
+  vertical-align: middle;
+}
+.collect-content .songlist .songlistItem {
+  display: flex;
+  padding: 6px 0 6px 35px;
+  border-top: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+.collect-content .songlist .songlistItem:hover {
+  background: #f2f2f2;
+}
+.collect-content .songlist .songlistItem .collectLink {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+.collect-content .songlist .songlistItem .collectLink .collectimg {
+  width: 40px;
+  height: 40px;
+}
+.collect-content .songlist .songlistItem .collectTx {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.collect-content .songlist .songlistItem p {
+  display: block;
+  word-wrap: break-word;
+  font-size: 12px;
+}

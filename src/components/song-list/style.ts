@@ -111,6 +111,12 @@ export const SongListWrapper = styled.div`
           .icon:first-of-type {
             margin: 0 0 0 0;
           }
+          .addPlayIcon {
+            background-position: 2px -699px;
+            :hover {
+              background-position: -20px -699px;
+            }
+          }
           .addIcon {
             background-position: -24px 0;
             :hover {

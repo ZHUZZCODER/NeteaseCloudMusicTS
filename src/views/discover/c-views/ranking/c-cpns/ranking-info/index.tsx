@@ -10,6 +10,7 @@ import {
   changeCurrentSongAction,
   fetchGetLyricDataAction
 } from '@/views/player/store/player'
+import { useAddPlaySongList } from '@/hooks'
 
 interface IProps {
   children?: ReactNode
@@ -40,6 +41,8 @@ const RankingInfo: FC<IProps> = (props) => {
     dispatch(fetchGetLyricDataAction(tracks[0].id))
   }, [dispatch, tracks])
 
+  const { handleAddPlaySongList } = useAddPlaySongList()
+
   return (
     <RankingInfoWrapper>
       <div className="rankingHeader">
@@ -57,10 +60,12 @@ const RankingInfo: FC<IProps> = (props) => {
             </span>
           </div>
           <SongBtnlist
+            id={id}
             colletNum={subscribedCount}
             shareNum={shareCount}
             commentNum={commentCount}
             playAllClick={playAllClick}
+            addPlayListClick={() => handleAddPlaySongList(id, tracks)}
           />
         </div>
       </div>

@@ -30,7 +30,8 @@ import {
   getReserveSongUrl
 } from '../service/player'
 import { playRequetVal } from '@/assets/constants'
-import { useGetMusicUrl } from '@/hooks'
+import { useGetMusicUrl, useTitle } from '@/hooks'
+import { changeVoiceVal } from '@/store/modules/global'
 
 interface IProps {
   children?: ReactNode
@@ -84,14 +85,16 @@ const AppPlayerBar: FC<IProps> = (props) => {
     lyrics,
     lyricsItemIndex,
     playMode,
-    currentList
+    currentList,
+    voiceVal
   } = useAppSelector(
     (state) => ({
       currentSong: state.player.currentSong,
       lyrics: state.player.lyrics,
       lyricsItemIndex: state.player.lyricsItemIndex,
       playMode: state.player.playMode,
-      currentList: state.player.currentList
+      currentList: state.player.currentList,
+      voiceVal: state.globalStore.voiceVal
     }),
     shallowEqual
   )
@@ -105,6 +108,8 @@ const AppPlayerBar: FC<IProps> = (props) => {
     dt = 0 //总时间
   } = currentSong
 
+  useTitle(isPlay, name)
+
   //6.3请求歌曲数据
   useEffect(() => {
     dispatch(fetchCurrentSongDataAction(id))
@@ -113,10 +118,9 @@ const AppPlayerBar: FC<IProps> = (props) => {
   //1.2获取audio实例
   const audioRef = useRef<HTMLMediaElement>(null)
 
-  //1.6当页面挂载后，且歌曲数据获取到，设置歌曲url
-  useEffect(() => {
-    //检查歌曲是否可用
-    const checkMusicService = async (id: number) => {
+  //检查歌曲是否可用
+  const checkMusicService = useCallback(
+    async (id: number) => {
       // const { success, message: MESSAGE } = await getCheckMusic(id)
       // // 如果没有版权
       // if (!success) {
@@ -174,9 +178,14 @@ const AppPlayerBar: FC<IProps> = (props) => {
         })
 
       setDuration(dt)
-    }
+    },
+    [currentSong, id, useGetMusicUrl]
+  )
+
+  //1.6当页面挂载后，且歌曲数据获取到，设置歌曲url
+  useEffect(() => {
     checkMusicService(id)
-  }, [currentSong, id, dispatch, useGetMusicUrl])
+  }, [id])
 
   //1.4播放歌曲方法
   function playAudio() {
@@ -324,7 +333,9 @@ const AppPlayerBar: FC<IProps> = (props) => {
       } else {
         setIsShowVoice(true)
       }
-      audioRef.current!.volume = value / 100
+      const volume = value / 100
+      audioRef.current!.volume = volume
+      dispatch(changeVoiceVal(value))
     },
     [audioRef]
   )
@@ -429,7 +440,7 @@ const AppPlayerBar: FC<IProps> = (props) => {
               <div className="voiceTotalDistance">
                 <Slider
                   className="voiceSlider"
-                  defaultValue={100}
+                  defaultValue={voiceVal}
                   vertical
                   step={0.1}
                   onChange={voiceSliderChange}

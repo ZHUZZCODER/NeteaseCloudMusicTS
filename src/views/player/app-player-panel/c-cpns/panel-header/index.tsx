@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react'
+import React, { memo, useCallback, useContext } from 'react'
 import type { FC, ReactNode } from 'react'
 import {
   HeaderLeftWrapper,
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/store'
 import { shallowEqual } from 'react-redux'
 import { changeCurrentListAction } from '@/views/player/store/player'
 import { PlayerContext } from '@/views/player/app-player-bar'
+import { useCollectModal } from '@/hooks'
 
 interface IProps {
   children?: ReactNode
@@ -25,18 +26,25 @@ const PanelHeader: FC<IProps> = (props) => {
     shallowEqual
   )
 
+  const { renderModal } = useCollectModal()
+
   const dispatch = useAppDispatch()
   //清除播放歌曲列表
   const clearCurrentList = () => {
     dispatch(changeCurrentListAction([]))
   }
 
+  const handleCollecAll = useCallback(() => {
+    const tracks = currentList.map(({ id }) => id).join(',')
+    renderModal(tracks)
+  }, [currentList])
+
   return (
     <PanelHeaderWrapper>
       <HeaderLeftWrapper>
         <h4 className="headerTitle">播放列表({currentList.length})</h4>
         <div className="collectAndClear">
-          <div className="collectAll">
+          <div className="collectAll" onClick={handleCollecAll}>
             <div className="sprite_playlist  collectIcon icon"></div>
             <span className="iconText">收藏全部</span>
           </div>

@@ -1,0 +1,53 @@
+.collect-content {
+  height: 478px;
+  overflow-y: auto;
+  .header-new {
+    padding: 10px 0 10px 35px;
+    background: #e6e6e6;
+    cursor: pointer;
+    font-size: 12px;
+    .new-icon {
+      display: inline-block;
+      margin-right: 10px;
+      width: 35px;
+      height: 36px;
+      background-position: 0 -495px;
+      vertical-align: middle;
+    }
+  }
+  .songlist {
+    .songlistItem {
+      display: flex;
+      padding: 6px 0 6px 35px;
+      border-top: 1px solid #e0e0e0;
+      cursor: pointer;
+      &:hover {
+        background: #f2f2f2;
+      }
+      .collectLink {
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        .collectimg {
+          width: 40px;
+          height: 40px;
+        }
+      }
+      .collectTx {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+      p {
+        display: block;
+        word-wrap: break-word;
+        font-size: 12px;
+      }
+      .collect-name {
+        // margin-top: 2px;
+        // margin-bottom: 8px;
+      }
+    }
+  }
+}

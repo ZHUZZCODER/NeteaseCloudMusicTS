@@ -1,0 +1,29 @@
+.global-modal-container {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.8);
+  background-color: white;
+  pointer-events: auto;
+}
+
+.global-modal-container .global-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 23px 0 18px;
+  border-bottom: 1px solid #191919;
+  border-radius: 4px 4px 0 0;
+  background: #2d2d2d;
+  font-weight: bold;
+  font-size: 14px;
+  color: #fff;
+  height: 38px;
+}
+
+.global-modal-container .global-modal-header h2 {
+  font-size: 14px;
+}
+
+.global-modal-container .global-modal-header .close-icon {
+  cursor: pointer;
+}

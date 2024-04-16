@@ -1,3 +1,5 @@
+import { CurrentSongState } from '@/views/player/store/type'
+
 export interface Ar {
   id: number
   name: string
@@ -86,10 +88,10 @@ export interface Privilege {
   chargeInfoList: ChargeInfoList[]
 }
 
-export interface ISONGINFO {
+export interface ISONGINFO extends CurrentSongState {
   rtUrls: any[]
-  ar: Ar[]
-  al: Al
+  // ar: Ar[]
+  // al: Al
   st: number
   noCopyrightRcmd?: any
   songJumpInfo?: any
@@ -198,7 +200,7 @@ export interface Info {
 }
 
 export interface IALBUMINFO {
-  songs: any[]
+  songs: CurrentSongState[]
   paid: boolean
   onSale: boolean
   mark: number

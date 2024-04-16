@@ -1,3 +1,5 @@
+import type { CurrentSongState } from '@/views/player/store/type'
+
 export interface IRANKINGLIST {
   subscribers: any[]
   subscribed?: any
@@ -42,12 +44,12 @@ export interface IRANKINGLIST {
   ToplistType: string
 }
 
-interface ITRACKS {
+interface ITRACKS extends CurrentSongState {
   id: number
-  al: { picUrl: string }
+  // al: { picUrl: string }
   name: string
   dt: number
-  ar: [{ name: string }]
+  // ar: [{ name: string }]
   mv: number
 }
 

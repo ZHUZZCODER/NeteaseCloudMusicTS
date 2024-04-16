@@ -45,6 +45,7 @@ export interface Sq {
   vd: number
   sr: number
 }
+
 export interface CurrentSongState {
   name: string
   id: number

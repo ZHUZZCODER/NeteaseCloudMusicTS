@@ -1,3 +1,5 @@
+import type { CurrentSongState } from '@/views/player/store/type'
+
 export interface Subscriber {
   defaultAvatar: boolean
   province: number
@@ -121,7 +123,7 @@ export interface Track {
   id: number
   pst: number
   t: number
-  ar: Ar[]
+  // ar: Ar[]
   alia: string[]
   pop: number
   st: number
@@ -130,7 +132,7 @@ export interface Track {
   v: number
   crbt?: any
   cf: string
-  al: Al
+  // al: Al
   dt: number
   h: H
   m: M
@@ -216,7 +218,7 @@ export interface Playlist {
   subscribers: Subscriber[]
   subscribed: boolean
   creator: Creator
-  tracks: Track[]
+  tracks: CurrentSongState[]
   videoIds?: any
   videos?: any
   trackIds: TrackId[]

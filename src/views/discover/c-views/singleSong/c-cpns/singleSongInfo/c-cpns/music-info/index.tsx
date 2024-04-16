@@ -43,6 +43,7 @@ const MusicInfo: FC<IProps> = (props) => {
         所属专辑：<a href={undefined}>{albumName}</a>
       </p>
       <SongBtnlist
+        id={0}
         colletNum={1}
         shareNum={2}
         commentNum={3}

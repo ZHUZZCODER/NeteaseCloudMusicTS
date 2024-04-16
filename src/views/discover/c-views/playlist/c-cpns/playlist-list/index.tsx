@@ -12,8 +12,9 @@ interface IProps {
 
 const PlayListList: FC<IProps> = (props) => {
   const {
-    playlist: { trackCount = 0, playCount = 0, tracks = [] }
+    playlist: { trackCount = 0, playCount = 0, tracks = [], id }
   } = useContext(PlayListCtx)!
+
   return (
     <PlayListListWrapper>
       <NavHeaderV3

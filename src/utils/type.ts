@@ -37,3 +37,7 @@ export function isObject<T = PlainObject>(val: unknown): val is T {
 export function isObjectKeys(val: object): boolean {
   return !!Object.keys(val).length
 }
+
+export function isNumber(val: unknown): val is number {
+  return typeof val === DataType.Number
+}
